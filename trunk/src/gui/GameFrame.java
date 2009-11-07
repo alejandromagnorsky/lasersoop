@@ -2,22 +2,19 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.io.IOException;
 import java.util.Vector;
 
 import javax.swing.JFrame;
 
-import logic.tile.Origin;
-import logic.tile.Tile;
+import logic.Vector2D;
+import logic.mirror.*;
+import logic.tile.*;
 
 public class GameFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
 	private static final int CELL_SIZE = 30;
-
 	private BoardPanel bp;
-
 	private Vector<Image> tileImages;
 
 	public void loadTiles() {
@@ -60,7 +57,7 @@ public class GameFrame extends JFrame {
 
 		tileImages = new Vector<Image>();
 
-		this.loadTiles();
+		loadTiles();
 
 		bp = new BoardPanel(10, 10, CELL_SIZE);
 		bp.setBackground(Color.WHITE);
@@ -70,7 +67,9 @@ public class GameFrame extends JFrame {
 
 		bp.setListener(new BoardPanelListener() {
 			public void cellClicked(int row, int column) {
-				System.out.println("Clic en " + row + ", " + column);
+
+				// Crear un alt text para mostrar que tile es
+				// if( checkTileAt(new Vector2D(row, column)) )
 				bp.setImage(row, column, tileImages.elementAt(0));
 				bp.appendImage(row, column, tileImages.elementAt(4));
 				bp.repaint();
@@ -79,14 +78,28 @@ public class GameFrame extends JFrame {
 			public void cellDragged(int sourceRow, int sourceColumn,
 					int targetRow, int targetColumn) {
 
-				System.out.println("Celda arrastrada desde " + sourceRow + ", "
-						+ sourceColumn + " hasta " + targetRow + ", "
-						+ targetColumn);
+				if (checkTileAt(new Vector2D(sourceRow, sourceColumn))) {
 
-				bp.setImage(sourceRow, sourceColumn, tileImages.elementAt(0));
-				bp.setImage(targetRow, targetColumn, tileImages.elementAt(0));
-				bp.appendImage(targetRow, targetColumn, tileImages.elementAt(4));
-				bp.repaint();
+					// avisarle al tileset que cambio de posicion!
+
+					bp.setImage(sourceRow, sourceColumn, tileImages
+							.elementAt(0));
+					bp.setImage(targetRow, targetColumn, tileImages
+							.elementAt(0));
+					bp.appendImage(targetRow, targetColumn, tileImages
+							.elementAt(4));
+
+					bp.repaint();
+
+					System.out.println("Celda arrastrada desde " + sourceRow
+							+ ", " + sourceColumn + " hasta " + targetRow
+							+ ", " + targetColumn);
+
+				} else {
+					System.out.println("Celda no movible");
+
+				}
+
 			}
 
 		});
@@ -94,5 +107,33 @@ public class GameFrame extends JFrame {
 		add(bp);
 		this.setResizable(true);
 
+	}
+
+	private boolean checkTileAt(Vector2D pos) {
+		return false;
+		// Check it moving this tile is posible.
+	}
+
+	public void addTile(Tile t) {
+		// Later check which tile to print
+
+		int i;
+		if (t instanceof Origin)
+			i = 1;
+		else if (t instanceof Goal)
+			i = 4;
+		else if (t instanceof Trap)
+			i = 2;
+		else if (t instanceof Wall)
+			i = 3;
+		else if (t instanceof DoubleMirror)
+			i = 7;
+		else if (t instanceof SimpleMirror)
+			i = 8;
+		else
+			i = 9;
+
+		bp.setImage(t.getPos().getX(), t.getPos().getY(), tileImages
+				.elementAt(i));
 	}
 }

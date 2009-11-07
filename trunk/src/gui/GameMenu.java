@@ -20,6 +20,8 @@ public class GameMenu extends JFrame {
 	public GameMenu() {
 		super("Menu Principal");
 		
+		setLayout(null);
+		
 		setBounds(100, 100, 900, 725);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,29 +39,24 @@ public class GameMenu extends JFrame {
 				System.exit(0);
 			}
 		});
-
+		ImageButton start2 = null;
+		
 		try {
 			background = new ImagePanel("bg.jpg");
-			//title = new ImagePanel("title.jpg");
-	
+			start2 = new ImageButton("simple-mirror.png", "empty-tile.png");
+			start2.setBounds(200, 200, 230, 230);
+			background.setBounds(0, 0, 900, 725);
+			
 		} catch (Exception e) {
 			// ERROR! (create an error frame)
 			System.out.println(e);
 		}
 		
-		background.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				System.out.println("El mouse entró al bg");
-			}
-			public void mouseExited(MouseEvent e) {
-				System.out.println("El mouse salió del bg");
-			}
-		});
-
-
 		add(start);
 		add(exit);
 		add(load);
 		add(background);
+		//add(start2);
+	
 	}
 }
