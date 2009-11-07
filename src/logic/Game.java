@@ -1,12 +1,12 @@
 package logic;
 
-import gui.SampleFrame;
+import gui.GameFrame;
 
 public class Game {
 
 	public static void main(String args[]) {
 
-		SampleFrame menu = new SampleFrame();
+		GameFrame menu = new GameFrame();
 		menu.setVisible(true);
 
 	}
