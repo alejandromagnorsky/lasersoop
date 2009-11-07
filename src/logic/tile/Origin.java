@@ -3,17 +3,22 @@ package logic.tile;
 import logic.GameMessage;
 import logic.Vector2D;
 import logic.laser.Laser;
+import logic.laser.LaserColor;
 
 public class Origin extends StaticTile {
-	
+
 	private int orientation;
-	
-	public Origin(Vector2D pos) {
+
+	public Origin(Vector2D pos, int orientation, LaserColor color) {
 		super(pos);
-		Laser l;
-		/* switch (orientation)
-		case 0: l = new Laser (1,0, ) El color debe proporcionarlo loader mediante un parametro mas */
-		 
+		this.orientation = orientation;
+		Vector2D dir = new Vector2D((360 - orientation * 90) % 360);
+		Laser l = new Laser(dir, color);
+		super.addLaser(l);
+		/**
+		 * El de la clase esta para que no se puedan crear lazers extra en el
+		 * origin
+		 */
 	}
 
 	/**
