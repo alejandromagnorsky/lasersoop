@@ -12,18 +12,18 @@ public class Wall extends StaticTile {
 
 	@Override
 	public GameMessage action(Tile t) {
-		return null;
+		return new StopLaser();
 	}
-	
+
 	/**
 	 * Walls have no lasers
 	 */
 	@Override
-	public void addLaser(Laser laser){}
-
+	public void addLaser(Laser laser) {
+	}
 
 	public Vector2D nextPosition() {
-		return new Vector2D(0,0);
+		return this.getPos();
 	}
 
 }

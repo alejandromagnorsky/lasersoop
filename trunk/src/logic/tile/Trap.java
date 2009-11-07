@@ -16,7 +16,7 @@ public class Trap extends StaticTile {
 
 	@Override
 	public Vector2D nextPosition() {
-		return new Vector2D(0,0);
+		return this.getPos();
 	}
 
 }

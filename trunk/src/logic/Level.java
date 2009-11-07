@@ -19,8 +19,8 @@ public class Level {
 	public void start() {
 		GameMessage status = null;
 		while (!(status instanceof GameOver))
-			for (int i = 0; i < tileSet.getRows(); i++)
-				for (int j = 0; j < tileSet.getCols(); j++) {
+			for (int i = 0; i < tileSet.getRows() && !(status instanceof GameOver); i++)
+				for (int j = 0; j < tileSet.getCols() && !(status instanceof GameOver); j++) {
 					Tile itr = tileSet.at(new Vector2D(i, j));
 					if (itr instanceof Origin) {
 						while (!(status instanceof StopLaser)
