@@ -10,22 +10,23 @@ import logic.tileset.TileSet;
 
 public class Level {
 	private TileSet tileSet;
-	
-	public Level(String filename) throws IOException{
+
+	public Level(String filename) throws IOException {
 		tileSet.loader(filename);
 		start();
 	}
-	
-	public void start(){
+
+	public void start() {
 		GameMessage status = null;
-		while ( !(status instanceof GameOver) )
-			for( int i = 0; i < tileSet.getRows(); i++)
-				for( int j = 0; j < tileSet.getCols(); j++){
-					Tile itr = tileSet.at(new Vector2D(i,j));
-					if ( itr instanceof Origin ){
-						while ( !(status instanceof StopLaser) && !(status instanceof GameOver) )
+		while (!(status instanceof GameOver))
+			for (int i = 0; i < tileSet.getRows(); i++)
+				for (int j = 0; j < tileSet.getCols(); j++) {
+					Tile itr = tileSet.at(new Vector2D(i, j));
+					if (itr instanceof Origin) {
+						while (!(status instanceof StopLaser)
+								&& !(status instanceof GameOver))
 							itr.action(tileSet.at(itr.nextPosition()));
-					}						
-				}		
+					}
+				}
 	}
 }
