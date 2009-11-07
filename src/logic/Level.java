@@ -18,7 +18,7 @@ public class Level {
 		tileSet = new TileSet();
 		tileSet.loader(filename);
 		
-		//GameFrame game = new GameFrame(tileSet);
+		GameFrame game = new GameFrame(tileSet);
 			
 		//start();
 	}
