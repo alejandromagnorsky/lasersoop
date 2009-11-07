@@ -7,11 +7,8 @@ import logic.laser.LaserColor;
 
 public class Origin extends StaticTile {
 
-	private int orientation;
-
 	public Origin(Vector2D pos, int orientation, LaserColor color) {
 		super(pos);
-		this.orientation = orientation;
 		Vector2D dir = new Vector2D((360 - orientation * 90) % 360);
 		Laser l = new Laser(dir, color);
 		super.addLaser(l);
@@ -31,10 +28,10 @@ public class Origin extends StaticTile {
 	@Override
 	public GameMessage action(Tile t) {
 		if (t.countLasers() > 1)
-			return new StopLaser(); /** Si recibio un laser, aparte del que ya contiene, actua como pared */
+			return new GameMessage("StopLaser"); /** Si recibio un laser, aparte del que ya contiene, actua como pared */
 		else
 			t.addLaser(new Laser(getLastLaser()));
-		return null;
+		return new GameMessage("EmisionOK");
 	}
 
 	@Override

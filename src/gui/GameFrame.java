@@ -6,9 +6,17 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
+import logic.Level;
 import logic.Vector2D;
-import logic.mirror.*;
-import logic.tile.*;
+import logic.mirror.DoubleMirror;
+import logic.mirror.Mirror;
+import logic.mirror.SimpleMirror;
+import logic.tile.Goal;
+import logic.tile.Origin;
+import logic.tile.SimpleTile;
+import logic.tile.Tile;
+import logic.tile.Trap;
+import logic.tile.Wall;
 import logic.tileset.TileSet;
 
 public class GameFrame extends JFrame {
@@ -18,7 +26,7 @@ public class GameFrame extends JFrame {
 	private BoardPanel bp;
 	private Vector<Image> tileImages;
 	private TileSet tileset;
-
+	
 	public void loadTiles() {
 		try {
 
@@ -52,10 +60,9 @@ public class GameFrame extends JFrame {
 				bp.setImage(i, j, this.tileImages.elementAt(0));
 	}
 
-	public GameFrame(TileSet tileset) {
+	public GameFrame(TileSet tileset, Level currentLevel) {
 
 		this.tileset = tileset;
-
 		setLayout(null);
 		setSize(tileset.getCols() * CELL_SIZE + 40, tileset.getRows()
 				* CELL_SIZE + 40);
@@ -67,8 +74,9 @@ public class GameFrame extends JFrame {
 
 		loadTiles();
 		clearScreen();
+		currentLevel.update();
 		updateLevel();
-
+		
 		bp.setListener(new BoardPanelListener() {
 			public void cellClicked(int row, int column) {
 
@@ -86,9 +94,9 @@ public class GameFrame extends JFrame {
 						&& getTileSet().moveTile(
 								new Vector2D(sourceRow, sourceColumn),
 								new Vector2D(targetRow, targetColumn))) {
-
+						
 					updateLevel();
-
+					
 					bp.repaint();
 
 					System.out.println("Celda arrastrada desde " + sourceRow
@@ -151,5 +159,8 @@ public class GameFrame extends JFrame {
 			i = 9;
 		bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImages
 				.elementAt(i));
+		if ( t.countLasers() > 0 )
+			bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImages
+					.elementAt(5));
 	}
 }
