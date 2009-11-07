@@ -39,7 +39,7 @@ public class GameFrame extends JFrame {
 			tileImages.add(ImageUtils.loadImage("resources/double-mirror.png"));
 			tileImages.add(ImageUtils.loadImage("resources/simple-mirror.png"));
 			tileImages.add(ImageUtils.loadImage("resources/split-mirror.png"));
-
+			
 		} catch (Exception e) {
 			System.out.println("Error loading images.");
 		}
@@ -132,11 +132,10 @@ public class GameFrame extends JFrame {
 
 	public void addTile(Tile t) {
 		// Later check which tile to print
-		System.out.println("dngan");
 		int i;
 		if (t instanceof SimpleTile)
-			i = 0;
-		if (t instanceof Origin)
+				i = 0;
+		else if (t instanceof Origin)
 			i = 1;
 		else if (t instanceof Trap)
 			i = 2;
@@ -149,10 +148,8 @@ public class GameFrame extends JFrame {
 		else if (t instanceof SimpleMirror)
 			i = 8;
 		else
-			i = 0;
-		System.out.println("cacsdasd");
+			i = 9;
 		bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImages
 				.elementAt(i));
-		System.out.println("Hola");
 	}
 }
