@@ -8,9 +8,11 @@ import java.io.IOException;
 import logic.Vector2D;
 import logic.laser.LaserColor;
 import logic.mirror.DoubleMirror;
+import logic.mirror.Mirror;
 import logic.mirror.SimpleMirror;
 import logic.tile.Goal;
 import logic.tile.Origin;
+import logic.tile.SimpleTile;
 import logic.tile.Tile;
 import logic.tile.Trap;
 import logic.tile.Wall;
@@ -37,6 +39,24 @@ public class TileSet {
 
 	public Tile at(Vector2D pos) {
 		return tileSet[pos.getX()][pos.getY()];
+	}
+
+	private boolean set(Tile t, Vector2D pos) {
+		// OJO: CAMBIAR NULL POR INSTANCEOF SIMPLE TILE
+		if (tileSet[pos.getX()][pos.getY()] == null) {
+			tileSet[pos.getX()][pos.getY()] = t;
+			return true;
+		} else
+			return false;
+	}
+
+	public boolean moveTile(Vector2D v1, Vector2D v2) {
+		Mirror tmp = (Mirror) at(v1);
+		tmp.translate(v2);
+		if (set(tmp, v2))
+			return true;
+		else
+			return false;
 	}
 
 	public void loader(String filename) throws IOException {
@@ -70,8 +90,8 @@ public class TileSet {
 	}
 
 	/*
-	 * ----------------------------------------------------------- 
-	 * FALTA VER QUE DEVUELVE EN CASO DE ARCHIVO INVALIDO
+	 * ----------------------------------------------------------- FALTA VER QUE
+	 * DEVUELVE EN CASO DE ARCHIVO INVALIDO
 	 * -----------------------------------------------------------
 	 */
 	public void loadGeneral(String line, int n) {
@@ -138,19 +158,23 @@ public class TileSet {
 			switch (data[2]) {
 			case 1:
 				LaserColor lc = new LaserColor(data[4], data[5], data[6]);
-				this.getTileSet()[data[0]][data[1]] = new Origin(pos, data[3], lc);
+				this.getTileSet()[data[0]][data[1]] = new Origin(pos, data[3],
+						lc);
 				break;
 			case 2:
 				this.getTileSet()[data[0]][data[1]] = new Goal(pos);
 				break;
 			case 3:
-				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
+				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos,
+						data[3]);
 				break;
 			case 4:
-				this.getTileSet()[data[0]][data[1]] = new DoubleMirror(pos, data[3]);
+				this.getTileSet()[data[0]][data[1]] = new DoubleMirror(pos,
+						data[3]);
 				break;
 			case 5:
-				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
+				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos,
+						data[3]);
 				break;
 			case 6:
 				this.getTileSet()[data[0]][data[1]] = new Wall(pos);
