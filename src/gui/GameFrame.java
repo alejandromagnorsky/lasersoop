@@ -14,7 +14,7 @@ import logic.tileset.TileSet;
 public class GameFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private static final int CELL_SIZE = 30;
+	private static final int CELL_SIZE = 50;
 	private BoardPanel bp;
 	private Vector<Image> tileImages;
 	private TileSet tileset;
@@ -118,8 +118,7 @@ public class GameFrame extends JFrame {
 		clearScreen();
 		for (int i = 0; i < tileset.getCols(); i++)
 			for (int j = 0; j < tileset.getRows(); j++)
-				if (tileset.at(new Vector2D(i, j)) != null)
-					addTile(tileset.at(new Vector2D(i, j)));
+				addTile(tileset.at(new Vector2D(i, j)));
 	}
 
 	private boolean checkTileAt(Vector2D pos) {
@@ -133,14 +132,16 @@ public class GameFrame extends JFrame {
 		// Later check which tile to print
 
 		int i;
+		if (t instanceof SimpleTile)
+			i = 0;
 		if (t instanceof Origin)
 			i = 1;
-		else if (t instanceof Goal)
-			i = 4;
 		else if (t instanceof Trap)
 			i = 2;
 		else if (t instanceof Wall)
 			i = 3;
+		else if (t instanceof Goal)
+			i = 4;
 		else if (t instanceof DoubleMirror)
 			i = 7;
 		else if (t instanceof SimpleMirror)
