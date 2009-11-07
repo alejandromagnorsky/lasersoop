@@ -22,10 +22,10 @@ public class GameFrame extends JFrame {
 
 	public void loadTiles() {
 		try {
-			
+
 			// Load empty tile
-			tileImages.add(ImageUtils.loadImage("resources/empty.png"));
-			
+			tileImages.add(ImageUtils.loadImage("resources/empty-tile.png"));
+
 			// Load misc. images
 			tileImages.add(ImageUtils.loadImage("resources/source.png"));
 			tileImages.add(ImageUtils.loadImage("resources/trap.png"));
@@ -45,12 +45,12 @@ public class GameFrame extends JFrame {
 			System.out.println("Error loading images.");
 		}
 	}
-	
-	public void clearScreen(){
-		
-		for(int i=0;i<10;i++)
-			for(int j=0;j<10;j++)
-				bp.setImage(i,j, this.tileImages.elementAt(0));
+
+	public void clearScreen() {
+
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < 10; j++)
+				bp.setImage(i, j, this.tileImages.elementAt(0));
 	}
 
 	public GameFrame() {
@@ -61,29 +61,31 @@ public class GameFrame extends JFrame {
 		tileImages = new Vector<Image>();
 
 		this.loadTiles();
-		
+
 		bp = new BoardPanel(10, 10, CELL_SIZE);
 		bp.setBackground(Color.WHITE);
 		bp.setGridColor(Color.GRAY);
-		
-		//this.clearScreen();
-		
+
+		this.clearScreen();
+
 		bp.setListener(new BoardPanelListener() {
 			public void cellClicked(int row, int column) {
 				System.out.println("Clic en " + row + ", " + column);
 				bp.setImage(row, column, tileImages.elementAt(0));
+				bp.appendImage(row, column, tileImages.elementAt(4));
 				bp.repaint();
 			}
 
 			public void cellDragged(int sourceRow, int sourceColumn,
 					int targetRow, int targetColumn) {
-				
+
 				System.out.println("Celda arrastrada desde " + sourceRow + ", "
 						+ sourceColumn + " hasta " + targetRow + ", "
 						+ targetColumn);
-				
-				bp.setImage(sourceRow, sourceColumn, tileImages.elementAt(3));
-				bp.setImage(targetRow, targetColumn, tileImages.elementAt(4));
+
+				bp.setImage(sourceRow, sourceColumn, tileImages.elementAt(0));
+				bp.setImage(targetRow, targetColumn, tileImages.elementAt(0));
+				bp.appendImage(targetRow, targetColumn, tileImages.elementAt(4));
 				bp.repaint();
 			}
 
