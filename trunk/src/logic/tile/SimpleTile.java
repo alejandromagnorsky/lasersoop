@@ -13,7 +13,7 @@ public class SimpleTile extends StaticTile {
 	@Override
 	public GameMessage action(Tile t) {
 		t.addLaser(new Laser(getLastLaser()));
-		return null;
+		return new GameMessage("SimpleTileOK");
 	}
 
 	@Override

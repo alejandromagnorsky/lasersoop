@@ -11,8 +11,8 @@ public class Vector2D {
 	}
 	
 	public Vector2D(int angle){
-		Vector2D v = new Vector2D(0,0);
-		v.setDirection(angle);
+		this(0,0);
+		this.setDirection(angle);
 	}
 
 	public int getX() {

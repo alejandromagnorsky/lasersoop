@@ -12,7 +12,7 @@ public class Wall extends StaticTile {
 
 	@Override
 	public GameMessage action(Tile t) {
-		return new StopLaser();
+		return new GameMessage("StopLaser");
 	}
 
 	/**

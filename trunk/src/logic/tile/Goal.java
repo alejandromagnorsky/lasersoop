@@ -14,7 +14,7 @@ public class Goal extends StaticTile {
 	public GameMessage action(Tile t) {
 		if (this.hasLasers()) {
 			t.addLaser(new Laser(getLastLaser()));
-			return new GoalAchieved();
+			return new GameMessage("GoalAcchieved");
 		}
 
 		return null;
