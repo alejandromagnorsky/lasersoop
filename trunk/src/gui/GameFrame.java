@@ -17,12 +17,15 @@ public class GameFrame extends JFrame {
 	private static final int CELL_SIZE = 30;
 
 	private BoardPanel bp;
-	private Image img1, img2;
 
 	private Vector<Image> tileImages;
 
 	public void loadTiles() {
 		try {
+			
+			// Load empty tile
+			tileImages.add(ImageUtils.loadImage("resources/empty.png"));
+			
 			// Load misc. images
 			tileImages.add(ImageUtils.loadImage("resources/source.png"));
 			tileImages.add(ImageUtils.loadImage("resources/trap.png"));
@@ -42,14 +45,14 @@ public class GameFrame extends JFrame {
 			System.out.println("Error loading images.");
 		}
 	}
-	/*
+	
 	public void clearScreen(){
 		
-		for(int i=0;i<bp.get)
-		
-		bp.setImage(sourceRow, sourceColumn, tileImages.elementAt(3));
+		for(int i=0;i<10;i++)
+			for(int j=0;j<10;j++)
+				bp.setImage(i,j, this.tileImages.elementAt(0));
 	}
-*/
+
 	public GameFrame() {
 
 		setLayout(null);
@@ -58,11 +61,13 @@ public class GameFrame extends JFrame {
 		tileImages = new Vector<Image>();
 
 		this.loadTiles();
-
+		
 		bp = new BoardPanel(10, 10, CELL_SIZE);
 		bp.setBackground(Color.WHITE);
 		bp.setGridColor(Color.GRAY);
-
+		
+		//this.clearScreen();
+		
 		bp.setListener(new BoardPanelListener() {
 			public void cellClicked(int row, int column) {
 				System.out.println("Clic en " + row + ", " + column);
@@ -85,6 +90,7 @@ public class GameFrame extends JFrame {
 		});
 
 		add(bp);
+		this.setResizable(true);
 
 	}
 }

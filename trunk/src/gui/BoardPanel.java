@@ -38,7 +38,7 @@ public class BoardPanel extends JPanel {
 		this.columns = columns;
 		this.cellSize = cellSize;
 		this.cells = new Image[rows][columns];
-
+		
 		setSize(columns * cellSize + 1, rows * cellSize + 1);
 		
 		addMouseListener(new MouseAdapter() {
