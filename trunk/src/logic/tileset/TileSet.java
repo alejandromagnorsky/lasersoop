@@ -8,6 +8,7 @@ import java.io.IOException;
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.laser.LaserColor;
+import logic.mirror.DoubleMirror;
 import logic.mirror.SimpleMirror;
 import logic.tile.Goal;
 import logic.tile.Origin;
@@ -137,27 +138,27 @@ public class TileSet {
 			Vector2D pos = new Vector2D(data[0], data[1]);
 			switch (data[2]) {
 			case 1:
-				/*
-				 * DEJÉ LA ROTACIÓN INICIALIZADA EN (0,0) PORQUE QUIERO AGREGAR
-				 * UN MÉTODO EN LA CLASE VECTOR2D QUE RECIBA UN ENTERO ENTRE 0 Y
-				 * 3 Y DEVUELVA EL VECTOR DIRECCIÓN, ASÍ NO PONGO OTRO SARPADO
-				 * IF ACÁ.
-				 */
-				// Vector2D dir = new Vector2D();
-				Laser l = new Laser(new Vector2D(0, 0), new LaserColor(data[4], data[5], data[6]));
-				this.getTileSet()[data[0]][data[1]] = new Origin(pos, l);
+				LaserColor lc = new LaserColor(data[4], data[5], data[6]);
+				this.getTileSet()[data[0]][data[1]] = new Origin(pos, data[3], lc);
+				break;
 			case 2:
 				this.getTileSet()[data[0]][data[1]] = new Goal(pos);
+				break;
 			case 3:
 				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
+				break;
 			case 4:
-				/* ESPEJO DOBLE QUEDA POR HACER */
+				this.getTileSet()[data[0]][data[1]] = new DoubleMirror(pos, data[3]);
+				break;
 			case 5:
-				/* ESPEJO DOBLE QUEDA POR HACER */
+				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
+				break;
 			case 6:
 				this.getTileSet()[data[0]][data[1]] = new Wall(pos);
+				break;
 			case 7:
 				this.getTileSet()[data[0]][data[1]] = new Trap(pos);
+				break;
 			}
 		}
 
