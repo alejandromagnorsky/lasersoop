@@ -9,6 +9,11 @@ public class Vector2D {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Vector2D(int angle){
+		Vector2D v = new Vector2D(0,0);
+		v.setDirection(angle);
+	}
 
 	public int getX() {
 		return x;
@@ -33,6 +38,12 @@ public class Vector2D {
 		int auxY = (int)(Math.sin(radians) * x + Math.cos(radians) * y);
 		x = auxX;
 		y = auxY;
+	}
+	
+	public void setDirection(int angle){
+		double radians = angle*Math.PI/180;
+		x = (int)Math.cos(radians);
+		y = (int)Math.sin(radians);
 	}
 
 	public String toString() {
