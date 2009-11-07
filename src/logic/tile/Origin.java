@@ -16,8 +16,8 @@ public class Origin extends StaticTile {
 		Laser l = new Laser(dir, color);
 		super.addLaser(l);
 		/**
-		 * El de la clase esta para que no se puedan crear lazers extra en el
-		 * origin
+		 * El addLaser de la clase esta para que no se puedan crear lasers extra
+		 * en el origin
 		 */
 	}
 
@@ -30,13 +30,16 @@ public class Origin extends StaticTile {
 
 	@Override
 	public GameMessage action(Tile t) {
-		t.addLaser(new Laser(getLastLaser()));
+		if (t.countLasers() > 1)
+			return new StopLaser(); /** Si recibio un laser, aparte del que ya contiene, actua como pared */
+		else
+			t.addLaser(new Laser(getLastLaser()));
 		return null;
 	}
 
 	@Override
 	public Vector2D nextPosition() {
-		return this.getPos().add(this.getLastLaser().getDir());
+		return this.getPos().add(getLastLaser().getDir());
 	}
 
 }
