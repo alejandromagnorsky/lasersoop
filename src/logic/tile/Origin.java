@@ -5,10 +5,15 @@ import logic.Vector2D;
 import logic.laser.Laser;
 
 public class Origin extends StaticTile {
-
-	public Origin(Vector2D pos, Laser laser) {
+	
+	private int orientation;
+	
+	public Origin(Vector2D pos) {
 		super(pos);
-		this.addLaser(laser);
+		Laser l;
+		/* switch (orientation)
+		case 0: l = new Laser (1,0, ) El color debe proporcionarlo loader mediante un parametro mas */
+		 
 	}
 
 	/**

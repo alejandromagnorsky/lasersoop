@@ -14,7 +14,12 @@ public abstract class Mirror extends MovableTile {
 	public Mirror(Vector2D pos, int orientation) {
 		super(pos);
 		this.orientation = orientation;
-		this.degree = 45 + orientation * 90;
+		switch (orientation){
+			case 0: degree = 135; break;
+			case 1: degree = 45; break;
+			case 2: degree = 315; break;
+			case 3: degree = 225; break;
+		}
 	}
 
 	public void translate(Vector2D dest) {
@@ -22,7 +27,7 @@ public abstract class Mirror extends MovableTile {
 	}
 
 	/**
-	 * Rota en sentido antihorario
+	 * Rota en sentido horario
 	 */
 	public abstract void rotate();
 }

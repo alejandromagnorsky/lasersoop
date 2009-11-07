@@ -14,7 +14,7 @@ public class SimpleMirror extends Mirror {
 	@Override
 	public void rotate() {
 		orientation = (orientation + 1) % 4;
-		degree = (degree + 90) % 360;
+		degree = (degree - 90) % 360;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class SimpleMirror extends Mirror {
 		if (angle <= degree && angle >= degree - 180
 				|| (angle == 270 && degree == 45)) {
 			next = l.getDir();
-			if (angle + 45 == degree) {
+			if ( angle + 45 == degree) {
 				next.changeDirection(90);
 			} else {
 				next.changeDirection(-90);
