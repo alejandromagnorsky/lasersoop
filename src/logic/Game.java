@@ -1,6 +1,7 @@
 package logic;
 
 import gui.GameFrame;
+import gui.GameMenu;
 
 public class Game {
 
