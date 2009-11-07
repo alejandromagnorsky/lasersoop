@@ -61,14 +61,12 @@ public class TileSet {
 			return false;
 	}
 
-	public boolean initializer() {
+	public void initializer() {
 		for (int i = 0; i < this.getRows(); i++) {
 			for (int j = 0; j < this.getCols(); j++) {
 				tileSet[i][j] = new SimpleTile(new Vector2D(i,j));
-				}
 			}
-
-		return true;
+		}
 	}
 
 	public void loader(String filename) throws IOException {
