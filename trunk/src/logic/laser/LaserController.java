@@ -21,6 +21,10 @@ public abstract class LaserController {
 	public boolean hasLasers() {
 		return !lasers.isEmpty();
 	}
+	
+	public int countLasers(){
+		return lasers.size();
+	}
 
 	public void addLaser(Laser laser) {
 		lasers.add(laser);
