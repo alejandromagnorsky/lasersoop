@@ -41,9 +41,10 @@ public class TileSet {
 		return tileSet[pos.getX()][pos.getY()];
 	}
 
-	private boolean set(Tile t, Vector2D pos) {
+	private boolean set(Tile t) {
 		// OJO: CAMBIAR NULL POR INSTANCEOF SIMPLE TILE
-		if (tileSet[pos.getX()][pos.getY()] == null) {
+		Vector2D pos = t.getPos();
+		if (this.at(pos) instanceof SimpleTile) {
 			tileSet[pos.getX()][pos.getY()] = t;
 			return true;
 		} else
@@ -53,10 +54,21 @@ public class TileSet {
 	public boolean moveTile(Vector2D v1, Vector2D v2) {
 		Mirror tmp = (Mirror) at(v1);
 		tmp.translate(v2);
-		if (set(tmp, v2))
+		if (set(tmp))
 			return true;
 		else
 			return false;
+	}
+	
+	public boolean initializer(){
+		for (int i = 0; i<this.getRows(); i++){
+			for (int j = 0; j<this.getCols(); j++){
+				if (!this.set(new SimpleTile(new Vector2D(i,j)))){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public void loader(String filename) throws IOException {
@@ -90,8 +102,8 @@ public class TileSet {
 	}
 
 	/*
-	 * ----------------------------------------------------------- FALTA VER QUE
-	 * DEVUELVE EN CASO DE ARCHIVO INVALIDO
+	 * -----------------------------------------------------------
+	 * FALTA VER QUE DEVUELVE EN CASO DE ARCHIVO INVALIDO
 	 * -----------------------------------------------------------
 	 */
 	public void loadGeneral(String line, int n) {
@@ -134,6 +146,7 @@ public class TileSet {
 				return;
 			}
 			tileSet = new Tile[data[0]][data[1]];
+			this.initializer();
 		} else {
 			if (data[0] > this.getRows() || data[1] > this.getCols()
 					|| data[2] > 7 || data[2] < 1) {
@@ -194,12 +207,10 @@ public class TileSet {
 	}
 
 	public void loadDimensions(String line) {
-		/* El 2 es por que necesito leer 2 números */
 		loadGeneral(line, 2);
 	}
 
 	public void loadTile(String line) {
-		/* El 7 es por que necesito leer 7 números */
 		loadGeneral(line, 7);
 	}
 
