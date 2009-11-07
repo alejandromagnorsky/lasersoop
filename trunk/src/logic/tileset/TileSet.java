@@ -43,21 +43,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.laser.LaserColor;
-import logic.laser.LaserController;
 import logic.mirror.SimpleMirror;
 import logic.tile.Goal;
 import logic.tile.Origin;
+import logic.tile.Tile;
 import logic.tile.Trap;
 import logic.tile.Wall;
 
 public class TileSet{
 	private String levelName;
-	private LaserController[][] tileSet;
+	private Tile[][] tileSet;
 	
-	public LaserController[][] getTileSet(){
+	public Tile[][] getTileSet(){
 		return tileSet;
 	}
 	
@@ -72,6 +73,10 @@ public class TileSet{
 	public String getLevelName(){
 		return levelName;
 	}
+	
+	public Tile at(Vector2D pos){
+		return tileSet[pos.getX()][pos.getY()];
+	}	
 	
 	public void loader(String filename) throws IOException{
 		BufferedReader input = null;	
@@ -142,7 +147,7 @@ public class TileSet{
 				System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
 				return;
 			}
-			tileSet = new LaserController[data[0]][data[1]];
+			tileSet = new Tile[data[0]][data[1]];
 		}else{
 			if (data[0] > this.getRows() || data[1] > this.getCols() || data[2] > 7 || data[2] < 1){
 				/* Valido los parámetros en general */
@@ -199,6 +204,7 @@ public class TileSet{
 		/* El 2 es por que necesito leer 2 números */
 		loadGeneral(line, 2);
 	}
+	
 	
 	public void loadTile(String line){
 		/* El 7 es por que necesito leer 7 números */
