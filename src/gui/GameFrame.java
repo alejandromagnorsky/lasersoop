@@ -14,7 +14,7 @@ import logic.tileset.TileSet;
 public class GameFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private static final int CELL_SIZE = 30;
+	private static final int CELL_SIZE = 50;
 	private BoardPanel bp;
 	private Vector<Image> tileImages;
 	private TileSet tileset;
@@ -118,9 +118,7 @@ public class GameFrame extends JFrame {
 		clearScreen();
 		for (int i = 0; i < tileset.getCols(); i++)
 			for (int j = 0; j < tileset.getRows(); j++){
-				System.out.println("asdas");
 				addTile(tileset.at(new Vector2D(i, j)));
-				System.out.println("Chau");
 			}
 				
 	}
@@ -151,7 +149,7 @@ public class GameFrame extends JFrame {
 		else if (t instanceof SimpleMirror)
 			i = 8;
 		else
-			i = 9;
+			i = 0;
 		System.out.println("cacsdasd");
 		bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImages
 				.elementAt(i));

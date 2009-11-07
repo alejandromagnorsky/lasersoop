@@ -42,7 +42,6 @@ public class TileSet {
 	}
 
 	private boolean set(Tile t) {
-		// OJO: CAMBIAR NULL POR INSTANCEOF SIMPLE TILE
 		Vector2D pos = t.getPos();
 		if (this.at(pos) instanceof SimpleTile) {
 			tileSet[pos.getX()][pos.getY()] = t;
@@ -54,20 +53,21 @@ public class TileSet {
 	public boolean moveTile(Vector2D v1, Vector2D v2) {
 		Mirror tmp = (Mirror) at(v1);
 		tmp.translate(v2);
-		if (set(tmp))
+		if (set(tmp)){
+			tileSet[v1.getX()][v1.getY()] = new SimpleTile(v1);
 			return true;
+		}
 		else
 			return false;
 	}
-	
-	public boolean initializer(){
-		for (int i = 0; i<this.getRows(); i++){
-			for (int j = 0; j<this.getCols(); j++){
-				if (!this.set(new SimpleTile(new Vector2D(i,j)))){
-					return false;
+
+	public boolean initializer() {
+		for (int i = 0; i < this.getRows(); i++) {
+			for (int j = 0; j < this.getCols(); j++) {
+				tileSet[i][j] = new SimpleTile(new Vector2D(i,j));
 				}
 			}
-		}
+
 		return true;
 	}
 
@@ -102,8 +102,8 @@ public class TileSet {
 	}
 
 	/*
-	 * -----------------------------------------------------------
-	 * FALTA VER QUE DEVUELVE EN CASO DE ARCHIVO INVALIDO
+	 * ----------------------------------------------------------- FALTA VER QUE
+	 * DEVUELVE EN CASO DE ARCHIVO INVALIDO
 	 * -----------------------------------------------------------
 	 */
 	public void loadGeneral(String line, int n) {
