@@ -1,5 +1,7 @@
 package logic;
 
+import gui.GameFrame;
+
 import java.io.IOException;
 
 import logic.tile.GameOver;
@@ -12,10 +14,23 @@ public class Level {
 	private TileSet tileSet;
 
 	public Level(String filename) throws IOException {
+		
+		tileSet = new TileSet();
 		tileSet.loader(filename);
-		start();
+		
+		//GameFrame game = new GameFrame(tileSet);
+			
+		//start();
 	}
 
+	public static void main(String args[]){
+		try {
+			Level level= new Level("levelTest.txt");
+		} catch( Exception e){
+			System.out.println(e);
+		}
+	}
+	
 	public void start() {
 		GameMessage status = null;
 		while (!(status instanceof GameOver))

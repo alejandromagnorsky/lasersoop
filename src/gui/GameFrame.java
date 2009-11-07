@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import logic.Vector2D;
 import logic.mirror.*;
 import logic.tile.*;
+import logic.tileset.TileSet;
 
 public class GameFrame extends JFrame {
 
@@ -16,6 +17,7 @@ public class GameFrame extends JFrame {
 	private static final int CELL_SIZE = 30;
 	private BoardPanel bp;
 	private Vector<Image> tileImages;
+	private TileSet tileset;
 
 	public void loadTiles() {
 		try {
@@ -45,25 +47,26 @@ public class GameFrame extends JFrame {
 
 	public void clearScreen() {
 
-		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++)
+		for (int i = 0; i < tileset.getCols(); i++)
+			for (int j = 0; j < tileset.getRows(); j++)
 				bp.setImage(i, j, this.tileImages.elementAt(0));
 	}
 
-	public GameFrame() {
+	public GameFrame(TileSet tileset) {
+		
+		this.tileset = tileset;
 
 		setLayout(null);
-		setSize(10 * CELL_SIZE + 40, 10 * CELL_SIZE + 40);
+		setSize(tileset.getCols() * CELL_SIZE + 40, tileset.getRows()
+				* CELL_SIZE + 40);
 
 		tileImages = new Vector<Image>();
-
-		loadTiles();
-
-		bp = new BoardPanel(10, 10, CELL_SIZE);
+		bp = new BoardPanel(tileset.getCols(), tileset.getRows(), CELL_SIZE);
 		bp.setBackground(Color.WHITE);
 		bp.setGridColor(Color.GRAY);
-
-		this.clearScreen();
+		
+		loadTiles();
+		clearScreen();
 
 		bp.setListener(new BoardPanelListener() {
 			public void cellClicked(int row, int column) {
@@ -110,8 +113,10 @@ public class GameFrame extends JFrame {
 	}
 
 	private boolean checkTileAt(Vector2D pos) {
-		return false;
-		// Check it moving this tile is posible.
+		if (tileset.at(pos) instanceof Mirror)
+			return true;
+		else
+			return false;
 	}
 
 	public void addTile(Tile t) {
