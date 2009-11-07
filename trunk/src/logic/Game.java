@@ -7,8 +7,12 @@ public class Game {
 
 	public static void main(String args[]) {
 
-		//GameFrame menu = new GameFrame();
-		//menu.setVisible(true);
+		try{
+			
+		Level level = new Level("levelTest.txt");
+		} catch( Exception e){
+			System.out.println(e);
+		}
 
 	}
 }

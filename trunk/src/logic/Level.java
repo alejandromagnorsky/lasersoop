@@ -19,18 +19,11 @@ public class Level {
 		tileSet.loader(filename);
 		
 		GameFrame game = new GameFrame(tileSet);
+		game.setVisible(true);
 			
 		//start();
 	}
 
-	public static void main(String args[]){
-		try {
-			Level level= new Level("levelTest.txt");
-		} catch( Exception e){
-			System.out.println(e);
-		}
-	}
-	
 	public void start() {
 		GameMessage status = null;
 		while (!(status instanceof GameOver))

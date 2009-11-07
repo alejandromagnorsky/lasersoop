@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import logic.Vector2D;
-import logic.laser.Laser;
 import logic.laser.LaserColor;
 import logic.mirror.DoubleMirror;
 import logic.mirror.SimpleMirror;

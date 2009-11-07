@@ -53,7 +53,7 @@ public class GameFrame extends JFrame {
 	}
 
 	public GameFrame(TileSet tileset) {
-		
+
 		this.tileset = tileset;
 
 		setLayout(null);
@@ -64,18 +64,19 @@ public class GameFrame extends JFrame {
 		bp = new BoardPanel(tileset.getCols(), tileset.getRows(), CELL_SIZE);
 		bp.setBackground(Color.WHITE);
 		bp.setGridColor(Color.GRAY);
-		
+
 		loadTiles();
 		clearScreen();
+		updateLevel();
 
 		bp.setListener(new BoardPanelListener() {
 			public void cellClicked(int row, int column) {
 
 				// Crear un alt text para mostrar que tile es
 				// if( checkTileAt(new Vector2D(row, column)) )
-				bp.setImage(row, column, tileImages.elementAt(0));
-				bp.appendImage(row, column, tileImages.elementAt(4));
-				bp.repaint();
+			//	bp.setImage(row, column, tileImages.elementAt(0));
+			//	bp.appendImage(row, column, tileImages.elementAt(4));
+//				bp.repaint();
 			}
 
 			public void cellDragged(int sourceRow, int sourceColumn,
@@ -87,11 +88,12 @@ public class GameFrame extends JFrame {
 
 					bp.setImage(sourceRow, sourceColumn, tileImages
 							.elementAt(0));
+					
 					bp.setImage(targetRow, targetColumn, tileImages
 							.elementAt(0));
-					bp.appendImage(targetRow, targetColumn, tileImages
-							.elementAt(4));
-
+				
+					//addTile( getTileset().at( new Vector2D(targetRow, targetColumn)) );
+				
 					bp.repaint();
 
 					System.out.println("Celda arrastrada desde " + sourceRow
@@ -110,6 +112,17 @@ public class GameFrame extends JFrame {
 		add(bp);
 		this.setResizable(true);
 
+	}
+	
+	private TileSet getTileSet(){
+		return tileset;
+	}
+
+	private void updateLevel() {
+		for (int i = 0; i < tileset.getCols(); i++)
+			for (int j = 0; j < tileset.getRows(); j++)
+				if(tileset.at(new Vector2D(i, j)) != null)
+				addTile(tileset.at(new Vector2D(i, j)));
 	}
 
 	private boolean checkTileAt(Vector2D pos) {
@@ -138,7 +151,7 @@ public class GameFrame extends JFrame {
 		else
 			i = 9;
 
-		bp.setImage(t.getPos().getX(), t.getPos().getY(), tileImages
+		bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImages
 				.elementAt(i));
 	}
 }
