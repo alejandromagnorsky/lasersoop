@@ -74,26 +74,21 @@ public class GameFrame extends JFrame {
 
 				// Crear un alt text para mostrar que tile es
 				// if( checkTileAt(new Vector2D(row, column)) )
-			//	bp.setImage(row, column, tileImages.elementAt(0));
-			//	bp.appendImage(row, column, tileImages.elementAt(4));
-//				bp.repaint();
+				// bp.setImage(row, column, tileImages.elementAt(0));
+				// bp.appendImage(row, column, tileImages.elementAt(4));
+				// bp.repaint();
 			}
 
 			public void cellDragged(int sourceRow, int sourceColumn,
 					int targetRow, int targetColumn) {
 
-				if (checkTileAt(new Vector2D(sourceRow, sourceColumn))) {
+				if (checkTileAt(new Vector2D(sourceRow, sourceColumn))
+						&& getTileSet().moveTile(
+								new Vector2D(sourceRow, sourceColumn),
+								new Vector2D(targetRow, targetColumn))) {
 
-					// avisarle al tileset que cambio de posicion!
+					updateLevel();
 
-					bp.setImage(sourceRow, sourceColumn, tileImages
-							.elementAt(0));
-					
-					bp.setImage(targetRow, targetColumn, tileImages
-							.elementAt(0));
-				
-					//addTile( getTileset().at( new Vector2D(targetRow, targetColumn)) );
-				
 					bp.repaint();
 
 					System.out.println("Celda arrastrada desde " + sourceRow
@@ -101,7 +96,8 @@ public class GameFrame extends JFrame {
 							+ ", " + targetColumn);
 
 				} else {
-					System.out.println("Celda no movible");
+					System.out
+							.println("Accion incorrecta: imposible mover la celda.");
 
 				}
 
@@ -113,16 +109,17 @@ public class GameFrame extends JFrame {
 		this.setResizable(true);
 
 	}
-	
-	private TileSet getTileSet(){
+
+	private TileSet getTileSet() {
 		return tileset;
 	}
 
 	private void updateLevel() {
+		clearScreen();
 		for (int i = 0; i < tileset.getCols(); i++)
 			for (int j = 0; j < tileset.getRows(); j++)
-				if(tileset.at(new Vector2D(i, j)) != null)
-				addTile(tileset.at(new Vector2D(i, j)));
+				if (tileset.at(new Vector2D(i, j)) != null)
+					addTile(tileset.at(new Vector2D(i, j)));
 	}
 
 	private boolean checkTileAt(Vector2D pos) {
