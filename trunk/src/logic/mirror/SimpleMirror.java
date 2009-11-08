@@ -20,11 +20,11 @@ public class SimpleMirror extends Mirror {
 	@Override
 	public GameMessage action(Tile t) {
 		if (t.getPos().equals(this.getPos())) {
-			return null;
+			return new GameMessage("StopLaser");
 		}
 		Vector2D nextDir = nextPosition();
 		t.addLaser(new Laser(nextDir, getLastLaser().getColor()));
-		return null;
+		return new GameMessage("SimpleMirrorOK");
 	}
 
 	/**

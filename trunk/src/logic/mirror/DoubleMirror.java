@@ -20,7 +20,7 @@ public class DoubleMirror extends Mirror {
 	public GameMessage action(Tile t) {
 		Vector2D nextDir = nextPosition();
 		t.addLaser(new Laser(nextDir, getLastLaser().getColor()));
-		return null;
+		return new GameMessage("DoubleMirrorOK");
 	}
 
 	@Override
