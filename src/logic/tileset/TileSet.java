@@ -57,8 +57,10 @@ public class TileSet {
 			tileSet[v1.getX()][v1.getY()] = new SimpleTile(v1);
 			return true;
 		}
-		else
-			return false;
+		else{
+			tmp.translate(v1);
+			return false;	
+		}
 	}
 
 	public void initializer() {
