@@ -17,9 +17,16 @@ public class Level {
 		GameFrame game = new GameFrame(tileSet, this);
 		game.setVisible(true);
 	}
+	
+	public void cleanLevel(){
+		for (int i = 0; i < tileSet.getRows();i++)
+			for(int j=0;j<tileSet.getCols();j++)
+					tileSet.at(new Vector2D(j,i)).eraseLasers();				
+	}
 
 	public void update() {
 		GameMessage status = new GameMessage("");
+		cleanLevel();
 		for (int i = 0; i < tileSet.getRows()
 				&& !(status.getName().equals("GameOver")); i++)
 			for (int j = 0; j < tileSet.getCols()
