@@ -32,24 +32,26 @@ public class Level {
 			for (int j = 0; j < tileSet.getCols()
 					&& !(status.getName().equals("GameOver")); j++) {
 				Tile itr = tileSet.at(new Vector2D(i, j));
-				if (itr instanceof Origin)
-					while (!(status.getName().equals("StopLaser"))
-							&& !(status.getName().equals("GameOver"))) {
-						Tile next = tileSet.at(itr.nextPosition());
+
+				if (itr instanceof Origin){
+					Vector2D aux = itr.nextPosition();  // YA QUE PARA ALGUNOS TILE
+														// IMPORTA LA CANTIDAD DE
+													    // VECES QUE SE LLAMA A
+														// NEXTPOSITION
+					while (!(status.getName().equals("StopLaser")) && !(status.getName().equals("GameOver"))) {
+						if (!tileSet.contains(aux))
+							break;
+						Tile next = tileSet.at(aux);
 						status = itr.action(next);
 						System.out.println("Status:" + status);
 						System.out.println("Next:" + next.getPos());
 						itr = next;
-						// MODIFICAR CON UN METODO QUE SE FIJE SI ESTA DENTRO
-						if (itr.nextPosition().getX() >= tileSet.getRows()
-								|| itr.nextPosition().getX() < 0
-								|| itr.nextPosition().getY() >= tileSet.getCols()
-								|| itr.nextPosition().getY() < 0)
-							break;
+						aux = itr.nextPosition();
 					}
-				if (status.getName().equals("StopLaser"))
+					if (status.getName().equals("StopLaser"))
 					status = new GameMessage("");
-				System.out.println(new Vector2D(i, j));
+				}
+				System.out.println(new Vector2D(i, j));		
 			}
 	}
 }
