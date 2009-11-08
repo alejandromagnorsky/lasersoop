@@ -68,6 +68,14 @@ public class TileSet {
 			}
 		}
 	}
+	
+	public boolean contains(Vector2D pos){
+		  if ( ( pos.getX() < getRows() && pos.getX() >= 0 )
+		    && ( pos.getY() < getCols() && pos.getY() >= 0) )
+			  return true;
+		  else
+			  return false;
+	}
 
 	public void loader(String filename) throws IOException {
 		BufferedReader input = null;
