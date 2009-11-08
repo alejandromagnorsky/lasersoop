@@ -35,8 +35,7 @@ public abstract class LaserController {
 	}
 
 	public void eraseLasers() {
-		do {
+		while(hasLasers())
 			lasers.pop();
-		} while (hasLasers());
 	}
 }

@@ -25,10 +25,14 @@ public class Origin extends StaticTile {
 	public void addLaser(Laser laser) {
 	}
 
+	public void eraseLasers() {
+	}
+
 	@Override
 	public GameMessage action(Tile t) {
 		if (t.countLasers() > 1)
-			return new GameMessage("StopLaser"); /** Si recibio un laser, aparte del que ya contiene, actua como pared */
+			return new GameMessage("StopLaser");
+		/** Si recibio un laser, aparte del que ya contiene, actua como pared */
 		else
 			t.addLaser(new Laser(getLastLaser()));
 		return new GameMessage("EmisionOK");
