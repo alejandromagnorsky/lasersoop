@@ -10,6 +10,7 @@ public abstract class Mirror extends MovableTile {
 	protected int orientation;
 	/** Indica el angulo de inclinacion */
 	protected int degree;
+	protected Vector2D newLaserDir = null;
 
 	public Mirror(Vector2D pos, int orientation) {
 		super(pos);

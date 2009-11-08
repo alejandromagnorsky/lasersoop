@@ -20,10 +20,10 @@ public class SimpleMirror extends Mirror {
 	@Override
 	public GameMessage action(Tile t) {
 		if (t.getPos().equals(this.getPos())) {
+			System.out.println("Paso por un mirror");
 			return new GameMessage("StopLaser");
 		}
-		Vector2D nextDir = nextPosition();
-		t.addLaser(new Laser(nextDir, getLastLaser().getColor()));
+		t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));
 		return new GameMessage("SimpleMirrorOK");
 	}
 
@@ -42,12 +42,13 @@ public class SimpleMirror extends Mirror {
 		 */
 		if (angle <= degree && angle >= degree - 180
 				|| (angle == 270 && degree == 45)) {
-			next = l.getDir();
+			newLaserDir = l.getDir();
 			if (angle + 45 == degree) {
-				next.changeDirection(90);
+				newLaserDir.changeDirection(90);
 			} else {
-				next.changeDirection(-90);
+				newLaserDir.changeDirection(-90);
 			}
+			next = getPos().add(newLaserDir);
 		} else {
 			/**
 			 * El mensaje action verifica la posicion del tile que recibe. Si es
