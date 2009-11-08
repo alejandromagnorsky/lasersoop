@@ -33,12 +33,16 @@ public class Level {
 						System.out.println("Status:" + status);
 						System.out.println("Next:" + next.getPos());
 						itr = next;
-						if ( itr.nextPosition().getX() > tileSet.getRows() || itr.nextPosition().getX() < 0 
-							|| itr.nextPosition().getY() > tileSet.getCols() || itr.nextPosition().getY() < 0) //MODIFICAR CON UN METODO QUE SE FIJE SI ESTA DENTRO
+						// MODIFICAR CON UN METODO QUE SE FIJE SI ESTA DENTRO
+						if (itr.nextPosition().getX() >= tileSet.getRows()
+								|| itr.nextPosition().getX() < 0
+								|| itr.nextPosition().getY() >= tileSet.getCols()
+								|| itr.nextPosition().getY() < 0)
 							break;
 					}
 				if (status.getName().equals("StopLaser"))
 					status = new GameMessage("");
+				System.out.println(new Vector2D(i, j));
 			}
 	}
 }

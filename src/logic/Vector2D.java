@@ -22,10 +22,20 @@ public class Vector2D {
 	public int getY() {
 		return y;
 	}
-
+	
+	// La suma esta definida de este modo puesto que estamos sumando
+	//un vector direccion con una posicion de la matriz
 	public Vector2D add(Vector2D v) {
-		int ansX = this.getX() + v.getX();
-		int ansY = this.getY() + v.getY();
+		int ansX = 0;
+		int ansY = 0;
+		if ( Math.abs(v.getX()) == 1 ){
+			ansX = this.getX() + v.getY(); 
+			ansY = this.getY() + v.getX();
+		}
+		if ( Math.abs(v.getY()) == 1){
+			ansX = this.getX() - v.getY(); 
+			ansY = this.getY() - v.getX();
+		}
 		return new Vector2D(ansX, ansY);
 	}
 

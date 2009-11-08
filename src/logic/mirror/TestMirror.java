@@ -13,7 +13,7 @@ public class TestMirror {
 		Laser l3 = new Laser(new Vector2D(0, -1), new LaserColor(100, 200, 100));
 		Laser l4 = new Laser(new Vector2D(0, 1), new LaserColor(100, 200, 100));
 		
-	/*	System.out.println(m.degree);
+		System.out.println(m.degree);
 		m.addLaser(l1);
 		System.out.println("NewDir: " + m.nextPosition());
 		m.addLaser(l2);
@@ -21,7 +21,7 @@ public class TestMirror {
 		m.addLaser(l3);
 		System.out.println("NewDir: " + m.nextPosition());
 		m.addLaser(l4);
-		System.out.println("NewDir: " + m.nextPosition());*/
+		System.out.println("NewDir: " + m.nextPosition());
 		
 		DoubleMirror m2 = new DoubleMirror(pos, 0);
 		System.out.println(m2.degree);

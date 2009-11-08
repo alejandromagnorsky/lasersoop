@@ -18,20 +18,20 @@ public class DoubleMirror extends Mirror {
 
 	@Override
 	public GameMessage action(Tile t) {
-		Vector2D nextDir = nextPosition();
-		t.addLaser(new Laser(nextDir, getLastLaser().getColor()));
+		t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));
 		return new GameMessage("DoubleMirrorOK");
 	}
 
 	@Override
 	public Vector2D nextPosition() {
-		Vector2D nextDir = getLastLaser().getDir();
+		newLaserDir = getLastLaser().getDir();
 		int angle = getLastLaser().getAngle();
-		if (angle == 0 || angle == 180)
-			nextDir.changeDirection((int)Math.pow(-1, orientation) * -90);
-		else
-			nextDir.changeDirection((int)Math.pow(-1, orientation) * 90);
-		return nextDir;
+		if (angle == 0 || angle == 180) {
+			newLaserDir.changeDirection((int) Math.pow(-1,orientation)* -90);
+		} else {
+			newLaserDir.changeDirection((int) Math.pow(-1,orientation)* 90);
+		}
+		return getPos().add(newLaserDir);
 	}
 
 }

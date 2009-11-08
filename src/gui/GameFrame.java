@@ -26,6 +26,7 @@ public class GameFrame extends JFrame {
 	private BoardPanel bp;
 	private Vector<Image> tileImages;
 	private TileSet tileset;
+	private Level currentLevel;
 	
 	public void loadTiles() {
 		try {
@@ -63,6 +64,7 @@ public class GameFrame extends JFrame {
 	public GameFrame(TileSet tileset, Level currentLevel) {
 
 		this.tileset = tileset;
+		this.currentLevel = currentLevel;
 		setLayout(null);
 		setSize(tileset.getCols() * CELL_SIZE + 40, tileset.getRows()
 				* CELL_SIZE + 40);
@@ -94,7 +96,8 @@ public class GameFrame extends JFrame {
 						&& getTileSet().moveTile(
 								new Vector2D(sourceRow, sourceColumn),
 								new Vector2D(targetRow, targetColumn))) {
-						
+					//HABRIA QUE BORRAR TODOS LOS LASERS DE TODAS LAS CELDAS
+					getCurrentLevel().update();
 					updateLevel();
 					
 					bp.repaint();
@@ -121,6 +124,11 @@ public class GameFrame extends JFrame {
 	private TileSet getTileSet() {
 		return tileset;
 	}
+	
+	private Level getCurrentLevel() {
+		return currentLevel;
+	}
+	
 
 	private void updateLevel() {
 		clearScreen();
