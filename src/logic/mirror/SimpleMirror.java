@@ -36,10 +36,7 @@ public class SimpleMirror extends Mirror {
 		Laser l = getLastLaser();
 		int angle = l.getAngle();
 		Vector2D next;
-		/**
-		 * FIJARSE SI HAY QUE HACER UN SHALLOW COPY YA QUE SINO ESTAMOS
-		 * MODIFICANDO EL LASER QUE YA HABIA
-		 */
+	
 		if (angle <= degree && angle >= degree - 180
 				|| (angle == 270 && degree == 45)) {
 			newLaserDir = l.getDir();

@@ -40,6 +40,7 @@ public class Origin extends StaticTile {
 
 	@Override
 	public Vector2D nextPosition() {
+		System.out.println("Laserdir: "+getLastLaser().getDir());
 		return this.getPos().add(getLastLaser().getDir());
 	}
 
