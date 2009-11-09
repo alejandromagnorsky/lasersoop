@@ -15,7 +15,8 @@ public class Laser {
 	}
 	
 	public Laser( Laser l ){
-		this(l.dir,l.color);
+		
+		this(new Vector2D(l.dir.getX(),l.dir.getY()),l.color);
 	}
 
 	/**
