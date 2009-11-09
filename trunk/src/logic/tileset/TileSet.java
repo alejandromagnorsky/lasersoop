@@ -20,6 +20,8 @@ import logic.tile.Wall;
 public class TileSet {
 	private String levelName;
 	private Tile[][] tileSet;
+	private static final int DIMLINE = 2;
+	private static final int TILELINE = 7;
 
 	public Tile[][] getTileSet() {
 		return tileSet;
@@ -72,11 +74,7 @@ public class TileSet {
 	}
 	
 	public boolean contains(Vector2D pos){
-		  if ( ( pos.getX() < getRows() && pos.getX() >= 0 )
-		    && ( pos.getY() < getCols() && pos.getY() >= 0) )
-			  return true;
-		  else
-			  return false;
+		return pos.getX() < getRows() && pos.getX() >= 0 && pos.getY() < getCols() && pos.getY() >= 0;
 	}
 
 	public void loader(String filename) throws IOException {
@@ -114,23 +112,28 @@ public class TileSet {
 	 * DEVUELVE EN CASO DE ARCHIVO INVALIDO
 	 * -----------------------------------------------------------
 	 */
-	public void loadGeneral(String line, int n) {
-		String[] strData = new String[n];
+	public void loadGeneral(String line, int lineType) {
+		/* El parámetro lineType hace referencia a la cantidad de valores que el parser
+		 * tiene que levantar por línea. Si la línea tiene información acerca de:
+		 * 		- la dimensión del tablero: lineType = 2.
+		 * 		- una celda: lineType = 7. 
+		 */
+		String[] strData = new String[lineType];
 		char auxChar;
 		int quantComas = 0;
 		boolean flagComment = false;
 		strData[0] = "";
 		for (int i = 0, j = 0; i < line.length() && !flagComment; i++, j++) {
 			if ((auxChar = line.charAt(i)) != ' ' && auxChar != '\t') {
-				if (auxChar == ',' && quantComas < n - 1) {
+				if (auxChar == ',' && quantComas < lineType-1) {
 					strData[++quantComas] = "";
 					j = 0;
-				} else if (auxChar == '#' && quantComas == n - 1
-						&& strData[n - 1] != "") {
+				} else if (auxChar == '#' && quantComas == lineType-1
+						&& strData[lineType-1] != "") {
 					flagComment = true;
 				} else {
 					if ((quantComas == 1 && i == 1)
-							|| (quantComas < n - 1 && quantComas > n - 3)
+							|| (quantComas < lineType-1 && quantComas > lineType-3)
 							&& j > 2 || !Character.isDigit(auxChar)) {
 						System.out.println(line + "TEMP|-----| INVALIDO 1");
 						return;
@@ -144,13 +147,12 @@ public class TileSet {
 			}
 		}
 		Integer[] data = new Integer[7];
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < lineType; i++) {
 			data[i] = new Integer(strData[i]);
 		}
-		if (n == 2) {
+		if (lineType == 2) {
 			if (data[0] < 5 || data[1] < 5 || data[1] > 20 || data[0] > 20) {
-				System.out
-						.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
+				System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
 				return;
 			}
 			tileSet = new Tile[data[0]][data[1]];
@@ -194,6 +196,9 @@ public class TileSet {
 						data[3]);
 				break;
 			case 5:
+				/* El case 5 lo tengo que hacer para el semiespejo, estoy esperando a que
+				 * terminen de definir la clase, mientras está el simpleMirror a modo de prueba
+				 */
 				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos,
 						data[3]);
 				break;
@@ -215,13 +220,14 @@ public class TileSet {
 	}
 
 	public void loadDimensions(String line) {
-		loadGeneral(line, 2);
+		loadGeneral(line, DIMLINE);
 	}
 
 	public void loadTile(String line) {
-		loadGeneral(line, 7);
+		loadGeneral(line, TILELINE);
 	}
 
+	/* CREO QUE ESTO LO TENGO QUE REMOVER */
 	public String toString() {
 		return tileSet.toString();
 	}
