@@ -14,6 +14,7 @@ public class DoubleMirror extends Mirror {
 	@Override
 	public void rotate() {
 		orientation = (orientation + 1) % 2;
+		setDegree(orientation);
 	}
 
 	@Override

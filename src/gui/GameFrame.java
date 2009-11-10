@@ -179,10 +179,22 @@ public class GameFrame extends JFrame {
 		int halfLaser = 0;
 
 		if (t instanceof Mirror) {
-			int times = 3 + ((Mirror) t).getDegree() / 45;
-
-			// Ver la orientacion de los espejos bien.. los double mirrors andan
-			// mal
+			Mirror m = (Mirror) t;
+			int times = 0;
+			switch (m.getDegree()) {
+			case 135:
+				times = 0;
+				break;
+			case 45:
+				times = 1;
+				break;
+			case 315:
+				times = 2;
+				break;
+			case 225:
+				times = 3;
+				break;
+			}
 			tileImage = ImageUtils.rotateImage(tileImages.elementAt(i), times);
 			halfLaser = 1;
 
