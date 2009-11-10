@@ -83,6 +83,15 @@ public class GameFrame extends JFrame {
 		bp.setListener(new BoardPanelListener() {
 			public void cellClicked(int row, int column) {
 
+				Tile t = getTileSet().at(new Vector2D(row, column));
+				if (t instanceof Mirror) {
+					((Mirror) t).rotate();
+
+					getCurrentLevel().update();
+					updateLevel();
+
+					bp.repaint();
+				}
 				// Crear un alt text para mostrar que tile es
 				// if( checkTileAt(new Vector2D(row, column)) )
 				// bp.setImage(row, column, tileImages.elementAt(0));
@@ -170,12 +179,12 @@ public class GameFrame extends JFrame {
 		int halfLaser = 0;
 
 		if (t instanceof Mirror) {
-			int times = 3+ ((Mirror) t).getDegree() / 45;
+			int times = 3 + ((Mirror) t).getDegree() / 45;
 
 			// Ver la orientacion de los espejos bien.. los double mirrors andan
 			// mal
 			tileImage = ImageUtils.rotateImage(tileImages.elementAt(i), times);
-			halfLaser = 1	;
+			halfLaser = 1;
 
 		} else if (t instanceof Origin) {
 
@@ -189,13 +198,13 @@ public class GameFrame extends JFrame {
 		bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImage);
 
 		int count = t.countLasers();
-		
-		if ( count > 0  && !(t instanceof Origin)) {
+
+		if (count > 0 && !(t instanceof Origin)) {
 
 			int times = t.getLastLaser().getAngle() / 90;
 
-			Image tmpLaser = ImageUtils.rotateImage(tileImages.elementAt(5+halfLaser),
-					times + 1);
+			Image tmpLaser = ImageUtils.rotateImage(tileImages
+					.elementAt(5 + halfLaser), times + 1);
 
 			bp.appendImage(t.getPos().getX(), t.getPos().getY(), tmpLaser);
 		}
