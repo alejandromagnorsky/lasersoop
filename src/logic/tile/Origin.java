@@ -6,9 +6,12 @@ import logic.laser.Laser;
 import logic.laser.LaserColor;
 
 public class Origin extends StaticTile {
+	
+	private int orientation;
 
 	public Origin(Vector2D pos, int orientation, LaserColor color) {
 		super(pos);
+		this.orientation = orientation;
 		Vector2D dir = new Vector2D((360 - orientation * 90) % 360);
 		Laser l = new Laser(dir, color);
 		super.addLaser(l);
@@ -16,6 +19,10 @@ public class Origin extends StaticTile {
 		 * El addLaser de la clase esta para que no se puedan crear lasers extra
 		 * en el origin
 		 */
+	}
+	
+	public int getOrientation(){
+		return this.orientation;
 	}
 
 	/**
@@ -40,7 +47,7 @@ public class Origin extends StaticTile {
 
 	@Override
 	public Vector2D nextPosition() {
-		System.out.println("Laserdir: "+getLastLaser().getDir());
+		System.out.println("Laserdir: " + getLastLaser().getDir());
 		return this.getPos().add(getLastLaser().getDir());
 	}
 
