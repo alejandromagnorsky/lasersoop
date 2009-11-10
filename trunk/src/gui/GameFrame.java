@@ -27,7 +27,7 @@ public class GameFrame extends JFrame {
 	private Vector<Image> tileImages;
 	private TileSet tileset;
 	private Level currentLevel;
-	
+
 	public void loadTiles() {
 		try {
 
@@ -48,7 +48,7 @@ public class GameFrame extends JFrame {
 			tileImages.add(ImageUtils.loadImage("resources/double-mirror.png"));
 			tileImages.add(ImageUtils.loadImage("resources/simple-mirror.png"));
 			tileImages.add(ImageUtils.loadImage("resources/split-mirror.png"));
-			
+
 		} catch (Exception e) {
 			System.out.println("Error loading images.");
 		}
@@ -78,7 +78,8 @@ public class GameFrame extends JFrame {
 		clearScreen();
 		currentLevel.update();
 		updateLevel();
-		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		bp.setListener(new BoardPanelListener() {
 			public void cellClicked(int row, int column) {
 
@@ -96,10 +97,10 @@ public class GameFrame extends JFrame {
 						&& getTileSet().moveTile(
 								new Vector2D(sourceRow, sourceColumn),
 								new Vector2D(targetRow, targetColumn))) {
-					//HABRIA QUE BORRAR TODOS LOS LASERS DE TODAS LAS CELDAS
+					// HABRIA QUE BORRAR TODOS LOS LASERS DE TODAS LAS CELDAS
 					getCurrentLevel().update();
 					updateLevel();
-					
+
 					bp.repaint();
 
 					System.out.println("Celda arrastrada desde " + sourceRow
@@ -124,19 +125,18 @@ public class GameFrame extends JFrame {
 	private TileSet getTileSet() {
 		return tileset;
 	}
-	
+
 	private Level getCurrentLevel() {
 		return currentLevel;
 	}
-	
 
 	private void updateLevel() {
 		clearScreen();
 		for (int i = 0; i < tileset.getCols(); i++)
-			for (int j = 0; j < tileset.getRows(); j++){
+			for (int j = 0; j < tileset.getRows(); j++) {
 				addTile(tileset.at(new Vector2D(i, j)));
 			}
-				
+
 	}
 
 	private boolean checkTileAt(Vector2D pos) {
@@ -150,7 +150,7 @@ public class GameFrame extends JFrame {
 		// Later check which tile to print
 		int i;
 		if (t instanceof SimpleTile)
-				i = 0;
+			i = 0;
 		else if (t instanceof Origin)
 			i = 1;
 		else if (t instanceof Trap)
@@ -165,10 +165,39 @@ public class GameFrame extends JFrame {
 			i = 8;
 		else
 			i = 9;
-		bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImages
-				.elementAt(i));
-		if ( t.countLasers() > 0 )
-			bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImages
-					.elementAt(5));
+
+		Image tileImage;
+		int halfLaser = 0;
+
+		if (t instanceof Mirror) {
+			int times = 3+ ((Mirror) t).getDegree() / 45;
+
+			// Ver la orientacion de los espejos bien.. los double mirrors andan
+			// mal
+			tileImage = ImageUtils.rotateImage(tileImages.elementAt(i), times);
+			halfLaser = 1	;
+
+		} else if (t instanceof Origin) {
+
+			int times = ((Origin) t).getOrientation();
+			tileImage = ImageUtils.rotateImage(tileImages.elementAt(i), times);
+
+		} else {
+			tileImage = tileImages.elementAt(i);
+		}
+
+		bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImage);
+
+		int count = t.countLasers();
+		
+		if ( count > 0  && !(t instanceof Origin)) {
+
+			int times = t.getLastLaser().getAngle() / 90;
+
+			Image tmpLaser = ImageUtils.rotateImage(tileImages.elementAt(5+halfLaser),
+					times + 1);
+
+			bp.appendImage(t.getPos().getX(), t.getPos().getY(), tmpLaser);
+		}
 	}
 }

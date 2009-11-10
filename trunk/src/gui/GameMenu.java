@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import logic.Level;
+
 public class GameMenu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -28,6 +30,18 @@ public class GameMenu extends JFrame {
 		
 		JButton start = new JButton("Start game");
 		start.setBounds(getWidth()/2-100, getHeight()/3+50, 200, 50);
+		
+		start.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Level level = new Level("levelTest.txt");
+					setVisible(false);
+				} catch (Exception exc) {
+					System.out.println(exc);
+				}
+
+			}
+		});
 
 		JButton load = new JButton("Load");
 		load.setBounds(getWidth()/2-100, getHeight()/2, 200, 50);
