@@ -57,8 +57,6 @@ public class GameMenu extends JFrame {
 		
 		try {
 			background = new ImagePanel("bg.jpg");
-			start2 = new ImageButton("simple-mirror.png", "empty-tile.png");
-			start2.setBounds(200, 200, 230, 230);
 			background.setBounds(0, 0, 900, 725);
 			
 		} catch (Exception e) {
