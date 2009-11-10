@@ -14,13 +14,12 @@ public class SimpleMirror extends Mirror {
 	@Override
 	public void rotate() {
 		orientation = (orientation + 1) % 4;
-		degree = (degree - 90) % 360;
+		setDegree(orientation);
 	}
 
 	@Override
 	public GameMessage action(Tile t) {
 		if (t.getPos().equals(this.getPos())) {
-			System.out.println("Paso por un mirror");
 			return new GameMessage("StopLaser");
 		}
 		t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));

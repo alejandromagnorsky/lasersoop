@@ -15,11 +15,23 @@ public abstract class Mirror extends MovableTile {
 	public Mirror(Vector2D pos, int orientation) {
 		super(pos);
 		this.orientation = orientation;
-		switch (orientation){
-			case 0: degree = 135; break;
-			case 1: degree = 45; break;
-			case 2: degree = 315; break;
-			case 3: degree = 225; break;
+		setDegree(orientation);
+	}
+
+	public void setDegree(int orientation) {
+		switch (orientation) {
+		case 0:
+			degree = 135;
+			break;
+		case 1:
+			degree = 45;
+			break;
+		case 2:
+			degree = 315;
+			break;
+		case 3:
+			degree = 225;
+			break;
 		}
 	}
 	
