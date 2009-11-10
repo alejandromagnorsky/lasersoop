@@ -164,7 +164,7 @@ public class TileSet {
 				System.out.println("TEMP|-----| incorrectos 1");
 				return;
 			} else if (((data[2] == 1 || data[2] == 3) && (data[3] < 0 || data[3] > 3))
-					|| (data[2] == 4 && data[3] != 0 && data[3] != 1)
+					|| ((data[2] == 4 || data[2] == 5) && data[3] != 0 && data[3] != 1)
 					|| (data[2] != 1 && data[2] != 3 && data[2] != 4 && data[3] != 0)) {
 				/* Valido los parámetros de la rotación */
 				System.out.println("TEMP|-----| incorrectos 2");
@@ -225,10 +225,5 @@ public class TileSet {
 
 	public void loadTile(String line) {
 		loadGeneral(line, TILELINE);
-	}
-
-	/* CREO QUE ESTO LO TENGO QUE REMOVER */
-	public String toString() {
-		return tileSet.toString();
 	}
 }
