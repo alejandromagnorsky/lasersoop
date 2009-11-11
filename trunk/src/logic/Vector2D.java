@@ -13,7 +13,11 @@ public class Vector2D {
 		this(0, 0);
 		this.setDirection(angle);
 	}
-
+	
+	public Vector2D(Vector2D v) {
+		this(v.x, v.y);
+	}
+	
 	public int getX() {
 		return x;
 	}

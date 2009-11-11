@@ -105,14 +105,14 @@ public class TileSet {
 					if (!(this.at(pos) instanceof SimpleTile)){
 						if ( this.at(pos) instanceof Origin ){
 							aux = ",1," + ((Origin)this.at(pos)).getOrientation() + ","
-							+ ((Origin)this.at(pos)).getRed() + "," 
-							+ ((Origin)this.at(pos)).getGreen() + ","
-							+ ((Origin)this.at(pos)).getBlue();
+							+ ((Origin)this.at(pos)).getColor().getRed() + "," 
+							+ ((Origin)this.at(pos)).getColor().getGreen() + ","
+							+ ((Origin)this.at(pos)).getColor().getBlue();
 							
 						} else if( this.at(pos) instanceof Goal ) {
-							aux = ",2,0," + ((Goal)this.at(pos)).getRed() + ","
-							+ ((Goal)this.at(pos)).getGreen() + ","
-							+ ((Goal)this.at(pos)).getBlue();
+							aux = ",2,0," + ((Goal)this.at(pos)).getColor().getRed() + ","
+							+ ((Goal)this.at(pos)).getColor().getGreen() + ","
+							+ ((Goal)this.at(pos)).getColor().getBlue();
 							
 						} else if( this.at(pos) instanceof SimpleMirror ) {
 							aux = ",3," + ((Mirror)this.at(pos)).getOrientation() + ",0,0,0";

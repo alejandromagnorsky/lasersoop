@@ -29,35 +29,17 @@ public class Origin extends StaticTile {
 		return this.getLastLaser().getColor();
 	}
 	
-	public int getRed(){
-		return this.getColor().getRed();
-	}
-	
-	public int getGreen(){
-		return this.getColor().getGreen();
-	}
-	
-	public int getBlue(){
-		return this.getColor().getBlue();
-	}
-	
 	/**
 	 * Origins have only one laser, defined by its constructor
 	 */
-	@Override
-	public void addLaser(Laser laser) {
-	}
 
 	public void eraseLasers() {
 	}
 
+	// ARREGLAR EL ORIGIN PARA QUE DISPARE EL LASER ORIGINAL CUANDO LE DEJAN DE PASAR MAS DE UNO
 	@Override
 	public GameMessage action(Tile t) {
-		if (t.countLasers() > 1)
-			return new GameMessage("StopLaser");
-		/** Si recibio un laser, aparte del que ya contiene, actua como pared */
-		else
-			t.addLaser(new Laser(getLastLaser()));
+		t.addLaser(new Laser(getLastLaser()));
 		return new GameMessage("EmisionOK");
 	}
 

@@ -10,10 +10,7 @@ public class Trap extends StaticTile {
 	}
 
 	public GameMessage action(Tile t) {
-		if (this.hasLasers())
-			return new GameMessage("GameOver");
-		else
-			return null;
+		return new GameMessage("GameOver");
 	}
 
 	@Override
