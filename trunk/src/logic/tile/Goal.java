@@ -1,9 +1,9 @@
 package logic.tile;
 
-import logic.GameMessage;
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.laser.LaserColor;
+import messages.GameMessage;
 
 public class Goal extends StaticTile {
 
