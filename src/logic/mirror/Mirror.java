@@ -4,11 +4,12 @@ import logic.Vector2D;
 import logic.tile.MovableTile;
 
 public abstract class Mirror extends MovableTile {
-	/**
-	 * Contiene la orientacion del espejo representada por un numero entre 0 y 3
+	/*
+	 * Contiene la orientacion del espejo representada 
+	 * por un numero entre 0 y 3
 	 */
 	protected int orientation;
-	/** Indica el angulo de inclinacion */
+	/* Indica el angulo de inclinacion */
 	protected int degree;
 	protected Vector2D newLaserDir = null;
 
@@ -34,15 +35,15 @@ public abstract class Mirror extends MovableTile {
 			break;
 		}
 	}
-	
-	public int getDegree(){
+
+	public int getDegree() {
 		return degree;
 	}
 
-	public int getOrientation(){
+	public int getOrientation() {
 		return orientation;
 	}
-	
+
 	public void translate(Vector2D dest) {
 		setPos(dest);
 	}

@@ -4,6 +4,8 @@ import logic.Vector2D;
 import logic.laser.Laser;
 import logic.laser.LaserColor;
 import messages.GameMessage;
+import messages.GoalAchievedMessage;
+import messages.NullMessage;
 
 public class Goal extends StaticTile {
 
@@ -13,17 +15,17 @@ public class Goal extends StaticTile {
 		super(pos);
 		this.color = color;
 	}
-	
-	public LaserColor getColor(){
+
+	public LaserColor getColor() {
 		return color;
-	}	
-	
+	}
+
 	@Override
 	public GameMessage action(Tile t) {
 		t.addLaser(new Laser(getLastLaser()));
 		if (color.equals(getLastLaser()))
-			return new GameMessage("GoalAcchieved");
-		return new GameMessage("GoalOK");
+			return new GoalAchievedMessage();
+		return new NullMessage();
 	}
 
 	@Override

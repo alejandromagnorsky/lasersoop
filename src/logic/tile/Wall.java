@@ -3,6 +3,7 @@ package logic.tile;
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
+import messages.LaserStopMessage;
 
 public class Wall extends StaticTile {
 
@@ -12,7 +13,7 @@ public class Wall extends StaticTile {
 
 	@Override
 	public GameMessage action(Tile t) {
-		return new GameMessage("StopLaser");
+		return new LaserStopMessage();
 	}
 
 	/**
