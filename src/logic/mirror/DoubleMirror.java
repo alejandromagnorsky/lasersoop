@@ -25,7 +25,7 @@ public class DoubleMirror extends Mirror {
 
 	@Override
 	public Vector2D nextPosition() {
-		newLaserDir = getLastLaser().getDir();
+		newLaserDir = new Vector2D(getLastLaser().getDir());
 		int angle = getLastLaser().getAngle();
 		if (angle == 0 || angle == 180) {
 			newLaserDir.changeDirection((int) Math.pow(-1,orientation)* -90);

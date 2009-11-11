@@ -16,27 +16,13 @@ public class Goal extends StaticTile {
 	
 	public LaserColor getColor(){
 		return color;
-	}
+	}	
 	
-	public int getRed(){
-		return this.getColor().getRed();
-	}
-	
-	public int getGreen(){
-		return this.getColor().getGreen();
-	}
-	
-	public int getBlue(){
-		return this.getColor().getBlue();
-	}
-
 	@Override
 	public GameMessage action(Tile t) {
-		if (this.hasLasers()) {
-			t.addLaser(new Laser(getLastLaser()));
-			if (color.equals(getLastLaser()))
-				return new GameMessage("GoalAcchieved");
-		}
+		t.addLaser(new Laser(getLastLaser()));
+		if (color.equals(getLastLaser()))
+			return new GameMessage("GoalAcchieved");
 		return new GameMessage("GoalOK");
 	}
 

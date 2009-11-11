@@ -32,7 +32,7 @@ public class SimpleMirror extends Mirror {
 	 */
 	@Override
 	public Vector2D nextPosition() {
-		Laser l = getLastLaser();
+		Laser l = new Laser(getLastLaser());
 		int angle = l.getAngle();
 		Vector2D next;
 	
