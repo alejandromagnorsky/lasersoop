@@ -14,6 +14,10 @@ public class Goal extends StaticTile {
 		this.color = color;
 
 	}
+	
+	public LaserColor getColor(){
+		return color;
+	}
 
 	@Override
 	public GameMessage action(Tile t) {
