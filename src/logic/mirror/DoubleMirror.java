@@ -1,9 +1,9 @@
 package logic.mirror;
 
-import logic.GameMessage;
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.tile.Tile;
+import messages.GameMessage;
 
 public class DoubleMirror extends Mirror {
 

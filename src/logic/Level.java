@@ -6,6 +6,7 @@ import logic.tile.Origin;
 import logic.tile.Tile;
 import logic.tile.Wall;
 import logic.tileset.TileSet;
+import messages.GameMessage;
 
 public class Level {
 	private TileSet tileSet;

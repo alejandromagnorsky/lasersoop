@@ -1,8 +1,8 @@
 package logic.tile;
 
-import logic.GameMessage;
 import logic.Vector2D;
 import logic.laser.Laser;
+import messages.GameMessage;
 
 public class Wall extends StaticTile {
 

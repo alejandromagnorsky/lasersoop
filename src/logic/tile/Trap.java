@@ -1,7 +1,7 @@
 package logic.tile;
 
-import logic.GameMessage;
 import logic.Vector2D;
+import messages.GameMessage;
 
 public class Trap extends StaticTile {
 

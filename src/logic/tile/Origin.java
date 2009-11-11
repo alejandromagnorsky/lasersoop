@@ -1,9 +1,9 @@
 package logic.tile;
 
-import logic.GameMessage;
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.laser.LaserColor;
+import messages.GameMessage;
 
 public class Origin extends StaticTile {
 	
@@ -24,7 +24,7 @@ public class Origin extends StaticTile {
 	public int getOrientation(){
 		return this.orientation;
 	}
-	
+		
 	public LaserColor getColor(){
 		return this.getLastLaser().getColor();
 	}
@@ -34,6 +34,9 @@ public class Origin extends StaticTile {
 	 */
 
 	public void eraseLasers() {
+		Laser tmp = getFirstLaser();
+		super.eraseLasers();
+		super.addLaser(tmp);
 	}
 
 	// ARREGLAR EL ORIGIN PARA QUE DISPARE EL LASER ORIGINAL CUANDO LE DEJAN DE PASAR MAS DE UNO

@@ -1,21 +1,20 @@
 package logic.laser;
 
-import java.util.Stack;
-
-import logic.GameMessage;
+import java.util.Vector;
 import logic.Vector2D;
 import logic.tile.Tile;
+import messages.GameMessage;
 
 public abstract class LaserController {
 
-	Stack<Laser> lasers = null;
+	Vector<Laser> lasers = null;
 
 	public abstract GameMessage action(Tile t);
 
 	public abstract Vector2D nextPosition();
 
 	public LaserController() {
-		lasers = new Stack<Laser>();
+		lasers = new Vector<Laser>();
 	}
 
 	public boolean hasLasers() {
@@ -31,11 +30,15 @@ public abstract class LaserController {
 	}
 
 	public Laser getLastLaser() {
-		return lasers.peek();
+		return lasers.lastElement();
+	}
+	
+
+	public Laser getFirstLaser() {
+		return lasers.firstElement();
 	}
 
 	public void eraseLasers() {
-		while(hasLasers())
-			lasers.pop();
+		lasers.clear();
 	}
 }
