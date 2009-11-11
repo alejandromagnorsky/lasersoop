@@ -24,7 +24,23 @@ public class Origin extends StaticTile {
 	public int getOrientation(){
 		return this.orientation;
 	}
-
+	
+	public LaserColor getColor(){
+		return this.getLastLaser().getColor();
+	}
+	
+	public int getRed(){
+		return this.getColor().getRed();
+	}
+	
+	public int getGreen(){
+		return this.getColor().getGreen();
+	}
+	
+	public int getBlue(){
+		return this.getColor().getBlue();
+	}
+	
 	/**
 	 * Origins have only one laser, defined by its constructor
 	 */
