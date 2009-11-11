@@ -12,7 +12,6 @@ public class Goal extends StaticTile {
 	public Goal(Vector2D pos, LaserColor color) {
 		super(pos);
 		this.color = color;
-
 	}
 	
 	public LaserColor getColor(){
@@ -38,7 +37,7 @@ public class Goal extends StaticTile {
 			if (color.equals(getLastLaser()))
 				return new GameMessage("GoalAcchieved");
 		}
-		return null;
+		return new GameMessage("GoalOK");
 	}
 
 	@Override
