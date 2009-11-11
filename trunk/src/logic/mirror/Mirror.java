@@ -39,6 +39,10 @@ public abstract class Mirror extends MovableTile {
 		return degree;
 	}
 
+	public int getOrientation(){
+		return orientation;
+	}
+	
 	public void translate(Vector2D dest) {
 		setPos(dest);
 	}
