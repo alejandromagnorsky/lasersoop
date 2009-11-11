@@ -2,6 +2,7 @@ package logic.tile;
 
 import logic.Vector2D;
 import messages.GameMessage;
+import messages.GameOverMessage;
 
 public class Trap extends StaticTile {
 
@@ -10,7 +11,7 @@ public class Trap extends StaticTile {
 	}
 
 	public GameMessage action(Tile t) {
-		return new GameMessage("GameOver");
+		return new GameOverMessage();
 	}
 
 	@Override

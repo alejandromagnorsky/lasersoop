@@ -4,6 +4,8 @@ import logic.Vector2D;
 import logic.laser.Laser;
 import logic.tile.Tile;
 import messages.GameMessage;
+import messages.LaserBounceMessage;
+import messages.LaserStopMessage;
 
 public class SimpleMirror extends Mirror {
 
@@ -20,10 +22,10 @@ public class SimpleMirror extends Mirror {
 	@Override
 	public GameMessage action(Tile t) {
 		if (t.getPos().equals(this.getPos())) {
-			return new GameMessage("StopLaser");
+			return new LaserStopMessage();
 		}
 		t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));
-		return new GameMessage("SimpleMirrorOK");
+		return new LaserBounceMessage();
 	}
 
 	/**
@@ -35,7 +37,7 @@ public class SimpleMirror extends Mirror {
 		Laser l = new Laser(getLastLaser());
 		int angle = l.getAngle();
 		Vector2D next;
-	
+
 		if (angle <= degree && angle >= degree - 180
 				|| (angle == 270 && degree == 45)) {
 			newLaserDir = l.getDir();
@@ -46,7 +48,7 @@ public class SimpleMirror extends Mirror {
 			}
 			next = getPos().add(newLaserDir);
 		} else {
-			/**
+			/*
 			 * El mensaje action verifica la posicion del tile que recibe. Si es
 			 * la misma que la del espejo actua como pared para dicho laser.
 			 */
