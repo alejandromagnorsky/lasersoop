@@ -1,9 +1,11 @@
 package logic.tileset;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import logic.Vector2D;
 import logic.laser.LaserColor;
@@ -20,6 +22,7 @@ import logic.tile.Wall;
 public class TileSet {
 	private String levelName;
 	private Tile[][] tileSet;
+	
 	private static final int DIMLINE = 2;
 	private static final int TILELINE = 7;
 
@@ -77,6 +80,65 @@ public class TileSet {
 		return pos.getX() < getRows() && pos.getX() >= 0 && pos.getY() < getCols() && pos.getY() >= 0;
 	}
 
+	public void saver(String filename) throws IOException{
+		BufferedWriter output = null;
+		try {
+			File file = new File(filename);
+			if (file.exists()){
+				if (!file.isFile()){
+					System.out.println("TEMP |----| NO INGRESASTE UN ARCHIVO COMO PARAMETRO");
+					return;
+				}
+			} else {
+				file.createNewFile();
+			}
+			output = new BufferedWriter(new FileWriter(file));
+			output.write(levelName);
+			output.newLine();
+			output.write(this.getRows() + "," + this.getCols());
+			output.newLine();
+			
+			String aux = "";
+			for (int i=0; i < this.getRows(); i++){
+				for (int j=0; j < this.getCols(); j++){
+					Vector2D pos = new Vector2D(i,j);
+					if (!(this.at(pos) instanceof SimpleTile)){
+						if ( this.at(pos) instanceof Origin ){
+							aux = ",1," + ((Origin)this.at(pos)).getOrientation() + ","
+							+ ((Origin)this.at(pos)).getRed() + "," 
+							+ ((Origin)this.at(pos)).getGreen() + ","
+							+ ((Origin)this.at(pos)).getBlue();
+							
+						} else if( this.at(pos) instanceof Goal ) {
+							aux = ",2,0," + ((Goal)this.at(pos)).getRed() + ","
+							+ ((Goal)this.at(pos)).getGreen() + ","
+							+ ((Goal)this.at(pos)).getBlue();
+							
+						} else if( this.at(pos) instanceof SimpleMirror ) {
+							aux = ",3," + ((Mirror)this.at(pos)).getOrientation() + ",0,0,0";
+						} else if( this.at(pos) instanceof DoubleMirror ) {
+							aux = ",4," + ((Mirror)this.at(pos)).getOrientation() + ",0,0,0";
+							
+						/*} else if( this.at(pos) instanceof SplitMirror ) {
+							aux = ",5," + ((SplitMirror)this.at(pos)).getOrientation() + ",0,0,0";*/
+						}else if( this.at(pos) instanceof Wall ) {
+							aux = ",6,0,0,0,0";
+							
+						}else if( this.at(pos) instanceof Trap ) {
+							aux = ",7,0,0,0,0";
+						}
+						output.write(i + "," + j + aux);
+						output.newLine();
+					}
+				}
+			}
+		} finally {
+			if (output != null) {
+				output.close();
+			}
+		}
+	}
+	
 	public void loader(String filename) throws IOException {
 		BufferedReader input = null;
 		try {
@@ -108,8 +170,8 @@ public class TileSet {
 	}
 
 	/*
-	 * ----------------------------------------------------------- FALTA VER QUE
-	 * DEVUELVE EN CASO DE ARCHIVO INVALIDO
+	 * -----------------------------------------------------------
+	 * FALTA VER QUE DEVUELVE EN CASO DE ARCHIVO INVALIDO
 	 * -----------------------------------------------------------
 	 */
 	public void loadGeneral(String line, int lineType) {
@@ -128,11 +190,10 @@ public class TileSet {
 				if (auxChar == ',' && quantComas < lineType-1) {
 					strData[++quantComas] = "";
 					j = 0;
-				} else if (auxChar == '#' && quantComas == lineType-1
-						&& strData[lineType-1] != "") {
+				} else if (auxChar == '#' && quantComas == lineType-1 && strData[lineType-1] != "") {
 					flagComment = true;
 				} else {
-					if ((quantComas == 1 && i == 1)
+					if ((quantComas == 1 && i == 1) 
 							|| (quantComas < lineType-1 && quantComas > lineType-3)
 							&& j > 2 || !Character.isDigit(auxChar)) {
 						System.out.println(line + "TEMP|-----| INVALIDO 1");
@@ -159,7 +220,7 @@ public class TileSet {
 			this.initializer();
 		} else {
 			if (data[0] > this.getRows() || data[1] > this.getCols()
-					|| data[2] > 7 || data[2] < 1) {
+					|| data[2] > 7|| data[2] < 1) {
 				/* Valido los parámetros en general */
 				System.out.println("TEMP|-----| incorrectos 1");
 				return;
@@ -180,27 +241,24 @@ public class TileSet {
 			Vector2D pos = new Vector2D(data[0], data[1]);
 			switch (data[2]) {
 			case 1:
-				LaserColor lc = new LaserColor(data[4], data[5], data[6]);
-				this.getTileSet()[data[0]][data[1]] = new Origin(pos, data[3],
-						lc);
+				LaserColor lc1 = new LaserColor(data[4], data[5], data[6]);
+				this.getTileSet()[data[0]][data[1]] = new Origin(pos, data[3], lc1);
 				break;
 			case 2:
-				this.getTileSet()[data[0]][data[1]] = new Goal(pos);
+				LaserColor lc2 = new LaserColor(data[4], data[5], data[6]);
+				this.getTileSet()[data[0]][data[1]] = new Goal(pos, lc2);
 				break;
 			case 3:
-				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos,
-						data[3]);
+				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
 				break;
 			case 4:
-				this.getTileSet()[data[0]][data[1]] = new DoubleMirror(pos,
-						data[3]);
+				this.getTileSet()[data[0]][data[1]] = new DoubleMirror(pos, data[3]);
 				break;
 			case 5:
 				/* El case 5 lo tengo que hacer para el semiespejo, estoy esperando a que
 				 * terminen de definir la clase, mientras está el simpleMirror a modo de prueba
 				 */
-				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos,
-						data[3]);
+				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
 				break;
 			case 6:
 				this.getTileSet()[data[0]][data[1]] = new Wall(pos);
@@ -210,10 +268,10 @@ public class TileSet {
 				break;
 			}
 		}
-
 	}
 
 	public void loadName(String line) {
+		levelName = "";
 		for (int i = 0; i < line.length() && line.charAt(i) != '#'; i++) {
 			levelName += line.charAt(i);
 		}
