@@ -11,7 +11,7 @@ import logic.tile.Origin;
 import logic.tile.Tile;
 import logic.tile.Wall;
 import logic.tileset.TileSet;
-import message.EndWalkMessage;
+import messages.EndWalkMessage;
 import messages.GameMessage;
 import messages.GameOverMessage;
 import messages.LaserStopMessage;

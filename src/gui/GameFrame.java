@@ -10,6 +10,7 @@ import logic.Level;
 import logic.Vector2D;
 import logic.mirror.DoubleMirror;
 import logic.mirror.Mirror;
+import logic.mirror.SemiMirror;
 import logic.mirror.SimpleMirror;
 import logic.tile.Goal;
 import logic.tile.Origin;
@@ -107,7 +108,7 @@ public class GameFrame extends JFrame {
 						&& getTileSet().moveTile(
 								new Vector2D(sourceRow, sourceColumn),
 								new Vector2D(targetRow, targetColumn))) {
-			
+
 					getCurrentLevel().update();
 
 					updateScreen();
@@ -170,12 +171,14 @@ public class GameFrame extends JFrame {
 			i = 3;
 		else if (t instanceof Goal)
 			i = 4;
+		else if (t instanceof SemiMirror)
+			i = 9;
 		else if (t instanceof DoubleMirror)
 			i = 7;
 		else if (t instanceof SimpleMirror)
 			i = 8;
 		else
-			i = 9;
+			i = 0;
 
 		Image tileImage;
 		int halfLaser = 0;

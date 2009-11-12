@@ -1,6 +1,5 @@
-package message;
+package messages;
 
-import messages.GameMessage;
 
 public class EndWalkMessage extends GameMessage {
 
