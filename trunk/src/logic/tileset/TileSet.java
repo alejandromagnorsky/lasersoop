@@ -225,24 +225,23 @@ public class TileSet implements Iterable<Tile>{
 			tileSet = new Tile[data[0]][data[1]];
 			this.initializer();
 		} else {
-			System.out.println("fila: " + data[0] + "cols: " + data[1]);
 			if (data[0] > this.getRows() || data[1] > this.getCols()
 					|| data[2] > 7|| data[2] < 1) {
 				/* Valido los parámetros en general */
-				System.out.println("TEMP|-----| incorrectos 1");
+				System.out.println(line + "\n" + "TEMP|-----| incorrectos 1");
 				return;
 			} else if (((data[2] == 1 || data[2] == 3) && (data[3] < 0 || data[3] > 3))
 					|| ((data[2] == 4 || data[2] == 5) && data[3] != 0 && data[3] != 1)
-					|| (data[2] != 1 && data[2] != 3 && data[2] != 4 && data[3] != 0)) {
+					|| ( (data[2] == 6 || data[2] == 7) && data[3] != 0)) {
 				/* Valido los parámetros de la rotación */
-				System.out.println("TEMP|-----| incorrectos 2");
+				System.out.println(line + "\n" + "TEMP|-----| incorrectos 2");
 				return;
 			} else if (((data[2] == 1 || data[2] == 2) && (data[4] < 0
 					|| data[4] > 255 || data[5] < 0 || data[5] > 255
 					|| data[6] < 0 || data[6] > 255))
 					|| (data[2] != 1 && data[2] != 2 && data[4] != 0)) {
 				/* Valido los parámetros del color */
-				System.out.println("TEMP|-----| incorrectos 3");
+				System.out.println(line + "\n" + "TEMP|-----| incorrectos 3");
 				return;
 			}
 			Vector2D pos = new Vector2D(data[0], data[1]);
