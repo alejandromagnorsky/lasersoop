@@ -77,7 +77,7 @@ public class GameFrame extends JFrame {
 		loadTiles();
 		clearScreen();
 		currentLevel.update();
-		updateLevel();
+		updateScreen();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		bp.setListener(new BoardPanelListener() {
@@ -86,9 +86,10 @@ public class GameFrame extends JFrame {
 				Tile t = getTileSet().at(new Vector2D(row, column));
 				if (t instanceof Mirror) {
 					((Mirror) t).rotate();
+					if (t.countLasers() != 0)
+						getCurrentLevel().update();
 
-					getCurrentLevel().update();
-					updateLevel();
+					updateScreen();
 
 					bp.repaint();
 				}
@@ -106,9 +107,10 @@ public class GameFrame extends JFrame {
 						&& getTileSet().moveTile(
 								new Vector2D(sourceRow, sourceColumn),
 								new Vector2D(targetRow, targetColumn))) {
-					// HABRIA QUE BORRAR TODOS LOS LASERS DE TODAS LAS CELDAS
+			
 					getCurrentLevel().update();
-					updateLevel();
+
+					updateScreen();
 
 					bp.repaint();
 
@@ -139,7 +141,7 @@ public class GameFrame extends JFrame {
 		return currentLevel;
 	}
 
-	private void updateLevel() {
+	private void updateScreen() {
 		clearScreen();
 		for (int i = 0; i < tileset.getCols(); i++)
 			for (int j = 0; j < tileset.getRows(); j++) {
