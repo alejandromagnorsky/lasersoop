@@ -12,6 +12,7 @@ import logic.Vector2D;
 import logic.laser.LaserColor;
 import logic.mirror.DoubleMirror;
 import logic.mirror.Mirror;
+import logic.mirror.SemiMirror;
 import logic.mirror.SimpleMirror;
 import logic.tile.Goal;
 import logic.tile.Origin;
