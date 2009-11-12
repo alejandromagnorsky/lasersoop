@@ -4,6 +4,7 @@ import gui.GameFrame;
 
 import java.io.IOException;
 
+import logic.laser.Vector2DStack;
 import logic.tile.Origin;
 import logic.tile.Tile;
 import logic.tile.Wall;
@@ -32,19 +33,33 @@ public class Level {
 	}
 
 	public void update() {
+
 		GameMessage status = new NullMessage();
 		cleanLevel();
+
+		// FOR EACH
 		for (int i = 0; i < tileSet.getRows()
 				&& !(status instanceof GameOverMessage); i++)
 			for (int j = 0; j < tileSet.getCols()
 					&& !(status instanceof GameOverMessage); j++) {
+
 				Tile itr = tileSet.at(new Vector2D(i, j));
 
 				if (itr instanceof Origin) {
-					Vector2D nextPos = itr.nextPosition();
+
+					Vector2DStack vectorStack = new Vector2DStack();
+
+					vectorStack.add(itr.nextPosition());
 					Tile next;
-					while (!(status instanceof LaserStopMessage)
+
+					Vector2D nextPos;
+
+					while (!vectorStack.isEmpty()
+
+					&& !(status instanceof LaserStopMessage)
 							&& !(status instanceof GameOverMessage)) {
+
+						nextPos = vectorStack.pop();
 
 						// Borders are walls
 						if (!tileSet.contains(nextPos)) {
@@ -52,13 +67,14 @@ public class Level {
 						} else {
 							next = tileSet.at(nextPos);
 						}
+						
 						status = itr.action(next);
 
-						System.out.println("Status:" + status);
-						System.out.println("Next:" + next.getPos());
 						itr = next;
-						nextPos = itr.nextPosition();
+						vectorStack.add(itr.nextPosition());
+
 					}
+
 					if (status instanceof LaserStopMessage)
 						status = new NullMessage();
 				}

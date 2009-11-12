@@ -3,6 +3,7 @@ package logic.tile;
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.laser.LaserColor;
+import logic.laser.Vector2DStack;
 import messages.GameMessage;
 import messages.GoalAchievedMessage;
 import messages.NullMessage;
@@ -29,7 +30,7 @@ public class Goal extends StaticTile {
 	}
 
 	@Override
-	public Vector2D nextPosition() {
-		return this.getPos().add(this.getLastLaser().getDir());
+	public Vector2DStack nextPosition() {
+		return new Vector2DStack(getPos().add(getLastLaser().getDir()));
 	}
 }

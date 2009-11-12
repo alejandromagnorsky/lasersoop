@@ -1,6 +1,7 @@
 package logic.tile;
 
 import logic.Vector2D;
+import logic.laser.Vector2DStack;
 import messages.GameMessage;
 import messages.GameOverMessage;
 
@@ -15,8 +16,8 @@ public class Trap extends StaticTile {
 	}
 
 	@Override
-	public Vector2D nextPosition() {
-		return this.getPos();
+	public Vector2DStack nextPosition() {
+		return new Vector2DStack(getPos());
 	}
 
 }

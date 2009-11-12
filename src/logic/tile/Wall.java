@@ -2,6 +2,7 @@ package logic.tile;
 
 import logic.Vector2D;
 import logic.laser.Laser;
+import logic.laser.Vector2DStack;
 import messages.GameMessage;
 import messages.LaserStopMessage;
 
@@ -23,8 +24,8 @@ public class Wall extends StaticTile {
 	public void addLaser(Laser laser) {
 	}
 
-	public Vector2D nextPosition() {
-		return this.getPos();
+	public Vector2DStack nextPosition() {
+		return new Vector2DStack(getPos());
 	}
 
 }
