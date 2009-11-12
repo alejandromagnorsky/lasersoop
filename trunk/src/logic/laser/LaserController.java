@@ -1,7 +1,6 @@
 package logic.laser;
 
 import java.util.Vector;
-import logic.Vector2D;
 import logic.tile.Tile;
 import messages.GameMessage;
 
@@ -11,7 +10,7 @@ public abstract class LaserController {
 
 	public abstract GameMessage action(Tile t);
 
-	public abstract Vector2D nextPosition();
+	public abstract Vector2DStack nextPosition();
 
 	public LaserController() {
 		lasers = new Vector<Laser>();
@@ -20,8 +19,8 @@ public abstract class LaserController {
 	public boolean hasLasers() {
 		return !lasers.isEmpty();
 	}
-	
-	public int countLasers(){
+
+	public int countLasers() {
 		return lasers.size();
 	}
 
@@ -32,7 +31,6 @@ public abstract class LaserController {
 	public Laser getLastLaser() {
 		return lasers.lastElement();
 	}
-	
 
 	public Laser getFirstLaser() {
 		return lasers.firstElement();

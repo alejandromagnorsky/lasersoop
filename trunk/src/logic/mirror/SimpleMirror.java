@@ -2,6 +2,7 @@ package logic.mirror;
 
 import logic.Vector2D;
 import logic.laser.Laser;
+import logic.laser.Vector2DStack;
 import logic.tile.Tile;
 import messages.GameMessage;
 import messages.LaserBounceMessage;
@@ -33,7 +34,7 @@ public class SimpleMirror extends Mirror {
 	 * la orientacion del espejo y la dirrecion que tiene el laser que posee
 	 */
 	@Override
-	public Vector2D nextPosition() {
+	public Vector2DStack nextPosition() {
 		Laser l = new Laser(getLastLaser());
 		int angle = l.getAngle();
 		Vector2D next;
@@ -54,6 +55,6 @@ public class SimpleMirror extends Mirror {
 			 */
 			next = this.getPos();
 		}
-		return next;
+		return new Vector2DStack(next);
 	}
 }
