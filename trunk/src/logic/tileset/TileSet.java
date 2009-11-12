@@ -116,11 +116,11 @@ public class TileSet implements Iterable<Tile>{
 						+ g.getColor().getGreen() + ","
 						+ g.getColor().getBlue();
 					} else if( t instanceof SimpleMirror ) {
-						aux = ",3," + ((Mirror)t).getOrientation() + ",0,0,0";
+						aux = ",3," + ((SimpleMirror)t).getOrientation() + ",0,0,0";
+					} else if( t instanceof SemiMirror ) {
+						aux = ",5," + ((SemiMirror)t).getOrientation() + ",0,0,0";
 					} else if( t instanceof DoubleMirror ) {
-						aux = ",4," + ((Mirror)t).getOrientation() + ",0,0,0";
-					/*} else if( t instanceof SplitMirror ) {
-						aux = ",5," + ((SplitMirror)t).getOrientation() + ",0,0,0";*/
+						aux = ",4," + ((DoubleMirror)t).getOrientation() + ",0,0,0";
 					}else if( t instanceof Wall ) {
 						aux = ",6,0,0,0,0";
 					}else if( t instanceof Trap ) {
