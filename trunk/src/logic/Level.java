@@ -67,7 +67,7 @@ public class Level {
 						} else {
 							next = tileSet.at(nextPos);
 						}
-						
+
 						status = itr.action(next);
 
 						itr = next;
