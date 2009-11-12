@@ -30,13 +30,12 @@ public class Level {
 	}
 
 	public void cleanLevel() {
-		for(Tile t: tileSet){
-			t.eraseLasers();
-		}
-	/*	for (int i = 0; i < tileSet.getRows(); i++)
+
+		for (int i = 0; i < tileSet.getRows(); i++)
 			for (int j = 0; j < tileSet.getCols(); j++)
 				tileSet.at(new Vector2D(j, i)).eraseLasers();
-	*/}
+	
+	}
 
 	public void update() {
 
