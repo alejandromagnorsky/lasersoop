@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import logic.Vector2D;
 import logic.laser.LaserColor;
 import logic.mirror.DoubleMirror;
@@ -19,7 +20,7 @@ import logic.tile.Tile;
 import logic.tile.Trap;
 import logic.tile.Wall;
 
-public class TileSet {
+public class TileSet implements Iterable<Tile>{
 	private String levelName;
 	private Tile[][] tileSet;
 	
@@ -99,37 +100,33 @@ public class TileSet {
 			output.newLine();
 			
 			String aux = "";
-			for (int i=0; i < this.getRows(); i++){
-				for (int j=0; j < this.getCols(); j++){
-					Vector2D pos = new Vector2D(i,j);
-					if (!(this.at(pos) instanceof SimpleTile)){
-						if ( this.at(pos) instanceof Origin ){
-							aux = ",1," + ((Origin)this.at(pos)).getOrientation() + ","
-							+ ((Origin)this.at(pos)).getColor().getRed() + "," 
-							+ ((Origin)this.at(pos)).getColor().getGreen() + ","
-							+ ((Origin)this.at(pos)).getColor().getBlue();
-							
-						} else if( this.at(pos) instanceof Goal ) {
-							aux = ",2,0," + ((Goal)this.at(pos)).getColor().getRed() + ","
-							+ ((Goal)this.at(pos)).getColor().getGreen() + ","
-							+ ((Goal)this.at(pos)).getColor().getBlue();
-							
-						} else if( this.at(pos) instanceof SimpleMirror ) {
-							aux = ",3," + ((Mirror)this.at(pos)).getOrientation() + ",0,0,0";
-						} else if( this.at(pos) instanceof DoubleMirror ) {
-							aux = ",4," + ((Mirror)this.at(pos)).getOrientation() + ",0,0,0";
-							
-						/*} else if( this.at(pos) instanceof SplitMirror ) {
-							aux = ",5," + ((SplitMirror)this.at(pos)).getOrientation() + ",0,0,0";*/
-						}else if( this.at(pos) instanceof Wall ) {
-							aux = ",6,0,0,0,0";
-							
-						}else if( this.at(pos) instanceof Trap ) {
-							aux = ",7,0,0,0,0";
-						}
-						output.write(i + "," + j + aux);
-						output.newLine();
+			
+			for (Tile t: this){
+				if (!(t instanceof SimpleTile)){
+					if ( t instanceof Origin ){
+						Origin o = (Origin)t;
+						aux = ",1," + o.getOrientation() + "," 
+						+ o.getColor().getRed() + "," 
+						+ o.getColor().getGreen() + ","
+						+ o.getColor().getBlue();
+					} else if( t instanceof Goal ) {
+						Goal g = (Goal)t;
+						aux = ",2,0," + g.getColor().getRed() + ","
+						+ g.getColor().getGreen() + ","
+						+ g.getColor().getBlue();
+					} else if( t instanceof SimpleMirror ) {
+						aux = ",3," + ((Mirror)t).getOrientation() + ",0,0,0";
+					} else if( t instanceof DoubleMirror ) {
+						aux = ",4," + ((Mirror)t).getOrientation() + ",0,0,0";
+					/*} else if( t instanceof SplitMirror ) {
+						aux = ",5," + ((SplitMirror)t).getOrientation() + ",0,0,0";*/
+					}else if( t instanceof Wall ) {
+						aux = ",6,0,0,0,0";
+					}else if( t instanceof Trap ) {
+						aux = ",7,0,0,0,0";
 					}
+					output.write(t.getPos().getX() + "," + t.getPos().getY() + aux);
+					output.newLine();
 				}
 			}
 		} finally {
@@ -185,26 +182,34 @@ public class TileSet {
 		int quantComas = 0;
 		boolean flagComment = false;
 		strData[0] = "";
-		for (int i = 0, j = 0; i < line.length() && !flagComment; i++, j++) {
+		for (int i = 0; i < line.length() && !flagComment; i++) {
 			if ((auxChar = line.charAt(i)) != ' ' && auxChar != '\t') {
-				if (auxChar == ',' && quantComas < lineType-1) {
+				if (auxChar == ',' && quantComas < lineType-1 && strData[quantComas]!="") {
+					/* Este IF valida que si se levantó una ',', sea considerado como coma
+					 * si y sólo si la cantidad de comas es menor a la que tiene que
+					 * levantarse, y que el número detrás de esa coma no sea "".
+					 * O sea, evita líneas como estas:
+					 * 		- ",0,0,0..."
+					 * 		- "0,0,,0,0..."
+					 * 		- "0,0,0,0,0,0,0,,,,,,,,,"
+					 */
 					strData[++quantComas] = "";
-					j = 0;
-				} else if (auxChar == '#' && quantComas == lineType-1 && strData[lineType-1] != "") {
+				} else if (auxChar == '#' && quantComas == lineType-1
+							&& strData[lineType-1] != "") {
+					/* Este IF hace que si se levantó un '#', sea considerado como comentario
+					 * si y sólo si la cantidad de comas que se levantaron es la correcta
+					 * y que el último número levantado no sea distinto de "".
+					 * O sea, evita líneas como estas:
+					 * 		- "0,0,0,0# blaba"
+					 * 		- "0,0,0,0,0,a"
+					 */
 					flagComment = true;
-				} else {
-					if ((quantComas == 1 && i == 1) 
-							|| (quantComas < lineType-1 && quantComas > lineType-3)
-							&& j > 2 || !Character.isDigit(auxChar)) {
+				} else if (!Character.isDigit(auxChar)) {
 						System.out.println(line + "TEMP|-----| INVALIDO 1");
 						return;
-					}
-				}
-				if (auxChar != ',' && auxChar != '#') {
+				} else {
 					strData[quantComas] += auxChar;
 				}
-			} else {
-				j--;
 			}
 		}
 		Integer[] data = new Integer[7];
@@ -219,6 +224,7 @@ public class TileSet {
 			tileSet = new Tile[data[0]][data[1]];
 			this.initializer();
 		} else {
+			System.out.println("fila: " + data[0] + "cols: " + data[1]);
 			if (data[0] > this.getRows() || data[1] > this.getCols()
 					|| data[2] > 7|| data[2] < 1) {
 				/* Valido los parámetros en general */
@@ -242,29 +248,26 @@ public class TileSet {
 			switch (data[2]) {
 			case 1:
 				LaserColor lc1 = new LaserColor(data[4], data[5], data[6]);
-				this.getTileSet()[data[0]][data[1]] = new Origin(pos, data[3], lc1);
+				tileSet[data[0]][data[1]] = new Origin(pos, data[3], lc1);
 				break;
 			case 2:
 				LaserColor lc2 = new LaserColor(data[4], data[5], data[6]);
-				this.getTileSet()[data[0]][data[1]] = new Goal(pos, lc2);
+				tileSet[data[0]][data[1]] = new Goal(pos, lc2);
 				break;
 			case 3:
-				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
+				tileSet[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
 				break;
 			case 4:
-				this.getTileSet()[data[0]][data[1]] = new DoubleMirror(pos, data[3]);
+				tileSet[data[0]][data[1]] = new DoubleMirror(pos, data[3]);
 				break;
 			case 5:
-				/* El case 5 lo tengo que hacer para el semiespejo, estoy esperando a que
-				 * terminen de definir la clase, mientras está el simpleMirror a modo de prueba
-				 */
-				this.getTileSet()[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
+				tileSet[data[0]][data[1]] = new SemiMirror(pos, data[3]);
 				break;
 			case 6:
-				this.getTileSet()[data[0]][data[1]] = new Wall(pos);
+				tileSet[data[0]][data[1]] = new Wall(pos);
 				break;
 			case 7:
-				this.getTileSet()[data[0]][data[1]] = new Trap(pos);
+				tileSet[data[0]][data[1]] = new Trap(pos);
 				break;
 			}
 		}
@@ -284,4 +287,30 @@ public class TileSet {
 	public void loadTile(String line) {
 		loadGeneral(line, TILELINE);
 	}
+
+	/* IMPLEMENTACIÓN DE ITERATOR E ITERABLE */
+	public class TileIterator implements Iterator<Tile>{
+		private int index;
+		
+		@Override
+		public boolean hasNext() {
+			return index < (getRows() * getCols() - 1);
+		}
+
+		@Override
+		public Tile next() {
+			return at(new Vector2D(index / getCols(), index++ % getCols()));
+		}
+
+		@Override
+		public void remove() {			
+		}
+		
+	}
+	
+	@Override
+	public Iterator<Tile> iterator() {
+		return new TileIterator();
+	}
+
 }
