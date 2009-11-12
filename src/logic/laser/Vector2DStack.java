@@ -42,4 +42,8 @@ public class Vector2DStack {
 	public boolean isEmpty() {
 		return vectors.isEmpty();
 	}
+
+	public Vector2D peek() {
+		return vectors.peek();
+	}
 }
