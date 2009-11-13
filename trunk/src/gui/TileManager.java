@@ -127,11 +127,6 @@ public class TileManager {
 
 		if (count > 0 && !(t instanceof Origin)) {
 
-			// if (t instanceof DoubleMirror)
-			laserType = 2;
-			if (t instanceof SemiMirror)
-				laserType = 3;
-
 			for (Laser l : lasers) {
 
 				// Nº of rotations to the left
@@ -147,7 +142,6 @@ public class TileManager {
 							.getOrientation() : ((Mirror) t).getOrientation();
 
 					direction = 2 + aux - 2 * l.getAngle() / 180;
-					System.out.println(l.getAngle());
 
 					if (t instanceof SemiMirror) {
 						laserType = 3;
@@ -155,6 +149,18 @@ public class TileManager {
 								+ times;
 					}
 				} else if (t instanceof SimpleMirror) {
+
+					if (((Mirror) t).reflects(l)) {
+						laserType = 2;
+						int aux = l.getAngle() / 90 % 2 == 1 ? 1 - ((Mirror) t)
+								.getOrientation()/2 : ((Mirror) t)
+								.getOrientation()/2;
+
+						direction = 2 + aux - 2 * l.getAngle() / 180;
+
+					} else {
+						laserType = 1;
+					}
 
 				} else {
 					laserType = 0;
