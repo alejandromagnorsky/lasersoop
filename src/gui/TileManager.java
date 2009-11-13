@@ -38,9 +38,10 @@ public class TileManager {
 
 			// Load laser image
 			tileImages.add(ImageUtils.loadImage("resources/laser.png"));
+			tileImages.add(ImageUtils.loadImage("resources/half-laser.png"));
+			tileImages.add(ImageUtils.loadImage("resources/corner-laser.png"));
 
 			// Load mirror images
-			tileImages.add(ImageUtils.loadImage("resources/half-laser.png"));
 			tileImages.add(ImageUtils.loadImage("resources/double-mirror.png"));
 			tileImages.add(ImageUtils.loadImage("resources/simple-mirror.png"));
 			tileImages.add(ImageUtils.loadImage("resources/split-mirror.png"));
@@ -64,11 +65,11 @@ public class TileManager {
 		else if (t instanceof Goal)
 			i = 4;
 		else if (t instanceof SemiMirror)
-			i = 9;
+			i = 10;
 		else if (t instanceof SimpleMirror)
-			i = 8;
+			i = 9;
 		else
-			i = 7;
+			i = 8;
 
 		Image tileImage;
 
@@ -119,28 +120,19 @@ public class TileManager {
 
 		Vector<Laser> lasers = t.getLasers();
 
-		if (t instanceof Mirror || t instanceof Trap)
-			halfLaser = 1;
-
 		if (count > 0 && !(t instanceof Origin)) {
 
 			for (Laser l : lasers) {
 				int times = l.getAngle() / 90;
 
+				if (t instanceof Mirror)
+					halfLaser = ((Mirror) t).reflects(l) ? 2 : 1;
+
 				Image tmpLaser = ImageUtils.rotateImage(tileImages
-						.elementAt(5 + halfLaser), times - 1);
+						.elementAt(5 + halfLaser), times + 1);
 
 				bp.appendImage(t.getPos().getX(), t.getPos().getY(), tmpLaser);
 
-				if (halfLaser == 1) {
-
-					tmpLaser = ImageUtils.rotateImage(tileImages
-							.elementAt(5 + halfLaser), times + 3);
-
-					//bp.appendImage(t.getPos().getX(), t.getPos().getY(),
-					//		tmpLaser);
-
-				}
 			}
 		}
 	}
