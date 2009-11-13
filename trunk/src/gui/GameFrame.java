@@ -42,7 +42,6 @@ public class GameFrame extends JFrame {
 		tileManager = new TileManager(bp);
 
 		tileManager.loadTiles();
-		clearScreen();
 		currentLevel.update();
 		updateScreen();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,7 +95,7 @@ public class GameFrame extends JFrame {
 		});
 
 		add(bp);
-		this.setResizable(true);
+		this.setResizable(false);
 
 	}
 

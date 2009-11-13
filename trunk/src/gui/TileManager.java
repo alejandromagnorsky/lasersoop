@@ -3,6 +3,7 @@ package gui;
 import java.awt.Image;
 import java.util.Vector;
 
+import logic.laser.Laser;
 import logic.mirror.Mirror;
 import logic.mirror.SemiMirror;
 import logic.mirror.SimpleMirror;
@@ -17,12 +18,11 @@ public class TileManager {
 
 	private BoardPanel bp;
 	private Vector<Image> tileImages;
-	
-	public TileManager( BoardPanel bp ){
+
+	public TileManager(BoardPanel bp) {
 		this.bp = bp;
 		tileImages = new Vector<Image>();
 	}
-	
 
 	public void loadTiles() {
 		try {
@@ -49,8 +49,7 @@ public class TileManager {
 			System.out.println("Error loading images.");
 		}
 	}
-	
-	
+
 	public void addTile(Tile t) {
 		// Later check which tile to print
 		int i;
@@ -72,11 +71,11 @@ public class TileManager {
 			i = 7;
 
 		Image tileImage;
-		int halfLaser = 0;
 
 		if (t instanceof Mirror) {
 			Mirror m = (Mirror) t;
 			int times = 0;
+
 			switch (m.getDegree()) {
 			case 135:
 				times = 0;
@@ -91,30 +90,58 @@ public class TileManager {
 				times = 3;
 				break;
 			}
+
 			tileImage = ImageUtils.rotateImage(tileImages.elementAt(i), times);
-			halfLaser = 1;
 
 		} else if (t instanceof Origin) {
 
 			int times = ((Origin) t).getOrientation();
 			tileImage = ImageUtils.rotateImage(tileImages.elementAt(i), times);
 
-		} else {
+		} else
 			tileImage = tileImages.elementAt(i);
-		}
 
-		bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImage);
+		// First, fill with empty tiles.
+		if (t instanceof SimpleTile)
+			bp.setImage(t.getPos().getX(), t.getPos().getY(), tileImage);
 
+		addLasers(t);
+
+		// Hide lasers behind mirrors
+		if (!(t instanceof SimpleTile))
+			bp.appendImage(t.getPos().getX(), t.getPos().getY(), tileImage);
+	}
+
+	private void addLasers(Tile t) {
+
+		int halfLaser = 0;
 		int count = t.countLasers();
+
+		Vector<Laser> lasers = t.getLasers();
+
+		if (t instanceof Mirror || t instanceof Trap)
+			halfLaser = 1;
 
 		if (count > 0 && !(t instanceof Origin)) {
 
-			int times = t.getLastLaser().getAngle() / 90;
+			for (Laser l : lasers) {
+				int times = l.getAngle() / 90;
 
-			Image tmpLaser = ImageUtils.rotateImage(tileImages
-					.elementAt(5 + halfLaser), times + 1);
+				Image tmpLaser = ImageUtils.rotateImage(tileImages
+						.elementAt(5 + halfLaser), times - 1);
 
-			bp.appendImage(t.getPos().getX(), t.getPos().getY(), tmpLaser);
+				bp.appendImage(t.getPos().getX(), t.getPos().getY(), tmpLaser);
+
+				if (halfLaser == 1) {
+
+					tmpLaser = ImageUtils.rotateImage(tileImages
+							.elementAt(5 + halfLaser), times + 3);
+
+					//bp.appendImage(t.getPos().getX(), t.getPos().getY(),
+					//		tmpLaser);
+
+				}
+			}
 		}
 	}
 }

@@ -16,6 +16,10 @@ public abstract class LaserController {
 	public LaserController() {
 		lasers = new Vector<Laser>();
 	}
+	
+	public Vector<Laser> getLasers(){
+		return lasers;
+	}
 
 	public boolean hasLasers() {
 		return !lasers.isEmpty();
