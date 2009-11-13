@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.util.Vector;
 
 import logic.laser.Laser;
+import logic.mirror.DoubleMirror;
 import logic.mirror.Mirror;
 import logic.mirror.SemiMirror;
 import logic.mirror.SimpleMirror;
@@ -40,6 +41,8 @@ public class TileManager {
 			tileImages.add(ImageUtils.loadImage("resources/laser.png"));
 			tileImages.add(ImageUtils.loadImage("resources/half-laser.png"));
 			tileImages.add(ImageUtils.loadImage("resources/corner-laser.png"));
+			tileImages.add(ImageUtils.loadImage("resources/t-laser.png"));
+			tileImages.add(ImageUtils.loadImage("resources/cross-laser.png"));
 
 			// Load mirror images
 			tileImages.add(ImageUtils.loadImage("resources/double-mirror.png"));
@@ -65,11 +68,11 @@ public class TileManager {
 		else if (t instanceof Goal)
 			i = 4;
 		else if (t instanceof SemiMirror)
-			i = 10;
+			i = 12;
 		else if (t instanceof SimpleMirror)
-			i = 9;
+			i = 11;
 		else
-			i = 8;
+			i = 10;
 
 		Image tileImage;
 
@@ -115,21 +118,50 @@ public class TileManager {
 
 	private void addLasers(Tile t) {
 
-		int halfLaser = 0;
+		int direction = 0;
 		int count = t.countLasers();
+
+		int laserType = 0;
 
 		Vector<Laser> lasers = t.getLasers();
 
 		if (count > 0 && !(t instanceof Origin)) {
 
+			// if (t instanceof DoubleMirror)
+			laserType = 2;
+			if (t instanceof SemiMirror)
+				laserType = 3;
+
 			for (Laser l : lasers) {
-				int times = l.getAngle() / 90;
 
-				if (t instanceof Mirror)
-					halfLaser = ((Mirror) t).reflects(l) ? 2 : 1;
+				// Nº of rotations to the left
+				int times = 1 + l.getAngle() / 90;
 
-				Image tmpLaser = ImageUtils.rotateImage(tileImages
-						.elementAt(5 + halfLaser), times + 1);
+				Image tmpLaser;
+
+				if (t instanceof DoubleMirror) {
+
+					laserType = 2;
+
+					int aux = l.getAngle() / 90 % 2 == 1 ? 1 - ((Mirror) t)
+							.getOrientation() : ((Mirror) t).getOrientation();
+
+					direction = 2 + aux - 2 * l.getAngle() / 180;
+					System.out.println(l.getAngle());
+
+					if (t instanceof SemiMirror) {
+						laserType = 3;
+						direction = ((Mirror) t).getOrientation() * 2 + 1
+								+ times;
+					}
+				} else if (t instanceof SimpleMirror) {
+
+				} else {
+					laserType = 0;
+					direction = times;
+				}
+				tmpLaser = ImageUtils.rotateImage(tileImages
+						.elementAt(5 + laserType), direction);
 
 				bp.appendImage(t.getPos().getX(), t.getPos().getY(), tmpLaser);
 
