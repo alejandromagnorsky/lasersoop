@@ -57,7 +57,7 @@ public class Level {
 
 		if (t instanceof SemiMirror) {
 			nextPos = t.getPos().add(t.getLastLaser().getDir());
-			if (tileSet.contains(nextPos)) {
+			if (!((SemiMirror) t).stopLoop() && tileSet.contains(nextPos)) {
 				Laser l = new Laser(t.getLastLaser().getDir(), t.getLastLaser()
 						.getColor());
 				tileSet.at(nextPos).addLaser(l);
@@ -67,7 +67,6 @@ public class Level {
 
 		status = t.action(next);
 		t = next;
-		nextPos = t.nextPosition();
 		walk(t, status);
 	}
 }

@@ -29,6 +29,10 @@ public abstract class LaserController {
 		lasers.add(laser);
 	}
 
+	public Vector<Laser> getLasers(){
+		return lasers;
+	}
+	
 	public Laser getLastLaser() {
 		return lasers.lastElement();
 	}
