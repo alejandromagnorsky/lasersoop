@@ -44,4 +44,8 @@ public abstract class LaserController {
 	public void eraseLasers() {
 		lasers.clear();
 	}
+	
+	public void eraseLastLaser() {
+		lasers.removeElementAt(countLasers()-1);
+	}
 }
