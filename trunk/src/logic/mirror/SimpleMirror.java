@@ -38,8 +38,7 @@ public class SimpleMirror extends Mirror {
 		int angle = l.getAngle();
 		Vector2D next;
 
-		if (angle <= degree && angle >= degree - 180
-				|| (angle == 270 && degree == 45)) {
+		if (reflects(l)) {
 			newLaserDir = l.getDir();
 			if (angle + 45 == degree) {
 				newLaserDir.changeDirection(90);
@@ -56,4 +55,12 @@ public class SimpleMirror extends Mirror {
 		}
 		return next;
 	}
+
+	@Override
+	public boolean reflects(Laser laser) {
+		int angle = laser.getAngle();
+		return angle <= degree && angle >= degree - 180
+				|| (angle == 270 && degree == 45);
+	}
+
 }

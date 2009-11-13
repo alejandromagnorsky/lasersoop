@@ -1,6 +1,7 @@
 package logic.mirror;
 
 import logic.Vector2D;
+import logic.laser.Laser;
 import logic.tile.MovableTile;
 
 public abstract class Mirror extends MovableTile {
@@ -46,6 +47,8 @@ public abstract class Mirror extends MovableTile {
 	public void translate(Vector2D dest) {
 		setPos(dest);
 	}
+	
+	public abstract boolean reflects(Laser laser);
 
 	/**
 	 * Rota en sentido horario
