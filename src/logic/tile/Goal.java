@@ -1,22 +1,22 @@
 package logic.tile;
 
+import java.awt.Color;
 import logic.Vector2D;
 import logic.laser.Laser;
-import logic.laser.LaserColor;
 import messages.GameMessage;
 import messages.GoalAchievedMessage;
 import messages.NullMessage;
 
 public class Goal extends StaticTile {
 
-	private LaserColor color;
+	private Color color;
 
-	public Goal(Vector2D pos, LaserColor color) {
+	public Goal(Vector2D pos, Color color) {
 		super(pos);
 		this.color = color;
 	}
 
-	public LaserColor getColor() {
+	public Color getColor() {
 		return color;
 	}
 

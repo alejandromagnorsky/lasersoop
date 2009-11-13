@@ -1,8 +1,9 @@
 package logic.tile;
 
+import java.awt.Color;
+
 import logic.Vector2D;
 import logic.laser.Laser;
-import logic.laser.LaserColor;
 import messages.GameMessage;
 import messages.NullMessage;
 
@@ -10,7 +11,7 @@ public class Origin extends StaticTile {
 
 	private int orientation;
 
-	public Origin(Vector2D pos, int orientation, LaserColor color) {
+	public Origin(Vector2D pos, int orientation, Color color) {
 		super(pos);
 		this.orientation = orientation;
 		Vector2D dir = new Vector2D((360 - orientation * 90) % 360);
@@ -22,7 +23,7 @@ public class Origin extends StaticTile {
 		return this.orientation;
 	}
 
-	public LaserColor getColor() {
+	public Color getColor() {
 		return this.getLastLaser().getColor();
 	}
 
