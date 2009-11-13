@@ -36,6 +36,8 @@ public class Origin extends StaticTile {
 	@Override
 	public GameMessage action(Tile t) {
 		t.addLaser(new Laser(getLastLaser()));
+		if ( countLasers() >= 2 )
+			eraseLastLaser();
 		return new NullMessage();
 	}
 
