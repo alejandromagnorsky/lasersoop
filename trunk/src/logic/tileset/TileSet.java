@@ -1,5 +1,6 @@
 package logic.tileset;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,8 +9,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
+
 import logic.Vector2D;
-import logic.laser.LaserColor;
 import logic.mirror.DoubleMirror;
 import logic.mirror.Mirror;
 import logic.mirror.SemiMirror;
@@ -247,11 +248,11 @@ public class TileSet implements Iterable<Tile>{
 			Vector2D pos = new Vector2D(data[0], data[1]);
 			switch (data[2]) {
 			case 1:
-				LaserColor lc1 = new LaserColor(data[4], data[5], data[6]);
+				Color lc1 = new Color(data[4], data[5], data[6]);
 				tileSet[data[0]][data[1]] = new Origin(pos, data[3], lc1);
 				break;
 			case 2:
-				LaserColor lc2 = new LaserColor(data[4], data[5], data[6]);
+				Color lc2 = new Color(data[4], data[5], data[6]);
 				tileSet[data[0]][data[1]] = new Goal(pos, lc2);
 				break;
 			case 3:
