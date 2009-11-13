@@ -34,37 +34,34 @@ public class Level {
 	public void update() {
 		GameMessage status = new NullMessage();
 		cleanLevel();
-		for (Tile itr : tileSet) {
-			if (itr instanceof Origin) {
+		for (Tile itr : tileSet)
+			if (itr instanceof Origin)
 				walk(itr, status);
-			}
-		}
-
 	}
 
 	private void walk(Tile t, GameMessage status) {
 		if (status instanceof LaserStopMessage
-				|| status instanceof GameOverMessage)
+				|| status instanceof GameOverMessage 
+				|| (t instanceof SemiMirror && t.countLasers() >= 2)) //Para el caso del loop
 			return;
 		Vector2D nextPos = t.nextPosition();
 		Tile next;
+	
 		// Borders are walls
-		if (!tileSet.contains(nextPos)) {
+		if (!tileSet.contains(nextPos))
 			next = new Wall(nextPos);
-		} else {
+		else
 			next = tileSet.at(nextPos);
-		}
-
+				
 		if (t instanceof SemiMirror) {
 			nextPos = t.getPos().add(t.getLastLaser().getDir());
-			if (!((SemiMirror) t).stopLoop() && tileSet.contains(nextPos)) {
+			if (tileSet.contains(nextPos)) {
 				Laser l = new Laser(t.getLastLaser().getDir(), t.getLastLaser()
 						.getColor());
 				tileSet.at(nextPos).addLaser(l);
 				walk(tileSet.at(nextPos), status);
 			}
 		}
-
 		status = t.action(next);
 		t = next;
 		walk(t, status);
