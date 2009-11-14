@@ -51,6 +51,9 @@ public class DoubleMirror extends Mirror {
 
 		// Draw image
 		Image image = ImageUtils.rotateImage(tm.getDoubleMirror(), times);
+
+		if (hasLasers())
+			image = HueController.changeHue(image, getFirstLaser().getColor());
 		bp.appendImage(getPos().getX(), getPos().getY(), image);
 
 	}

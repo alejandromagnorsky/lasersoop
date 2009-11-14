@@ -1,6 +1,7 @@
 package logic.tile;
 
 import gui.BoardPanel;
+import gui.HueController;
 import gui.ImageUtils;
 import gui.TileManager;
 
@@ -44,6 +45,7 @@ public class Trap extends StaticTile {
 			// Nº of rotations to the left.
 			int times = -l.getAngle() / 90;
 			Image tmpLaser = ImageUtils.rotateImage(tm.getHalfLaser(), times);
+			tmpLaser = HueController.changeHue(tmpLaser, l.getColor());
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}
