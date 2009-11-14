@@ -281,7 +281,6 @@ public class TileSet implements Iterable<Tile> {
 		@Override
 		public void remove() {
 		}
-
 	}
 
 	@Override
