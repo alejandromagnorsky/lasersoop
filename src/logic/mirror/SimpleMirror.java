@@ -9,6 +9,15 @@ import messages.LaserStopMessage;
 
 public class SimpleMirror extends Mirror {
 
+	/**
+	 * Crea un nuevo espejo simple.
+	 * 
+	 * @param pos
+	 *            Indica la posicion en el tablero.
+	 * @param orientation
+	 *            Contiene la orientacion del espejo representada por un numero
+	 *            entre 0 y 3.
+	 */
 	public SimpleMirror(Vector2D pos, int orientation) {
 		super(pos, orientation);
 	}
@@ -19,6 +28,13 @@ public class SimpleMirror extends Mirror {
 		setDegree(orientation);
 	}
 
+	/**
+	 * Agrega un laser en la celda que recibe si reboto el laser o actua como
+	 * pared en caso contrario.
+	 * 
+	 * @param t
+	 *            Celda destino.
+	 */
 	@Override
 	public GameMessage action(Tile t) {
 		if (t.getPos().equals(this.getPos())) {
@@ -30,7 +46,7 @@ public class SimpleMirror extends Mirror {
 
 	/**
 	 * Retorna la posicion de la siguiente celda utilizando la posicion actual,
-	 * la orientacion del espejo y la dirrecion que tiene el laser que posee
+	 * la orientacion del espejo y el angulo que tiene el laser que posee.
 	 */
 	@Override
 	public Vector2D nextPosition() {

@@ -16,8 +16,8 @@ public abstract class LaserController {
 	public LaserController() {
 		lasers = new Vector<Laser>();
 	}
-	
-	public Vector<Laser> getLasers(){
+
+	public Vector<Laser> getLasers() {
 		return lasers;
 	}
 
@@ -32,7 +32,7 @@ public abstract class LaserController {
 	public void addLaser(Laser laser) {
 		lasers.add(laser);
 	}
-	
+
 	public Laser getLastLaser() {
 		return lasers.lastElement();
 	}
@@ -44,8 +44,8 @@ public abstract class LaserController {
 	public void eraseLasers() {
 		lasers.clear();
 	}
-	
+
 	public void eraseLastLaser() {
-		lasers.removeElementAt(countLasers()-1);
+		lasers.removeElementAt(countLasers() - 1);
 	}
 }

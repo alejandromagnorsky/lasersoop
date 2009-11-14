@@ -10,18 +10,20 @@ public class Laser {
 	private Color color;
 	private int angle;
 
-	public static void main(String args[]) {
-		Laser l1 = new Laser(new Vector2D(0, 1), new Color(100, 200, 100));
-		System.out.println(l1);
-		System.out.println(l1.angle);
-	}
-
+	/**
+	 * Crea una copia del laser recibido.
+	 */
 	public Laser(Laser l) {
 		this(new Vector2D(l.dir.getX(), l.dir.getY()), l.color);
 	}
 
 	/**
-	 * -> : 0 <- : 180 Hacia arriba: 90 Hacia abajo: 270
+	 * Crea un nuevo laser con direccion, color y angulo.
+	 * Para el angulo el criterio es:
+	 * -> : 0 .
+	 * <- : 180 .
+	 * Hacia arriba: 90 .
+	 * Hacia abajo: 270.
 	 */
 	public Laser(Vector2D dir, Color color) {
 		this.dir = dir;

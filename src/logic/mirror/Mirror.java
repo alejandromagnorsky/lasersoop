@@ -5,20 +5,33 @@ import logic.laser.Laser;
 import logic.tile.MovableTile;
 
 public abstract class Mirror extends MovableTile {
-	/*
-	 * Contiene la orientacion del espejo representada por un numero entre 0 y 3
-	 */
+
 	protected int orientation;
-	/* Indica el angulo de inclinacion */
 	protected int degree;
 	protected Vector2D newLaserDir = null;
 
-	public Mirror(Vector2D pos, int orientation) {
+	/**
+	 * Crea un nuevo espejo.
+	 * 
+	 * @param pos
+	 *            Indica la posicion en el tablero.
+	 * @param orientation
+	 *            Contiene la orientacion del espejo representada por un numero
+	 *            entre 0 y 3.
+	 */
+	protected Mirror(Vector2D pos, int orientation) {
 		super(pos);
 		this.orientation = orientation;
 		setDegree(orientation);
 	}
 
+	/**
+	 * Cambia el angulo de orientacion.
+	 * 
+	 * @param orientation
+	 *            Contiene la orientacion del espejo representada por un numero
+	 *            entre 0 y 3.
+	 */
 	public void setDegree(int orientation) {
 		switch (orientation) {
 		case 0:
@@ -44,14 +57,12 @@ public abstract class Mirror extends MovableTile {
 		return orientation;
 	}
 
-	public void translate(Vector2D dest) {
-		setPos(dest);
-	}
-	
-	public abstract boolean reflects(Laser laser);
-
 	/**
-	 * Rota en sentido horario
+	 * Indica si el laser recibido es o no reflejado por el espejo.
+	 * 
+	 * @param laser
+	 *            Laser "dentro" del espejo.
+	 * @return True, si lo refleja. False, en caso contrario.
 	 */
-	public abstract void rotate();
+	public abstract boolean reflects(Laser laser);
 }

@@ -7,6 +7,9 @@ import messages.NullMessage;
 
 public class SimpleTile extends StaticTile {
 
+	/**
+	 * Crea una celda vacia en la posicion recibida.
+	 */
 	public SimpleTile(Vector2D pos) {
 		super(pos);
 	}
