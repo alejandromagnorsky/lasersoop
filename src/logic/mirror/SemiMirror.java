@@ -103,8 +103,8 @@ public class SemiMirror extends DoubleMirror {
 	@Override
 	public GameMessage action(Tile t) {
 		color = ImageUtils.mix(color, getLastLaser().getColor());
-		return super.action(t);
-	}
+		GameMessage status = t.addLaser(new Laser(newLaserDir, color));
+		return status;	}
 
 	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
