@@ -36,7 +36,6 @@ public class Trap extends StaticTile {
 
 	}
 
-	
 	/**
 	 * Devuelve su propia posicion ya detiene al laser.
 	 */

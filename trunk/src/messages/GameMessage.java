@@ -8,6 +8,14 @@ public class GameMessage {
 
 	}
 
+	/**
+	 * Por default no indica que hay que detener al laser.
+	 * @return
+	 */
+	public boolean stopLaser(){
+		return false;
+	}
+	
 	public GameMessage(String message) {
 		this.message = message;
 	}

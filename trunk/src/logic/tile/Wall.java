@@ -2,11 +2,8 @@ package logic.tile;
 
 import gui.BoardPanel;
 import gui.TileManager;
-
 import java.awt.Image;
-
 import logic.Vector2D;
-import logic.laser.Laser;
 import messages.GameMessage;
 import messages.LaserStopMessage;
 
@@ -38,13 +35,6 @@ public class Wall extends StaticTile {
 
 	}
 
-
-	/**
-	 * Las paredes no tienen lasers.
-	 */
-	@Override
-	public void addLaser(Laser laser) {
-	}
 
 	/**
 	 * Devuelve su propia posicion ya detiene al laser.

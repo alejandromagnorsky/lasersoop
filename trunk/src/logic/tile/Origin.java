@@ -47,6 +47,11 @@ public class Origin extends StaticTile {
 		return this.getLastLaser().getColor();
 	}
 
+	@Override
+	public boolean shootLaser(){
+		return true;
+	}
+	
 	/**
 	 * Borra todos los lasers menos el primero que es el que emite.
 	 */
