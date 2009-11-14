@@ -26,8 +26,8 @@ public class TileSet implements Iterable<Tile>{
 	private String levelName = "";
 	private Tile[][] tileSet;
 	
-//	private static final int DIMLINE = 2;
-//	private static final int TILELINE = 7;
+	private static final int DIMLINE = 2;
+	private static final int TILELINE = 7;
 
 	public Tile[][] getTileSet() {
 		return tileSet;
@@ -62,7 +62,12 @@ public class TileSet implements Iterable<Tile>{
 		return tileSet[pos.getX()][pos.getY()];
 	}
 	
-	public void set(Tile t) {
+	public void set(TileSet ts){
+		this.levelName = ts.levelName;
+		this.tileSet = ts.tileSet;
+	}
+	
+	public void add(Tile t) {
 		tileSet[t.getPos().getX()][t.getPos().getY()] = t;
 	}
 
@@ -137,7 +142,7 @@ public class TileSet implements Iterable<Tile>{
 			}
 		}
 	}
-/*	
+
 	public void loader(String filename) throws IOException {
 		BufferedReader input = null;
 		try {
@@ -166,19 +171,19 @@ public class TileSet implements Iterable<Tile>{
 			}
 		}
 	}
-*/
+
 	/*
 	 * -----------------------------------------------------------
 	 * FALTA VER QUE DEVUELVE EN CASO DE ARCHIVO INVALIDO
 	 * -----------------------------------------------------------
 	 */
-//	public void loadGeneral(String line, int lineType) {
+	public void loadGeneral(String line, int lineType) {
 		/* El parámetro lineType hace referencia a la cantidad de valores que el parser
 		 * tiene que levantar por línea. Si la línea tiene información acerca de:
 		 * 		- la dimensión del tablero: lineType = 2.
 		 * 		- una celda: lineType = 7.
 		 */
-/*		String[] strData = new String[lineType];
+		String[] strData = new String[lineType];
 		char auxChar;
 		int quantComas = 0;
 		boolean flagComment = false;
@@ -186,7 +191,7 @@ public class TileSet implements Iterable<Tile>{
 		for (int i = 0; i < line.length() && !flagComment; i++) {
 			if ((auxChar = line.charAt(i)) != ' ' && auxChar != '\t') {
 				if (auxChar == ',' && quantComas < lineType-1 && strData[quantComas]!="") {
-*/					/* Este IF valida que si se levantó una ',', sea considerado como coma
+				/* Este IF valida que si se levantó una ',', sea considerado como coma
 					 * si y sólo si la cantidad de comas es menor a la que tiene que
 					 * levantarse, y que el número detrás de esa coma no sea "".
 					 * O sea, evita líneas como estas:
@@ -194,17 +199,17 @@ public class TileSet implements Iterable<Tile>{
 					 * 		- "0,0,,0,0..."
 					 * 		- "0,0,0,0,0,0,0,,,,,,,,,"
 					 */
-/*					strData[++quantComas] = "";
+					strData[++quantComas] = "";
 				} else if (auxChar == '#' && quantComas == lineType-1
 							&& strData[lineType-1] != "") {
-*/					/* Este IF hace que si se levantó un '#', sea considerado como comentario
+					/* Este IF hace que si se levantó un '#', sea considerado como comentario
 					 * si y sólo si la cantidad de comas que se levantaron es la correcta
 					 * y que el último número levantado no sea distinto de "".
 					 * O sea, evita líneas como estas:
 					 * 		- "0,0,0,0# blaba"
 					 * 		- "0,0,0,0,0,a"
 					 */
-/*					flagComment = true;
+					flagComment = true;
 				} else if (!Character.isDigit(auxChar)) {
 						System.out.println(line + "TEMP|-----| INVALIDO 1");
 						return;
@@ -222,25 +227,25 @@ public class TileSet implements Iterable<Tile>{
 				System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
 				return;
 			}
-			this = new TileSet(data[0], data[1]);
+			this.set(new TileSet(data[0], data[1]));
 		} else {
 			if (data[0] > this.getRows() || data[1] > this.getCols()
 					|| data[2] > 7|| data[2] < 1) {
-*/				/* Valido los parámetros en general */
-/*				System.out.println(line + "\n" + "TEMP|-----| incorrectos 1");
+				/* Valido los parámetros en general */
+			System.out.println(line + "\n" + "TEMP|-----| incorrectos 1");
 				return;
 			} else if (((data[2] == 1 || data[2] == 3) && (data[3] < 0 || data[3] > 3))
 					|| ((data[2] == 4 || data[2] == 5) && data[3] != 0 && data[3] != 1)
 					|| ( (data[2] == 6 || data[2] == 7) && data[3] != 0)) {
-*/				/* Valido los parámetros de la rotación */
-/*				System.out.println(line + "\n" + "TEMP|-----| incorrectos 2");
+				/* Valido los parámetros de la rotación */
+				System.out.println(line + "\n" + "TEMP|-----| incorrectos 2");
 				return;
 			} else if (((data[2] == 1 || data[2] == 2) && (data[4] < 0
 					|| data[4] > 255 || data[5] < 0 || data[5] > 255
 					|| data[6] < 0 || data[6] > 255))
 					|| (data[2] != 1 && data[2] != 2 && data[4] != 0)) {
-*/				/* Valido los parámetros del color */
-/*				System.out.println(line + "\n" + "TEMP|-----| incorrectos 3");
+				/* Valido los parámetros del color */
+				System.out.println(line + "\n" + "TEMP|-----| incorrectos 3");
 				return;
 			}
 			Vector2D pos = new Vector2D(data[0], data[1]);
@@ -270,8 +275,8 @@ public class TileSet implements Iterable<Tile>{
 				break;
 			}
 		}
-	}*/
-/*
+	}
+
 	public void loadName(String line) {
 		for (int i = 0; i < line.length() && line.charAt(i) != '#'; i++) {
 			levelName += line.charAt(i);
@@ -285,7 +290,7 @@ public class TileSet implements Iterable<Tile>{
 	public void loadTile(String line) {
 		loadGeneral(line, TILELINE);
 	}
-*/
+
 	/* IMPLEMENTACIÓN DE ITERATOR E ITERABLE */
 	public class TileIterator implements Iterator<Tile>{
 		private int index;
