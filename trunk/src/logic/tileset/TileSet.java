@@ -73,7 +73,6 @@ public class TileSet implements Iterable<Tile> {
 	}
 
 	public void swapTiles(Vector2D v1, Vector2D v2) {
-
 		if (at(v2).canSwap()) {
 			at(v1).translate(v2);
 			add(at(v1));
@@ -100,43 +99,12 @@ public class TileSet implements Iterable<Tile> {
 				file.createNewFile();
 			}
 			output = new BufferedWriter(new FileWriter(file));
-			output.write(levelName);
-			output.newLine();
-			output.write(this.getRows() + "," + this.getCols());
-			output.newLine();
-
-			String aux = "";
+			output.write(levelName + "\n");
+			output.write(this.getRows() + "," + this.getCols() + "\n");
 
 			for (Tile t : this) {
 				if (!(t instanceof SimpleTile)) {
-					if (t instanceof Origin) {
-						Origin o = (Origin) t;
-						aux = ",1," + o.getOrientation() + ","
-								+ o.getColor().getRed() + ","
-								+ o.getColor().getGreen() + ","
-								+ o.getColor().getBlue();
-					} else if (t instanceof Goal) {
-						Goal g = (Goal) t;
-						aux = ",2,0," + g.getColor().getRed() + ","
-								+ g.getColor().getGreen() + ","
-								+ g.getColor().getBlue();
-					} else if (t instanceof SimpleMirror) {
-						aux = ",3," + ((SimpleMirror) t).getOrientation()
-								+ ",0,0,0";
-					} else if (t instanceof SemiMirror) {
-						aux = ",5," + ((SemiMirror) t).getOrientation()
-								+ ",0,0,0";
-					} else if (t instanceof DoubleMirror) {
-						aux = ",4," + ((DoubleMirror) t).getOrientation()
-								+ ",0,0,0";
-					} else if (t instanceof Wall) {
-						aux = ",6,0,0,0,0";
-					} else if (t instanceof Trap) {
-						aux = ",7,0,0,0,0";
-					}
-					output.write(t.getPos().getX() + "," + t.getPos().getY()
-							+ aux);
-					output.newLine();
+					output.write(t.toString() + "\n");
 				}
 			}
 		} finally {
