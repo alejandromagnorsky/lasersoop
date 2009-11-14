@@ -106,5 +106,10 @@ public class SemiMirror extends DoubleMirror {
 		color = ImageUtils.mix(color, getLastLaser().getColor());
 		return super.action(t);
 	}
+	
+	public String toString(){
+		String pos = getPos().getX() + "," + getPos().getY();
+		return pos + ",5," + orientation + ",0,0,0\n";
+	}
 
 }
