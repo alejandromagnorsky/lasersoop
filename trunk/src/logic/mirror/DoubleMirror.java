@@ -113,7 +113,6 @@ public class DoubleMirror extends Mirror {
 	
 	public String toString(){
 		String pos = getPos().getX() + "," + getPos().getY();
-		return pos + ",4," + orientation + ",0,0,0\n";
+		return pos + ",4," + orientation + ",0,0,0";
 	}
-
 }
