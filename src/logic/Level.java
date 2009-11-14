@@ -12,18 +12,19 @@ import messages.NullMessage;
 
 public class Level {
 	private TileSet tileSet;
-
+	private String name;
 	/**
 	 * Crea un nuevo nivel con un determinado nombre.
 	 * 
 	 * @param filename
-	 *            Nombre del nivel.
+	 *            Nombre del archivo que contiene los datos del nivel.
 	 * @throws IOException
 	 *             Si no se pudo cargar el nivel correctamente.
 	 */
 	public Level(String filename) throws IOException {
 		tileSet = new TileSet();
 		tileSet.loader(filename);
+		setName(filename);
 
 		GameFrame game = new GameFrame(tileSet, this);
 		game.setVisible(true);
@@ -84,5 +85,18 @@ public class Level {
 		status = t.action(next);
 		t = next;
 		walk(t, status);
+	}
+	
+	/**
+	 * Setea el nombre del nivel tomando la parte sin extension del String recibido.
+	 * @param name Nombre de archivo con extension .txt.
+	 */
+	public void setName(String name){
+		int index = name.lastIndexOf(".");
+		this.name = name.substring(0, index);
+	}
+	
+	public String getName(){
+		return name;
 	}
 }
