@@ -31,19 +31,16 @@ public abstract class StaticTile extends Tile {
 	public void drawLasers(TileManager tm, BoardPanel bp) {
 		Vector<Laser> lasers = getLasers();
 
-		int angle = -1;
-
 		for (Laser l : lasers) {
 
-			if ( angle != l.getAngle() / 90) {
-				// Nº of rotations to the left.
-				angle = l.getAngle() / 90;
+			// Nº of rotations to the left.
+			int angle = l.getAngle() / 90;
 
-				Image tmpLaser = ImageUtils.rotateImage(tm.getLaser(), angle);
-				tmpLaser = HueController.changeHue(tmpLaser, l.getColor());
+			Image tmpLaser = ImageUtils.rotateImage(tm.getLaser(), angle);
+			tmpLaser = HueController.changeHue(tmpLaser, l.getColor());
 
-				bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
-			}
+			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
+
 		}
 	}
 
