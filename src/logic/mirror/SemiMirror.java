@@ -69,7 +69,7 @@ public class SemiMirror extends DoubleMirror {
 		Image image = ImageUtils.rotateImage(tm.getSemiMirror(), times);
 
 		if (hasLasers())
-			image = HueController.changeHue(image, getFirstLaser().getColor());
+			image = HueController.changeHue(image, color);
 		bp.appendImage(getPos().getX(), getPos().getY(), image);
 
 	}
@@ -77,13 +77,10 @@ public class SemiMirror extends DoubleMirror {
 	public void drawLasers(TileManager tm, BoardPanel bp) {
 		Vector<Laser> lasers = getLasers();
 
-		Color finalColor = new Color(0, 0, 0);
 		for (Laser l : lasers) {
-			finalColor = ImageUtils.mix(finalColor, l.getColor());
-			System.out.println(l.getColor());
+			color = ImageUtils.mix(color, l.getColor());
 		}
 
-		System.out.println(finalColor);
 		for (Laser l : lasers) {
 
 			// Nº of rotations to the left.
@@ -91,7 +88,7 @@ public class SemiMirror extends DoubleMirror {
 			int direction = getOrientation() * 2 + angle;
 
 			Image tmpLaser = ImageUtils.rotateImage(tm.getTLaser(), direction);
-			tmpLaser = HueController.changeHue(tmpLaser, finalColor);
+			tmpLaser = HueController.changeHue(tmpLaser, color);
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}
