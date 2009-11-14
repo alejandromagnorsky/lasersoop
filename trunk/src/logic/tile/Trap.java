@@ -55,5 +55,10 @@ public class Trap extends StaticTile {
 	public Vector2D nextPosition() {
 		return this.getPos();
 	}
+	
+	public String toString(){
+		String pos = getPos().getX() + "," + getPos().getY();
+		return pos + ",7,0,0,0,0\n";
+	}
 
 }
