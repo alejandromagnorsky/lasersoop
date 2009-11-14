@@ -1,6 +1,7 @@
 package logic.tile;
 
 import gui.BoardPanel;
+import gui.HueController;
 import gui.ImageUtils;
 import gui.TileManager;
 import java.awt.Color;
@@ -36,6 +37,7 @@ public class Origin extends StaticTile {
 
 		// Draw image
 		Image image = ImageUtils.rotateImage(tm.getOrigin(), getOrientation());
+		image = HueController.changeHue(image, getFirstLaser().getColor());
 		bp.appendImage(getPos().getX(), getPos().getY(), image);
 
 	}

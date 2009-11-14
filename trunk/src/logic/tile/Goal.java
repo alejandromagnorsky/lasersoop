@@ -1,6 +1,7 @@
 package logic.tile;
 
 import gui.BoardPanel;
+import gui.HueController;
 import gui.TileManager;
 import java.awt.Color;
 import java.awt.Image;
@@ -8,7 +9,6 @@ import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
 import messages.GoalAchievedMessage;
-
 
 public class Goal extends StaticTile {
 
@@ -33,6 +33,8 @@ public class Goal extends StaticTile {
 
 		// Draw image
 		Image image = tm.getGoal();
+		if (hasLasers())
+			image = HueController.changeHue(image, getFirstLaser().getColor());
 		bp.appendImage(getPos().getX(), getPos().getY(), image);
 
 	}
@@ -61,10 +63,11 @@ public class Goal extends StaticTile {
 	public Vector2D nextPosition() {
 		return this.getPos().add(this.getLastLaser().getDir());
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
-		String color = getColor().getRed() + ","  + getColor().getGreen() + "," + getColor().getBlue();
+		String color = getColor().getRed() + "," + getColor().getGreen() + ","
+				+ getColor().getBlue();
 		return pos + ",2,0," + color;
 	}
 }
