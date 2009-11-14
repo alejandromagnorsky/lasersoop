@@ -1,6 +1,7 @@
 package logic.mirror;
 
 import gui.BoardPanel;
+import gui.HueController;
 import gui.ImageUtils;
 import gui.TileManager;
 import java.awt.Image;
@@ -81,6 +82,7 @@ public class SimpleMirror extends Mirror {
 			}
 
 			tmpLaser = ImageUtils.rotateImage(tmpLaser, direction);
+			tmpLaser = HueController.changeHue(tmpLaser, l.getColor());
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}
