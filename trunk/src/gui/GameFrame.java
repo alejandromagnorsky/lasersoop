@@ -1,7 +1,11 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
+
 import logic.Level;
 import logic.Vector2D;
 import logic.mirror.Mirror;
@@ -18,25 +22,24 @@ public class GameFrame extends JFrame {
 	private Level currentLevel;
 	private TileManager tileManager;
 
-	public void clearScreen() {
-		for (Tile itr : tileset)
-			new SimpleTile(itr.getPos()).drawTile(tileManager, bp);
-	}
-
 	public GameFrame(TileSet tileset, Level currentLevel) {
-
+		super(currentLevel.getName());
 		this.tileset = tileset;
 		this.currentLevel = currentLevel;
+		
 		setLayout(null);
-		setSize(tileset.getCols() * CELL_SIZE + 40, tileset.getRows()
-				* CELL_SIZE + 40);
+		setSize(tileset.getCols() * CELL_SIZE + 5, tileset.getRows()
+				* CELL_SIZE + 30);
+		Toolkit toolkit = getToolkit();
+		Dimension size = toolkit.getScreenSize();
+		setLocation(size.width / 2 - getWidth() / 2, size.height / 2
+				- getHeight() / 2);
 
 		bp = new BoardPanel(tileset.getCols(), tileset.getRows(), CELL_SIZE);
 		bp.setBackground(Color.WHITE);
 		bp.setGridColor(Color.GRAY);
 
 		tileManager = new TileManager();
-
 		tileManager.loadTiles();
 		currentLevel.update();
 		updateScreen();
@@ -52,7 +55,6 @@ public class GameFrame extends JFrame {
 						getCurrentLevel().update();
 
 					updateScreen();
-
 					bp.repaint();
 				}
 				// Crear un alt text para mostrar que tile es
@@ -64,8 +66,8 @@ public class GameFrame extends JFrame {
 
 			public void cellDragged(int sourceRow, int sourceColumn,
 					int targetRow, int targetColumn) {
-
-				if (checkTileAt(new Vector2D(sourceRow, sourceColumn))) {
+				Tile t = getTileSet().at(new Vector2D(sourceRow, sourceColumn));
+				if (t instanceof Mirror) {
 
 					getTileSet().swapTiles(
 							new Vector2D(sourceRow, sourceColumn),
@@ -74,21 +76,17 @@ public class GameFrame extends JFrame {
 					getCurrentLevel().update();
 
 					updateScreen();
-
 					bp.repaint();
 
 					System.out.println("Celda arrastrada desde " + sourceRow
 							+ ", " + sourceColumn + " hasta " + targetRow
 							+ ", " + targetColumn);
-
 				} else {
 					System.out
 							.println("Accion incorrecta: imposible mover la celda.");
 
 				}
-
 			}
-
 		});
 
 		add(bp);
@@ -109,12 +107,10 @@ public class GameFrame extends JFrame {
 		for (Tile itr : tileset)
 			itr.drawTile(tileManager, bp);
 	}
-
-	private boolean checkTileAt(Vector2D pos) {
-		if (tileset.at(pos) instanceof Mirror)
-			return true;
-		else
-			return false;
+	
+	public void clearScreen() {
+		for (Tile itr : tileset)
+			new SimpleTile(itr.getPos()).drawTile(tileManager, bp);
 	}
 
 }

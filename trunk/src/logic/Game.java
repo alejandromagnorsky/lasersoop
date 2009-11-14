@@ -4,7 +4,7 @@ import gui.GameMenu;
 
 /**
  * 
- * @author Magnorsky Alejandro, Matasuarez Andres y Merchante Mariano.
+ * @author Magnorsky Alejandro, Mata Suarez Andres y Merchante Mariano.
  * 
  */
 

@@ -29,14 +29,12 @@ public class Trap extends StaticTile {
 	}
 
 	public void drawTile(TileManager tm, BoardPanel bp) {
-
-		// Draw lasers first
-		drawLasers(tm, bp);
-
-		// Draw image
+		// Draw image first
 		Image image = tm.getTrap();
 		bp.appendImage(getPos().getX(), getPos().getY(), image);
 
+		// Draw lasers
+		drawLasers(tm, bp);
 	}
 
 	public void drawLasers(TileManager tm, BoardPanel bp) {
