@@ -33,8 +33,7 @@ public class Goal extends StaticTile {
 
 		// Draw image
 		Image image = tm.getGoal();
-		if (hasLasers())
-			image = HueController.changeHue(image, getFirstLaser().getColor());
+		image = HueController.changeHue(image, color);
 		bp.appendImage(getPos().getX(), getPos().getY(), image);
 
 	}
