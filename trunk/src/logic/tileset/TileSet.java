@@ -177,7 +177,7 @@ public class TileSet implements Iterable<Tile>{
 		/* El parámetro lineType hace referencia a la cantidad de valores que el parser
 		 * tiene que levantar por línea. Si la línea tiene información acerca de:
 		 * 		- la dimensión del tablero: lineType = 2.
-		 * 		- una celda: lineType = 7. 
+		 * 		- una celda: lineType = 7.
 		 */
 		String[] strData = new String[lineType];
 		char auxChar;
@@ -295,7 +295,7 @@ public class TileSet implements Iterable<Tile>{
 		
 		@Override
 		public boolean hasNext() {
-			return index < (getRows() * getCols() - 1);
+			return index <= (getRows() * getCols() - 1);
 		}
 
 		@Override
