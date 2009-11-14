@@ -32,19 +32,9 @@ public class SemiMirror extends DoubleMirror {
 		color = new Color(0, 0, 0);
 	}
 	
-	/**
-	 * Se utiliza para frenar el loop infinito.
-	 */
-	@Override
-	public boolean stopLaser(){
-		if( countLasers() > 2 )
-			return true;
-		return false;
-	}
-	
 	@Override
 	public GameMessage addLaser(Laser laser){
-		 // Si el laser que recibe es igual al ultimo que recibio, no lo agrega y devuelve que el Laser se detuvo.
+		 // Si el laser que recibe es igual al ultimo que recibio, no lo agrega y devuelve que el laser se detuvo.
 		if ( countLasers() > 1 && laser.getDir().equals(getLastLaser().getDir()) )
 			return new LaserStopMessage();
 		return super.addLaser(laser);
