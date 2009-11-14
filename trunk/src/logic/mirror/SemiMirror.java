@@ -36,7 +36,7 @@ public class SemiMirror extends DoubleMirror {
 	 */
 	@Override
 	public boolean stopLaser(){
-		if( countLasers() >= 2 )
+		if( countLasers() > 2 )
 			return true;
 		return false;
 	}
