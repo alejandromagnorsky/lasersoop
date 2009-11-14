@@ -1,12 +1,9 @@
 package gui;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 import logic.Player;
 
-public class HighScoresPanel extends JFrame{
+public class HighScoresPanel extends JPanel{
 	
 	private String levelName;
 	private Player player;
@@ -15,11 +12,7 @@ public class HighScoresPanel extends JFrame{
 		this.player = player;
 		this.levelName = levelName;
 		
-		Toolkit toolkit = getToolkit();
-		Dimension size = toolkit.getScreenSize();
-		setLocation(size.width / 2 - getWidth() / 2, size.height / 2
-				- getHeight() / 2);
-
+		// ACA VA A LLAMAR AL LOADER DE LOS HIGH SCORES
 	}
 		
 }
