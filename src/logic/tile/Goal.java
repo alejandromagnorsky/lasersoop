@@ -61,4 +61,10 @@ public class Goal extends StaticTile {
 	public Vector2D nextPosition() {
 		return this.getPos().add(this.getLastLaser().getDir());
 	}
+	
+	public String toString(){
+		String pos = getPos().getX() + "," + getPos().getY();
+		String color = getColor().getRed() + ","  + getColor().getGreen() + "," + getColor().getBlue();
+		return pos + ",2,0," + color + "\n";
+	}
 }
