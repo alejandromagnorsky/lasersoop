@@ -19,6 +19,13 @@ public abstract class StaticTile extends Tile {
 		super(pos);
 	}
 
+	public void translate(Vector2D dest) {
+	}
+
+	public boolean canSwap() {
+		return false;
+	}
+
 	public void drawLasers(TileManager tm, BoardPanel bp) {
 		Vector<Laser> lasers = getLasers();
 

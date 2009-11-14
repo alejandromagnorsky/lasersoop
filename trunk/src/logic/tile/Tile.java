@@ -17,20 +17,24 @@ public abstract class Tile extends LaserController {
 		super();
 		this.pos = pos;
 	}
-
+	
 	public Vector2D getPos() {
 		return pos;
 	}
-	
-	public boolean stopLaser(){
+
+	public boolean stopLaser() {
+		return false;
+	}
+
+	public boolean shootLaser() {
 		return false;
 	}
 	
-	public boolean shootLaser(){
-		return false;
-	}
-	
+	public abstract boolean canSwap();
+
+	public abstract void translate(Vector2D dest);
+
 	public abstract void drawLasers(TileManager tm, BoardPanel bp);
-	
+
 	public abstract void drawTile(TileManager tm, BoardPanel bp);
 }

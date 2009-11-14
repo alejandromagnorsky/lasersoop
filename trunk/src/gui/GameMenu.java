@@ -11,7 +11,6 @@ public class GameMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private ImagePanel background;
-	private ImagePanel title;
 
 
 	public GameMenu() {
