@@ -144,13 +144,12 @@ public class TileSet implements Iterable<Tile> {
 	}
 
 	/*
-	 * ----------------------------------------------------------- FALTA VER QUE
-	 * DEVUELVE EN CASO DE ARCHIVO INVALIDO
+	 * -----------------------------------------------------------
+	 * FALTA VER QUE DEVUELVE EN CASO DE ARCHIVO INVALIDO
 	 * -----------------------------------------------------------
 	 */
 	public void loadGeneral(String line, int lineType) {
-		/*
-		 * El parámetro lineType hace referencia a la cantidad de valores que el
+		/* El parámetro lineType hace referencia a la cantidad de valores que el
 		 * parser tiene que levantar por línea. Si la línea tiene información
 		 * acerca de: - la dimensión del tablero: lineType = 2. - una celda:
 		 * lineType = 7.
@@ -164,22 +163,23 @@ public class TileSet implements Iterable<Tile> {
 			if ((auxChar = line.charAt(i)) != ' ' && auxChar != '\t') {
 				if (auxChar == ',' && quantComas < lineType - 1
 						&& strData[quantComas] != "") {
-					/*
-					 * Este IF valida que si se levantó una ',', sea considerado
+					/* Este IF valida que si se levantó una ',', sea considerado
 					 * como coma si y sólo si la cantidad de comas es menor a la
 					 * que tiene que levantarse, y que el número detrás de esa
-					 * coma no sea "". O sea, evita líneas como estas: -
-					 * ",0,0,0..." - "0,0,,0,0..." - "0,0,0,0,0,0,0,,,,,,,,,"
+					 * coma no sea "". O sea, evita líneas como estas:
+					 * 		- ",0,0,0..."
+					 * 		- "0,0,,0,0..."
+					 * 		- "0,0,0,0,0,0,0,,,,,,,,,"
 					 */
 					strData[++quantComas] = "";
 				} else if (auxChar == '#' && quantComas == lineType - 1
 						&& strData[lineType - 1] != "") {
-					/*
-					 * Este IF hace que si se levantó un '#', sea considerado
-					 * como comentario si y sólo si la cantidad de comas que se
-					 * levantaron es la correcta y que el último número
-					 * levantado no sea distinto de "". O sea, evita líneas como
-					 * estas: - "0,0,0,0# blaba" - "0,0,0,0,0,a"
+					/* Este IF hace que si se levantó un '#', sea considerado
+					 * como inicio de comentarios si y sólo si la cantidad de
+					 * comas que se levantaron es la correcta y que el último número
+					 * levantado no sea distinto de "". O sea, evita líneas como estas:
+					 * 		- "0,0,0,0# blaba"
+					 * 		- "0,0,0,0,0,#"
 					 */
 					flagComment = true;
 				} else if (!Character.isDigit(auxChar)) {
@@ -196,8 +196,7 @@ public class TileSet implements Iterable<Tile> {
 		}
 		if (lineType == 2) {
 			if (data[0] < 5 || data[1] < 5 || data[1] > 20 || data[0] > 20) {
-				System.out
-						.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
+				System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
 				return;
 			}
 			this.set(new TileSet(data[0], data[1]));
@@ -225,26 +224,26 @@ public class TileSet implements Iterable<Tile> {
 			switch (data[2]) {
 			case 1:
 				Color lc1 = new Color(data[4], data[5], data[6]);
-				tileSet[data[0]][data[1]] = new Origin(pos, data[3], lc1);
+				add(new Origin(pos, data[3], lc1));
 				break;
 			case 2:
 				Color lc2 = new Color(data[4], data[5], data[6]);
-				tileSet[data[0]][data[1]] = new Goal(pos, lc2);
+				add(new Goal(pos, lc2));
 				break;
 			case 3:
-				tileSet[data[0]][data[1]] = new SimpleMirror(pos, data[3]);
+				add(new SimpleMirror(pos, data[3]));
 				break;
 			case 4:
-				tileSet[data[0]][data[1]] = new DoubleMirror(pos, data[3]);
+				add(new DoubleMirror(pos, data[3]));
 				break;
 			case 5:
-				tileSet[data[0]][data[1]] = new SemiMirror(pos, data[3]);
+				add(new SemiMirror(pos, data[3]));
 				break;
 			case 6:
-				tileSet[data[0]][data[1]] = new Wall(pos);
+				add(new Wall(pos));
 				break;
 			case 7:
-				tileSet[data[0]][data[1]] = new Trap(pos);
+				add(new Trap(pos));
 				break;
 			}
 		}
