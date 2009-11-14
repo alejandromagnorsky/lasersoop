@@ -63,27 +63,27 @@ public class SimpleMirror extends Mirror {
 
 		for (Laser l : lasers) {
 
-			// Nº of rotations to the left. 0 for 90º, then increase to the
-			// left
-			int times = l.getAngle() / 90 - 1;
+			// Nº of rotations to the left.
+			int angle = l.getAngle() / 90;
 
-			int aux = l.getAngle() / 90 % 2 == 1 ? 1 - getOrientation()
-					: getOrientation();
-
-			int direction = 0; // = 2 + aux - 2 * l.getAngle() / 180;
+			int direction = 0;
 
 			Image tmpLaser;
 
 			if (reflects(l)) {
-				direction = getOrientation() - times;
+
+				if (angle % 2 == 1)
+					direction = angle + (getOrientation()%2) * 3 - 1;
+				else
+					direction = angle + getOrientation()%2;
+
 				tmpLaser = tm.getCornerLaser();
 			} else {
-				direction = -times;
+				direction = -angle;
 				tmpLaser = tm.getHalfLaser();
 			}
 
 			tmpLaser = ImageUtils.rotateImage(tmpLaser, direction);
-
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}
