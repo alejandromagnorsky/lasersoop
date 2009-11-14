@@ -1,5 +1,12 @@
 package logic.mirror;
 
+import gui.BoardPanel;
+import gui.ImageUtils;
+import gui.TileManager;
+
+import java.awt.Image;
+import java.util.Vector;
+
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.tile.Tile;
@@ -20,6 +27,52 @@ public class SimpleMirror extends Mirror {
 	 */
 	public SimpleMirror(Vector2D pos, int orientation) {
 		super(pos, orientation);
+	}
+
+	public void drawTile(TileManager tm, BoardPanel bp) {
+
+		int times = 0;
+
+		// Just for easy understanding
+		switch (getDegree()) {
+		case 135:
+			times = 0;
+			break;
+		case 45:
+			times = 1;
+			break;
+		case 315:
+			times = 2;
+			break;
+		case 225:
+			times = 3;
+			break;
+		}
+
+		// Draw lasers first
+		drawLasers(tm, bp);
+
+		// Draw image
+		Image image = ImageUtils.rotateImage(tm.getSimpleMirror(), times);
+		bp.appendImage(getPos().getX(), getPos().getY(), image);
+
+	}
+
+	public void drawLasers(TileManager tm, BoardPanel bp) {
+		Vector<Laser> lasers = getLasers();
+
+		for (Laser l : lasers) {
+
+			// Nº of rotations to the left. The +1 correction is for the laser
+			// image original rotation
+			int times = 1 + l.getAngle() / 90;
+
+			Image tmpLaser;
+
+			tmpLaser = ImageUtils.rotateImage(tm.getLaser(), times);
+
+			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
+		}
 	}
 
 	@Override

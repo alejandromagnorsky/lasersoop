@@ -1,5 +1,10 @@
 package logic.tile;
 
+import gui.BoardPanel;
+import gui.TileManager;
+
+import java.awt.Image;
+
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
@@ -21,6 +26,18 @@ public class Wall extends StaticTile {
 	public GameMessage action(Tile t) {
 		return new LaserStopMessage();
 	}
+	
+	public void drawTile(TileManager tm, BoardPanel bp) {
+
+		// Draw lasers first
+		drawLasers(tm, bp);
+
+		// Draw image
+		Image image = tm.getWall();
+		bp.appendImage(getPos().getX(), getPos().getY(), image);
+
+	}
+
 
 	/**
 	 * Las paredes no tienen lasers.

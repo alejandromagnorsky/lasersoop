@@ -1,10 +1,13 @@
 package logic.tile;
 
+import gui.BoardPanel;
+import gui.TileManager;
 import logic.Vector2D;
 import logic.laser.LaserController;
+
 /**
  * Representa una celda en el tablero.
- *
+ * 
  */
 public abstract class Tile extends LaserController {
 
@@ -18,4 +21,8 @@ public abstract class Tile extends LaserController {
 	public Vector2D getPos() {
 		return pos;
 	}
+
+	public abstract void drawLasers(TileManager tm, BoardPanel bp);
+	
+	public abstract void drawTile(TileManager tm, BoardPanel bp);
 }

@@ -1,6 +1,11 @@
 package logic.tile;
 
+import gui.BoardPanel;
+import gui.ImageUtils;
+import gui.TileManager;
+
 import java.awt.Color;
+import java.awt.Image;
 
 import logic.Vector2D;
 import logic.laser.Laser;
@@ -25,6 +30,17 @@ public class Origin extends StaticTile {
 
 	public int getOrientation() {
 		return this.orientation;
+	}
+
+	public void drawTile(TileManager tm, BoardPanel bp) {
+
+		// Draw lasers first
+		drawLasers(tm, bp);
+
+		// Draw image
+		Image image = ImageUtils.rotateImage(tm.getOrigin(), getOrientation());
+		bp.appendImage(getPos().getX(), getPos().getY(), image);
+
 	}
 
 	public Color getColor() {

@@ -1,9 +1,7 @@
 package gui;
 
 import java.awt.Color;
-
 import javax.swing.JFrame;
-
 import logic.Level;
 import logic.Vector2D;
 import logic.mirror.Mirror;
@@ -21,10 +19,8 @@ public class GameFrame extends JFrame {
 	private TileManager tileManager;
 
 	public void clearScreen() {
-
-		for (int i = 0; i < tileset.getCols(); i++)
-			for (int j = 0; j < tileset.getRows(); j++)
-				tileManager.addTile(new SimpleTile(new Vector2D(i, j)));
+		for (Tile itr : tileset)
+			new SimpleTile(itr.getPos()).drawTile(tileManager, bp);
 	}
 
 	public GameFrame(TileSet tileset, Level currentLevel) {
@@ -39,7 +35,7 @@ public class GameFrame extends JFrame {
 		bp.setBackground(Color.WHITE);
 		bp.setGridColor(Color.GRAY);
 
-		tileManager = new TileManager(bp);
+		tileManager = new TileManager();
 
 		tileManager.loadTiles();
 		currentLevel.update();
@@ -109,11 +105,8 @@ public class GameFrame extends JFrame {
 
 	private void updateScreen() {
 		clearScreen();
-		for (int i = 0; i < tileset.getCols(); i++)
-			for (int j = 0; j < tileset.getRows(); j++) {
-				tileManager.addTile(tileset.at(new Vector2D(i, j)));
-			}
-
+		for (Tile itr : tileset)
+			itr.drawTile(tileManager, bp);
 	}
 
 	private boolean checkTileAt(Vector2D pos) {
