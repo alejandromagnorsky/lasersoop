@@ -200,7 +200,8 @@ public class TileSet implements Iterable<Tile> {
 				return;
 			}
 			this.set(new TileSet(data[0], data[1]));
-		} else {
+			
+		} else if (lineType == 7){
 			if (data[0] > this.getRows() || data[1] > this.getCols()
 					|| data[2] > 7 || data[2] < 1) {
 				/* Valido los parámetros en general */
