@@ -26,8 +26,11 @@ public class Vector2D {
 		return y;
 	}
 
-	// La suma esta definida de este modo puesto que estamos sumando
-	// un vector direccion con una posicion de la matriz
+	/**
+	 *  La suma esta definida de este modo puesto que estamos sumando
+	 *  un vector direccion con una posicion de la matriz (del tablero).
+	 * @param v Vector director.
+	 */
 	public Vector2D add(Vector2D v) {
 		int ansX = 0;
 		int ansY = 0;
@@ -53,6 +56,9 @@ public class Vector2D {
 		y = auxY;
 	}
 
+	/**
+	 * Setea la direccion en base al angulo que recibe.
+	 */
 	public void setDirection(int angle) {
 		double radians = angle * Math.PI / 180;
 		x = (int) Math.cos(radians);

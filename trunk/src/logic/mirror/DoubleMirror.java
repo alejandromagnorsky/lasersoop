@@ -8,6 +8,15 @@ import messages.LaserBounceMessage;
 
 public class DoubleMirror extends Mirror {
 
+	/**
+	 * Crea un nuevo espejo doble.
+	 * 
+	 * @param pos
+	 *            Indica la posicion en el tablero.
+	 * @param orientation
+	 *            Contiene la orientacion del espejo representada por un numero
+	 *            entre 0 y 3.
+	 */
 	public DoubleMirror(Vector2D pos, int orientation) {
 		super(pos, orientation);
 	}
@@ -18,12 +27,21 @@ public class DoubleMirror extends Mirror {
 		setDegree(orientation);
 	}
 
+	/**
+	 * Agrega un laser a la celda que recibe.
+	 * 
+	 * @param t
+	 *            Celda destino.
+	 */
 	@Override
 	public GameMessage action(Tile t) {
 		t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));
 		return new LaserBounceMessage();
 	}
 
+	/**
+	 * Devuelve la siguiente posicion en el tablero usando el laser que tiene.
+	 */
 	@Override
 	public Vector2D nextPosition() {
 		newLaserDir = new Vector2D(getLastLaser().getDir());

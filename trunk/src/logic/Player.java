@@ -1,8 +1,12 @@
 package logic;
 
+/**
+ * Representa un jugador con un nombre y puntaje para cada nivel.
+ * 
+ */
 public class Player {
 	private String name;
-	private int score;
+	private int score; //DEBERIA SER UN ARRAY PUES TIENE UN PUNTAJE POR CADA NIVEL 
 	
 	public Player(String name){
 		this.name = name;

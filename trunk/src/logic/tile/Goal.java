@@ -11,6 +11,9 @@ public class Goal extends StaticTile {
 
 	private Color color;
 
+	/**
+	 * Crea un nuevo destino con un determinado color en la posicion recibida.
+	 */
 	public Goal(Vector2D pos, Color color) {
 		super(pos);
 		this.color = color;
@@ -20,6 +23,14 @@ public class Goal extends StaticTile {
 		return color;
 	}
 
+	/**
+	 * Agrega un laser en la celda que recibe. Si el laser que posee tiene el
+	 * mismo color que si mismo, devuelve un mensaje que avisa que se alcanzo un
+	 * destino.
+	 * 
+	 * @param t
+	 *            Celda destino.
+	 */
 	@Override
 	public GameMessage action(Tile t) {
 		t.addLaser(new Laser(getLastLaser()));
@@ -28,6 +39,10 @@ public class Goal extends StaticTile {
 		return new NullMessage();
 	}
 
+	/**
+	 * Devuelve la siguiente posicion en el tablero usando la direccion del
+	 * laser que tiene.
+	 */
 	@Override
 	public Vector2D nextPosition() {
 		return this.getPos().add(this.getLastLaser().getDir());

@@ -11,6 +11,10 @@ public class Origin extends StaticTile {
 
 	private int orientation;
 
+	/**
+	 * Crea un nuevo origen con un determinado color y una orientacion, en la
+	 * posicion recibida.
+	 */
 	public Origin(Vector2D pos, int orientation, Color color) {
 		super(pos);
 		this.orientation = orientation;
@@ -27,6 +31,9 @@ public class Origin extends StaticTile {
 		return this.getLastLaser().getColor();
 	}
 
+	/**
+	 * Borra todos los lasers menos el primero que es el que emite.
+	 */
 	public void eraseLasers() {
 		Laser tmp = getFirstLaser();
 		super.eraseLasers();
@@ -36,7 +43,7 @@ public class Origin extends StaticTile {
 	@Override
 	public GameMessage action(Tile t) {
 		t.addLaser(new Laser(getLastLaser()));
-		if ( countLasers() >= 2 )
+		if (countLasers() >= 2)
 			eraseLastLaser();
 		return new NullMessage();
 	}
