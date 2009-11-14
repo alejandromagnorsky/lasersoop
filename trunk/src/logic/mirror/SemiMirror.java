@@ -32,15 +32,16 @@ public class SemiMirror extends DoubleMirror {
 		super(pos, orientation);
 		color = new Color(0, 0, 0);
 	}
-	
+
 	@Override
-	public GameMessage addLaser(Laser laser){
-		 // Si el laser que recibe es igual al ultimo que recibio, no lo agrega y devuelve que el laser se detuvo.
-		if ( countLasers() > 1 && laser.getDir().equals(getLastLaser().getDir()) )
+	public GameMessage addLaser(Laser laser) {
+		// Si el laser que recibe es igual al ultimo que recibio, no lo agrega y
+		// devuelve que el laser se detuvo.
+		if (countLasers() > 1 && laser.getDir().equals(getLastLaser().getDir()))
 			return new LaserStopMessage();
 		return super.addLaser(laser);
 	}
-	
+
 	public void drawTile(TileManager tm, BoardPanel bp) {
 
 		int times = 0;
@@ -73,12 +74,11 @@ public class SemiMirror extends DoubleMirror {
 
 	}
 
-
 	public void drawLasers(TileManager tm, BoardPanel bp) {
 		Vector<Laser> lasers = getLasers();
-		
-		Color finalColor = new Color(0,0,0); 
-		for(Laser l: lasers){
+
+		Color finalColor = new Color(0, 0, 0);
+		for (Laser l : lasers) {
 			finalColor = ImageUtils.mix(finalColor, l.getColor());
 			System.out.println(l.getColor());
 		}
@@ -88,7 +88,7 @@ public class SemiMirror extends DoubleMirror {
 
 			// Nº of rotations to the left.
 			int angle = l.getAngle() / 90;
-			int direction = getOrientation() * 2 +  angle;
+			int direction = getOrientation() * 2 + angle;
 
 			Image tmpLaser = ImageUtils.rotateImage(tm.getTLaser(), direction);
 			tmpLaser = HueController.changeHue(tmpLaser, finalColor);
@@ -108,8 +108,8 @@ public class SemiMirror extends DoubleMirror {
 		color = ImageUtils.mix(color, getLastLaser().getColor());
 		return super.action(t);
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
 		return pos + ",5," + orientation + ",0,0,0";
 	}

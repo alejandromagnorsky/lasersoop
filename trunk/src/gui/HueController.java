@@ -27,8 +27,6 @@ public class HueController {
 				float[] colorHSB = Color.RGBtoHSB(imgColor.getRed(), imgColor
 						.getGreen(), imgColor.getBlue(), null);
 
-				colorHSB[1] -= 0.01;
-
 				Color auxColor = Color.getHSBColor(hue, colorHSB[1],
 						colorHSB[2]);
 
