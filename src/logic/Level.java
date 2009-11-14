@@ -4,13 +4,10 @@ import gui.GameFrame;
 import java.io.IOException;
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
-import logic.tile.Origin;
 import logic.tile.Tile;
 import logic.tile.Wall;
 import logic.tileset.TileSet;
 import messages.GameMessage;
-import messages.GameOverMessage;
-import messages.LaserStopMessage;
 import messages.NullMessage;
 
 public class Level {
@@ -44,7 +41,7 @@ public class Level {
 		GameMessage status = new NullMessage();
 		cleanLevel();
 		for (Tile itr : tileSet)
-			if (itr instanceof Origin)
+			if ( itr.shootLaser() )
 				walk(itr, status);
 	}
 
@@ -58,12 +55,7 @@ public class Level {
 	 *            determinar si el jugador gano, perdio o el juego continua.
 	 */
 	private void walk(Tile t, GameMessage status) {
-		if (status instanceof LaserStopMessage
-				|| status instanceof GameOverMessage
-				|| (t instanceof SemiMirror && t.countLasers() >= 2)) // Para el
-																		// caso
-																		// del
-																		// loop
+		if ( status.stopLaser() || t.stopLaser() ) 
 			return;
 		Vector2D nextPos = t.nextPosition();
 		Tile next;

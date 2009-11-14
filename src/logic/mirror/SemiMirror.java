@@ -31,6 +31,16 @@ public class SemiMirror extends DoubleMirror {
 		color = new Color(0, 0, 0);
 	}
 	
+	/**
+	 * Se utiliza para frenar el loop infinito.
+	 */
+	@Override
+	public boolean stopLaser(){
+		if( countLasers() >= 2 )
+			return true;
+		return false;
+	}
+	
 	public void drawTile(TileManager tm, BoardPanel bp) {
 
 		int times = 0;

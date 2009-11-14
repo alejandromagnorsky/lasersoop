@@ -21,7 +21,15 @@ public abstract class Tile extends LaserController {
 	public Vector2D getPos() {
 		return pos;
 	}
-
+	
+	public boolean stopLaser(){
+		return false;
+	}
+	
+	public boolean shootLaser(){
+		return false;
+	}
+	
 	public abstract void drawLasers(TileManager tm, BoardPanel bp);
 	
 	public abstract void drawTile(TileManager tm, BoardPanel bp);
