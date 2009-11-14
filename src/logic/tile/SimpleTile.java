@@ -2,13 +2,10 @@ package logic.tile;
 
 import gui.BoardPanel;
 import gui.TileManager;
-
 import java.awt.Image;
-
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
-import messages.NullMessage;
 
 public class SimpleTile extends StaticTile {
 
@@ -21,8 +18,8 @@ public class SimpleTile extends StaticTile {
 
 	@Override
 	public GameMessage action(Tile t) {
-		t.addLaser(new Laser(getLastLaser()));
-		return new NullMessage();
+		GameMessage status = t.addLaser(new Laser(getLastLaser()));
+		return status;
 	}
 
 	public void drawTile(TileManager tm, BoardPanel bp) {

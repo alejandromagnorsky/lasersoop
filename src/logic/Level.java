@@ -1,9 +1,7 @@
 package logic;
 
 import gui.GameFrame;
-
 import java.io.IOException;
-
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
 import logic.tile.Tile;
@@ -17,8 +15,11 @@ public class Level {
 
 	/**
 	 * Crea un nuevo nivel con un determinado nombre.
-	 * @param filename Nombre del nivel.
-	 * @throws IOException Si no se pudo cargar el nivel correctamente.
+	 * 
+	 * @param filename
+	 *            Nombre del nivel.
+	 * @throws IOException
+	 *             Si no se pudo cargar el nivel correctamente.
 	 */
 	public Level(String filename) throws IOException {
 		tileSet = new TileSet();
@@ -43,7 +44,7 @@ public class Level {
 		GameMessage status = new NullMessage();
 		cleanLevel();
 		for (Tile itr : tileSet)
-			if ( itr.shootLaser() )
+			if (itr.shootLaser())
 				walk(itr, status);
 	}
 
@@ -57,26 +58,29 @@ public class Level {
 	 *            determinar si el jugador gano, perdio o el juego continua.
 	 */
 	private void walk(Tile t, GameMessage status) {
-		if ( status.stopLaser() || t.stopLaser() ) 
+		if (status.stopLaser())
 			return;
-		Vector2D nextPos = t.nextPosition();
+		
+		Vector2D nextPos;
 		Tile next;
-
+		 /* MEJORAR ESTO */
+		if (t instanceof SemiMirror) {
+			nextPos = t.getPos().add(t.getLastLaser().getDir());
+			if (tileSet.contains(nextPos)) {
+				Laser l = new Laser(t.getLastLaser().getDir(), t
+						.getLastLaser().getColor());
+				tileSet.at(nextPos).addLaser(l);
+				walk(tileSet.at(nextPos), status);
+			}
+		}
+		
+		nextPos = t.nextPosition();
 		// Borders are walls
 		if (!tileSet.contains(nextPos))
 			next = new Wall(nextPos);
 		else
 			next = tileSet.at(nextPos);
 
-		if (t instanceof SemiMirror) {
-			nextPos = t.getPos().add(t.getLastLaser().getDir());
-			if (tileSet.contains(nextPos)) {
-				Laser l = new Laser(t.getLastLaser().getDir(), t.getLastLaser()
-						.getColor());
-				tileSet.at(nextPos).addLaser(l);
-				walk(tileSet.at(nextPos), status);
-			}
-		}
 		status = t.action(next);
 		t = next;
 		walk(t, status);

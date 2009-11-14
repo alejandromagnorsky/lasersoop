@@ -3,15 +3,12 @@ package logic.mirror;
 import gui.BoardPanel;
 import gui.ImageUtils;
 import gui.TileManager;
-
 import java.awt.Image;
 import java.util.Vector;
-
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.tile.Tile;
 import messages.GameMessage;
-import messages.LaserBounceMessage;
 
 public class DoubleMirror extends Mirror {
 
@@ -90,8 +87,8 @@ public class DoubleMirror extends Mirror {
 	 */
 	@Override
 	public GameMessage action(Tile t) {
-		t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));
-		return new LaserBounceMessage();
+		GameMessage status = t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));
+		return status;
 	}
 
 	/**

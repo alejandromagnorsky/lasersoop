@@ -1,9 +1,11 @@
 package logic.laser;
 
 import java.util.Vector;
+
 import logic.Vector2D;
 import logic.tile.Tile;
 import messages.GameMessage;
+import messages.NullMessage;
 
 public abstract class LaserController {
 
@@ -29,8 +31,9 @@ public abstract class LaserController {
 		return lasers.size();
 	}
 
-	public void addLaser(Laser laser) {
+	public GameMessage addLaser(Laser laser) {
 		lasers.add(laser);
+		return new NullMessage();
 	}
 
 	public Laser getLastLaser() {
