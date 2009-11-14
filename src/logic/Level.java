@@ -1,7 +1,9 @@
 package logic;
 
 import gui.GameFrame;
+
 import java.io.IOException;
+
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
 import logic.tile.Tile;
