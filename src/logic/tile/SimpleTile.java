@@ -16,6 +16,10 @@ public class SimpleTile extends StaticTile {
 		super(pos);
 	}
 
+	public boolean canSwap() {
+		return true;
+	}
+
 	@Override
 	public GameMessage action(Tile t) {
 		GameMessage status = t.addLaser(new Laser(getLastLaser()));

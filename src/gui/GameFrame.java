@@ -65,10 +65,11 @@ public class GameFrame extends JFrame {
 			public void cellDragged(int sourceRow, int sourceColumn,
 					int targetRow, int targetColumn) {
 
-				if (checkTileAt(new Vector2D(sourceRow, sourceColumn))
-						&& getTileSet().moveTile(
-								new Vector2D(sourceRow, sourceColumn),
-								new Vector2D(targetRow, targetColumn))) {
+				if (checkTileAt(new Vector2D(sourceRow, sourceColumn))) {
+
+					getTileSet().swapTiles(
+							new Vector2D(sourceRow, sourceColumn),
+							new Vector2D(targetRow, targetColumn));
 
 					getCurrentLevel().update();
 
