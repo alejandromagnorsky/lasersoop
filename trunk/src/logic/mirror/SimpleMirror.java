@@ -52,6 +52,9 @@ public class SimpleMirror extends Mirror {
 
 		// Draw image
 		Image image = ImageUtils.rotateImage(tm.getSimpleMirror(), times);
+
+		if (hasLasers())
+			image = HueController.changeHue(image, getFirstLaser().getColor());
 		bp.appendImage(getPos().getX(), getPos().getY(), image);
 
 	}

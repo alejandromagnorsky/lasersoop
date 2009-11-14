@@ -1,6 +1,7 @@
 package logic.tile;
 
 import gui.BoardPanel;
+import gui.HueController;
 import gui.ImageUtils;
 import gui.TileManager;
 import java.awt.Image;
@@ -46,6 +47,8 @@ public class Wall extends StaticTile {
 			// Nº of rotations to the left.
 			int times = -l.getAngle() / 90;
 			Image tmpLaser = ImageUtils.rotateImage(tm.getHalfLaser(), times);
+
+			tmpLaser = HueController.changeHue(tmpLaser, l.getColor());
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}
@@ -56,8 +59,8 @@ public class Wall extends StaticTile {
 	public Vector2D nextPosition() {
 		return this.getPos();
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
 		return pos + ",6,0,0,0,0";
 	}
