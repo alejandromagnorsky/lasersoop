@@ -76,16 +76,11 @@ public class SemiMirror extends DoubleMirror {
 
 		for (Laser l : lasers) {
 
-			// Nº of rotations to the left. The +1 correction is for the laser
-			// image original rotation
-			int times = 1 + l.getAngle() / 90;
+			// Nº of rotations to the left.
+			int angle = l.getAngle() / 90;
+			int direction = getOrientation() * 2 +  angle;
 
-			int direction = getOrientation() * 2 + 1 + times;
-
-			Image tmpLaser;
-
-			tmpLaser = ImageUtils.rotateImage(tm.getTLaser(), direction);
-
+			Image tmpLaser = ImageUtils.rotateImage(tm.getTLaser(), direction);
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}

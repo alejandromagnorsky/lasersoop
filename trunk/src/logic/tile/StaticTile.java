@@ -23,15 +23,9 @@ public abstract class StaticTile extends Tile {
 		Vector<Laser> lasers = getLasers();
 
 		for (Laser l : lasers) {
-
-			// Nº of rotations to the left. The +1 correction is for the laser
-			// image original rotation
-			int times = 1 + l.getAngle() / 90;
-
-			Image tmpLaser;
-
-			tmpLaser = ImageUtils.rotateImage(tm.getLaser(), times);
-
+			// Nº of rotations to the left.
+			int times = l.getAngle() / 90;
+			Image tmpLaser = ImageUtils.rotateImage(tm.getLaser(), times);
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}

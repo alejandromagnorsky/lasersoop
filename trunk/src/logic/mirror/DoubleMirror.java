@@ -62,15 +62,16 @@ public class DoubleMirror extends Mirror {
 
 		for (Laser l : lasers) {
 
-			int aux = l.getAngle() / 90 % 2 == 1 ? 1 - getOrientation()
-					: getOrientation();
+			int angle = l.getAngle() / 90;
+			int direction = angle;
 
-			int direction = 2 + aux - 2 * l.getAngle() / 180;
+			if (angle % 2 == 1)
+				direction += getOrientation() * 3 - 1;
+			else
+				direction += getOrientation();
 
-			Image tmpLaser;
-
-			tmpLaser = ImageUtils.rotateImage(tm.getCornerLaser(), direction);
-
+			Image tmpLaser = ImageUtils.rotateImage(tm.getCornerLaser(),
+					direction);
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}
