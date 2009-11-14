@@ -59,7 +59,7 @@ public class Wall extends StaticTile {
 	
 	public String toString(){
 		String pos = getPos().getX() + "," + getPos().getY();
-		return pos + ",6,0,0,0,0\n";
+		return pos + ",6,0,0,0,0";
 	}
 
 }

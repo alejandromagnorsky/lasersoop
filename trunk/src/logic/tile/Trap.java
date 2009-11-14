@@ -58,7 +58,7 @@ public class Trap extends StaticTile {
 	
 	public String toString(){
 		String pos = getPos().getX() + "," + getPos().getY();
-		return pos + ",7,0,0,0,0\n";
+		return pos + ",7,0,0,0,0";
 	}
 
 }
