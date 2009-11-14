@@ -32,7 +32,14 @@ public class SemiMirror extends DoubleMirror {
 		super(pos, orientation);
 		color = new Color(0, 0, 0);
 	}
+	
 
+	public void eraseLasers() {
+		super.eraseLasers();
+		color = new Color(0,0,0);
+	}
+
+	
 	@Override
 	public GameMessage addLaser(Laser laser) {
 		// Si el laser que recibe es igual al ultimo que recibio, no lo agrega y
