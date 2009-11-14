@@ -3,15 +3,12 @@ package logic.mirror;
 import gui.BoardPanel;
 import gui.ImageUtils;
 import gui.TileManager;
-
 import java.awt.Image;
 import java.util.Vector;
-
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.tile.Tile;
 import messages.GameMessage;
-import messages.LaserBounceMessage;
 import messages.LaserStopMessage;
 
 public class SimpleMirror extends Mirror {
@@ -106,8 +103,8 @@ public class SimpleMirror extends Mirror {
 		if (t.getPos().equals(this.getPos())) {
 			return new LaserStopMessage();
 		}
-		t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));
-		return new LaserBounceMessage();
+		GameMessage status = t.addLaser(new Laser(newLaserDir, getLastLaser().getColor()));
+		return status;
 	}
 
 	/**

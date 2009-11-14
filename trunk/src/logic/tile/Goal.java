@@ -2,15 +2,13 @@ package logic.tile;
 
 import gui.BoardPanel;
 import gui.TileManager;
-
 import java.awt.Color;
 import java.awt.Image;
-
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
 import messages.GoalAchievedMessage;
-import messages.NullMessage;
+
 
 public class Goal extends StaticTile {
 
@@ -49,10 +47,10 @@ public class Goal extends StaticTile {
 	 */
 	@Override
 	public GameMessage action(Tile t) {
-		t.addLaser(new Laser(getLastLaser()));
+		GameMessage status = t.addLaser(new Laser(getLastLaser()));
 		if (color.equals(getLastLaser()))
 			return new GoalAchievedMessage();
-		return new NullMessage();
+		return status;
 	}
 
 	/**

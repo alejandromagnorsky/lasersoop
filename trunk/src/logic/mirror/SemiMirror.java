@@ -12,6 +12,7 @@ import logic.Vector2D;
 import logic.laser.Laser;
 import logic.tile.Tile;
 import messages.GameMessage;
+import messages.LaserStopMessage;
 
 public class SemiMirror extends DoubleMirror {
 
@@ -39,6 +40,14 @@ public class SemiMirror extends DoubleMirror {
 		if( countLasers() > 2 )
 			return true;
 		return false;
+	}
+	
+	@Override
+	public GameMessage addLaser(Laser laser){
+		 // Si el laser que recibe es igual al ultimo que recibio, no lo agrega y devuelve que el Laser se detuvo.
+		if ( countLasers() > 1 && laser.getDir().equals(getLastLaser().getDir()) )
+			return new LaserStopMessage();
+		return super.addLaser(laser);
 	}
 	
 	public void drawTile(TileManager tm, BoardPanel bp) {
