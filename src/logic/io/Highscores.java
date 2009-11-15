@@ -8,11 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-
 import logic.Player;
-import logic.tile.SimpleTile;
-import logic.tile.Tile;
-import logic.tileset.TileSet;
 
 public class Highscores {
 	private String levelName;
