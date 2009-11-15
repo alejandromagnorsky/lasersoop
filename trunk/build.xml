@@ -1,0 +1,11 @@
+<project name="TPE" default="A">
+<target name="A">
+
+</target>
+<target name="B" depends="B">
+
+</target>
+<target name="C" depends="C">
+
+</target>
+</project>
