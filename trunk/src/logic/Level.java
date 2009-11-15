@@ -1,11 +1,8 @@
 package logic;
 
 import gui.GameFrame;
-import gui.ImageUtils;
-
 import java.awt.Color;
 import java.io.IOException;
-
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
 import logic.tile.Tile;
@@ -73,15 +70,10 @@ public class Level {
 		if (t instanceof SemiMirror) {
 			nextPos = t.getPos().add(t.getLastLaser().getDir());
 			if (tileSet.contains(nextPos)) {
-				Laser l;
 				// Si son mas de dos lasers, mezcla sus colores
-				if (t.countLasers() >= 2) { 
-					Color color = ImageUtils.mix(t.getFirstLaser().getColor(),
-							t.getLastLaser().getColor());
-					l = new Laser(t.getLastLaser().getDir(), color);
-				} else
-					l = new Laser(t.getLastLaser().getDir(), t.getLastLaser()
-							.getColor());
+				Color color = ((SemiMirror)t).mixLasersColors();
+				Laser l = new Laser(t.getLastLaser().getDir(), color);
+				
 				tileSet.at(nextPos).addLaser(l);
 				walk(tileSet.at(nextPos), status);
 			}
