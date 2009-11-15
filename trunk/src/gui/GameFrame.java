@@ -3,10 +3,15 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import logic.Level;
+import logic.io.LevelSaver;
 import logic.tile.SimpleTile;
 import logic.tile.Tile;
 import logic.tileset.TileSet;
@@ -19,6 +24,8 @@ public class GameFrame extends JFrame {
 	private TileSet tileset;
 	private Level currentLevel;
 	private TileManager tileManager;
+	private JFileChooser saveDialog;
+	private JButton saveButton;
 
 	public GameFrame(TileSet tileset, Level currentLevel) {
 		super(currentLevel.getName());
@@ -45,13 +52,33 @@ public class GameFrame extends JFrame {
 
 		bp.setListener(new GameListener(this, bp));
 
-		JButton button = new JButton("Hola");
-		button.setBounds(getWidth()- 125, getHeight() / 3 + 50, 100, 50);
+		saveDialog = new JFileChooser();
+		saveButton = new JButton("Guardar");
+		saveButton.setBounds(getWidth() - 125, getHeight() / 3 + 50, 100, 50);
+
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int returnValue = showSaveDialog();
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					String filename = saveDialog.getSelectedFile().getPath();
+					LevelSaver save = new LevelSaver(filename);
+					try {
+						save.saver(getTileSet());
+					} catch (IOException e1) {
+						System.out.println(e1);
+					}
+				}
+			}
+		});
 
 		add(bp);
-		add(button);
+		add(saveButton);
 		this.setResizable(false);
 
+	}
+
+	public int showSaveDialog() {
+		return saveDialog.showOpenDialog(saveButton);
 	}
 
 	public TileSet getTileSet() {
