@@ -30,29 +30,79 @@ public class LevelLoader {
 		return filename;
 	}
 	
-	public void loader(TileSet tileSet) throws IOException{
+	public TileSet loader() throws IOException{
 		BufferedReader input = null;
 		try {
 			File file = new File(filename);
 			input = new BufferedReader(new FileReader(file));
-			String line;
-
-			for (int i = 0; (line = input.readLine()) != null; i++) {
+			TileSet tileSet;
+			String line, levelName;
+			if ((line = input.readLine()) == null) return null;
+			levelName = this.loadName(line);
+			if ((line = input.readLine()) == null) return null;
+			Integer[] dim = this.loadDimensions(line);
+			if (dim[0] < 5 || dim[1] < 5 || dim[1] > 20 || dim[0] > 20) {
+				System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
+				return null;
+			}
+			tileSet = new TileSet(dim[0], dim[1]);
+			tileSet.setLevelName(levelName);
+			
+			while ( (line = input.readLine()) != null ) {
 				if (!line.equals("") && line.charAt(0) != '#') {
-					if (i == 0) {
-						this.loadName(tileSet, line);
-					} else if (i == 1) {
-						this.loadDimensions(tileSet, line);
-					} else {
-						this.loadTile(tileSet, line);
+					Integer[] tile = this.loadTile(line);
+					if (tile[0] > tileSet.getRows() || tile[1] > tileSet.getCols()
+							|| tile[2] > 7|| tile[2] < 1) {
+						/* Valido los parámetros en general */
+						System.out.println(line + "\n" + "TEMP|-----| incorrectos 1");
+						return null;
+					} else if (((tile[2] == 1 || tile[2] == 3) && (tile[3] < 0 || tile[3] > 3))
+							|| ((tile[2] == 4 || tile[2] == 5) && tile[3] != 0 && tile[3] != 1)
+							|| ( (tile[2] == 6 || tile[2] == 7) && tile[3] != 0)) {
+						/* Valido los parámetros de la rotación */
+						System.out.println(line + "\n" + "TEMP|-----| incorrectos 2");
+						return null;
+					} else if (((tile[2] == 1 || tile[2] == 2) && (tile[4] < 0
+							|| tile[4] > 255 || tile[5] < 0 || tile[5] > 255
+							|| tile[6] < 0 || tile[6] > 255))
+							|| (tile[2] != 1 && tile[2] != 2 && tile[4] != 0)) {
+						/* Valido los parámetros del color */
+						System.out.println(line + "\n" + "TEMP|-----| incorrectos 3");
+						return null;
 					}
-				} else {
-					i--;
+					Vector2D pos = new Vector2D(tile[0], tile[1]);
+					switch (tile[2]) {
+					case 1:
+						Color lc1 = new Color(tile[4], tile[5], tile[6]);
+						tileSet.add(new Origin(pos, tile[3], lc1));
+						break;
+					case 2:
+						Color lc2 = new Color(tile[4], tile[5], tile[6]);
+						tileSet.add(new Goal(pos, lc2));
+						break;
+					case 3:
+						tileSet.add(new SimpleMirror(pos, tile[3]));
+						break;
+					case 4:
+						tileSet.add(new DoubleMirror(pos, tile[3]));
+						break;
+					case 5:
+						tileSet.add(new SemiMirror(pos, tile[3]));
+						break;
+					case 6:
+						tileSet.add(new Wall(pos));
+						break;
+					case 7:
+						tileSet.add(new Trap(pos));
+						break;
+					}
 				}
 			}
+			return tileSet;
 		} catch (FileNotFoundException exc) {
 			/* VER BIEN QUE ONDA ESTO */
 			System.out.println("TEMP|-----|HUBO UNA EXCEPCIÓN");
+			return null;
 		} finally {
 			if (input != null) {
 				input.close();
@@ -60,8 +110,7 @@ public class LevelLoader {
 		}
 	}
 	
-	
-	public void loadGeneral(TileSet tileSet, String line, int lineType) {
+	public Integer[] parser(String line, int lineType){
 		/* El parámetro lineType hace referencia a la cantidad de valores que el parser
 		 * tiene que levantar por línea. Si la línea tiene información acerca de:
 		 * 		- la dimensión del tablero: lineType = 2.
@@ -96,7 +145,7 @@ public class LevelLoader {
 					flagComment = true;
 				} else if (!Character.isDigit(auxChar)) {
 						System.out.println(line + "TEMP|-----| INVALIDO 1");
-						return;
+						return null;
 				} else {
 					strData[quantComas] += auxChar;
 				}
@@ -106,74 +155,23 @@ public class LevelLoader {
 		for (int i = 0; i < lineType; i++) {
 			data[i] = new Integer(strData[i]);
 		}
-		if (lineType == 2) {
-			if (data[0] < 5 || data[1] < 5 || data[1] > 20 || data[0] > 20) {
-				System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
-				return;
-			}
-			tileSet = new TileSet(data[0], data[1]);
-		} else {
-			if (data[0] > tileSet.getRows() || data[1] > tileSet.getCols()
-					|| data[2] > 7|| data[2] < 1) {
-				/* Valido los parámetros en general */
-				System.out.println(line + "\n" + "TEMP|-----| incorrectos 1");
-				return;
-			} else if (((data[2] == 1 || data[2] == 3) && (data[3] < 0 || data[3] > 3))
-					|| ((data[2] == 4 || data[2] == 5) && data[3] != 0 && data[3] != 1)
-					|| ( (data[2] == 6 || data[2] == 7) && data[3] != 0)) {
-				/* Valido los parámetros de la rotación */
-				System.out.println(line + "\n" + "TEMP|-----| incorrectos 2");
-				return;
-			} else if (((data[2] == 1 || data[2] == 2) && (data[4] < 0
-					|| data[4] > 255 || data[5] < 0 || data[5] > 255
-					|| data[6] < 0 || data[6] > 255))
-					|| (data[2] != 1 && data[2] != 2 && data[4] != 0)) {
-				/* Valido los parámetros del color */
-				System.out.println(line + "\n" + "TEMP|-----| incorrectos 3");
-				return;
-			}
-			Vector2D pos = new Vector2D(data[0], data[1]);
-			switch (data[2]) {
-			case 1:
-				Color lc1 = new Color(data[4], data[5], data[6]);
-				tileSet.add(new Origin(pos, data[3], lc1));
-				break;
-			case 2:
-				Color lc2 = new Color(data[4], data[5], data[6]);
-				tileSet.add(new Goal(pos, lc2));
-				break;
-			case 3:
-				tileSet.add(new SimpleMirror(pos, data[3]));
-				break;
-			case 4:
-				tileSet.add(new DoubleMirror(pos, data[3]));
-				break;
-			case 5:
-				tileSet.add(new SemiMirror(pos, data[3]));
-				break;
-			case 6:
-				tileSet.add(new Wall(pos));
-				break;
-			case 7:
-				tileSet.add(new Trap(pos));
-				break;
-			}
-		}
+		return data;
 	}
 
-	public void loadName(TileSet tileSet, String line) {
+	public String loadName(String line) {
 		String s = "";
 		for (int i = 0; i < line.length() && line.charAt(i) != '#'; i++) {
 			s += line.charAt(i);
 		}
-		tileSet.setLevelName(s);
+		return s;
 	}
 
-	public void loadDimensions(TileSet tileSet, String line) {
-		loadGeneral(tileSet, line, DIMLINE);
+	public Integer[] loadDimensions(String line) {
+		return parser(line, DIMLINE);
+		
 	}
 
-	public void loadTile(TileSet tileSet, String line) {
-		loadGeneral(tileSet, line, TILELINE);
+	public Integer[] loadTile(String line) {
+		return parser(line, TILELINE);
 	}
 }
