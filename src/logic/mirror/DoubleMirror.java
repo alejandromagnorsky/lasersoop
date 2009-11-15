@@ -110,11 +110,6 @@ public class DoubleMirror extends Mirror {
 		}
 		return getPos().add(newLaserDir);
 	}
-
-	@Override
-	public boolean reflects(Laser laser) {
-		return true;
-	}
 	
 	public String toString(){
 		String pos = getPos().getX() + "," + getPos().getY();

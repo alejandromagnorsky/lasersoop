@@ -64,5 +64,17 @@ public abstract class Mirror extends MovableTile {
 	 *            Laser "dentro" del espejo.
 	 * @return True, si lo refleja. False, en caso contrario.
 	 */
-	public abstract boolean reflects(Laser laser);
+
+	/**
+	 * Indica si un laser rebota en el espejo.
+	 *
+	 * @param laser
+	 *            Laser "dentro" del espejo.
+	 * @return True, si lo refleja. False, en caso contrario.
+	 */
+	public boolean reflects(Laser laser){
+		int angle = laser.getAngle();
+		return angle <= degree && angle >= degree - 180
+					|| (angle == 270 && degree == 45);
+	}
 }

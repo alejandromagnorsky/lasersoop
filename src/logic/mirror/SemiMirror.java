@@ -73,15 +73,6 @@ public class SemiMirror extends DoubleMirror {
 		}
 		return getLastLaser().getColor();
 	}
-
-	/**
-	 * Indica si un laser rebota en el semi-espejo.
-	 */
-	public boolean reflects(Laser laser) {
-		int angle = laser.getAngle();
-		return angle <= degree && angle >= degree - 180
-				|| (angle == 270 && degree == 45);
-	}
 	
 	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
