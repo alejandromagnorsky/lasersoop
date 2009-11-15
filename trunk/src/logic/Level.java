@@ -3,6 +3,8 @@ package logic;
 import gui.GameFrame;
 import java.awt.Color;
 import java.io.IOException;
+
+import logic.io.LevelLoader;
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
 import logic.tile.Tile;
@@ -24,8 +26,9 @@ public class Level {
 	 *             Si no se pudo cargar el nivel correctamente.
 	 */
 	public Level(String filename) throws IOException {
-		tileSet = new TileSet();
-		tileSet.loader(filename);
+
+		LevelLoader load = new LevelLoader(filename);
+		tileSet = load.loader();
 		setName(filename);
 
 		GameFrame game = new GameFrame(tileSet, this);
@@ -71,9 +74,9 @@ public class Level {
 			nextPos = t.getPos().add(t.getLastLaser().getDir());
 			if (tileSet.contains(nextPos)) {
 				// Si son mas de dos lasers, mezcla sus colores
-				Color color = ((SemiMirror)t).mixLasersColors();
+				Color color = ((SemiMirror) t).mixLasersColors();
 				Laser l = new Laser(t.getLastLaser().getDir(), color);
-				
+
 				tileSet.at(nextPos).addLaser(l);
 				walk(tileSet.at(nextPos), status);
 			}

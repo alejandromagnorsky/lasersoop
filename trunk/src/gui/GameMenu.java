@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -16,18 +14,14 @@ public class GameMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private ImagePanel background;
-
 	private JFileChooser openDialog;
-
 	private JButton loadButton;
-
 	private String filename;
 
 	public GameMenu() {
 		super("Menu Principal");
 
 		setLayout(null);
-
 		setBounds(100, 100, 900, 725);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
