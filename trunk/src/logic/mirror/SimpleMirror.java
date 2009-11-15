@@ -140,13 +140,6 @@ public class SimpleMirror extends Mirror {
 		return next;
 	}
 
-	@Override
-	public boolean reflects(Laser laser) {
-		int angle = laser.getAngle();
-		return angle <= degree && angle >= degree - 180
-				|| (angle == 270 && degree == 45);
-	}
-	
 	public String toString(){
 		String pos = getPos().getX() + "," + getPos().getY();
 		return pos + ",3," + orientation + ",0,0,0";
