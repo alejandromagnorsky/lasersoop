@@ -47,21 +47,15 @@ public class GameMenu extends JFrame {
 		JButton loadButton = new JButton("Load");
 		loadButton.setBounds(getWidth() / 2 - 100, getHeight() / 2, 200, 50);
 
-		openDialog = new JFileChooser(new File(""));
-
-		openDialog.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				filename = openDialog.getSelectedFile().getPath();
-				startLevel();
-			}
-
-		});
+		openDialog = new JFileChooser();
 
 		loadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showOpenDialog();
+				int returnValue = showOpenDialog();
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					filename = openDialog.getSelectedFile().getPath();
+					startLevel();
+				}
 			}
 		});
 
@@ -79,20 +73,19 @@ public class GameMenu extends JFrame {
 			background.setBounds(0, 0, 900, 725);
 
 		} catch (Exception e) {
-			// ERROR! (create an error frame)
-			System.out.println(e);
+			JOptionPane.showMessageDialog(null, "Error cargando recursos.");
 		}
 
 		add(start);
 		add(exit);
 		add(loadButton);
 		add(background);
-		// add(start2);
 
 	}
 
 	private void startLevel() {
 		try {
+			System.out.println(filename);
 			Level level = new Level(filename);
 			setVisible(false);
 		} catch (Exception exc) {
@@ -102,7 +95,7 @@ public class GameMenu extends JFrame {
 		}
 	}
 
-	private void showOpenDialog() {
-		openDialog.showOpenDialog(loadButton);
+	private int showOpenDialog() {
+		return openDialog.showOpenDialog(loadButton);
 	}
 }
