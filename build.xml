@@ -1,11 +1,18 @@
-<project name="TPE" default="A">
-<target name="A">
+<project name="TPE" default="dist" basedir=".">
 
-</target>
-<target name="B" depends="B">
+	<!-- Compila el proyecto, deja los archivos class en el directorio bin -->
+	<target name="compile">
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin" classpath="lib/junit-4.7.jar" />
+	</target>
 
-</target>
-<target name="C" depends="C">
+	<!-- Crea el jar ejecutable con todo el proyecto compilado. -->
+	<target name="dist" depends="compile">
+		<jar destfile="lasers.jar" basedir="bin">
+			<manifest>
+				<attribute name="Main-Class" value="logic.Game" />
+			</manifest>
+		</jar>
+	</target>
 
-</target>
 </project>
