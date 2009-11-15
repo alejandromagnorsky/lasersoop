@@ -38,9 +38,17 @@ public class LevelLoader {
 			TileSet tileSet;
 			String line, levelName;
 			if ((line = input.readLine()) == null) return null;
+			while(line.equals("") || line.charAt(0) == '#'){
+				line = input.readLine();
+			}
 			levelName = this.loadName(line);
+			
 			if ((line = input.readLine()) == null) return null;
+			while(line.equals("") || line.charAt(0) == '#'){
+				line = input.readLine();
+			}
 			Integer[] dim = this.loadDimensions(line);
+			
 			if (dim[0] < 5 || dim[1] < 5 || dim[1] > 20 || dim[0] > 20) {
 				System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
 				return null;
