@@ -81,6 +81,9 @@ public class Highscores {
 				output.write(player.getName() + "," + player.getScore());
 				return true;
 			} else {
+				if (scores[0] == null){
+					this.loader();
+				}
 				if (player.getScore() < scores[0].getScore()){
 					return false;
 				}
