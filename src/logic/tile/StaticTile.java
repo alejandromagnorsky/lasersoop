@@ -1,9 +1,7 @@
 package logic.tile;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.util.Vector;
-
 import gui.BoardPanel;
 import gui.HueController;
 import gui.ImageUtils;

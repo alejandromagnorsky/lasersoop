@@ -4,11 +4,9 @@ import gui.BoardPanel;
 import gui.HueController;
 import gui.ImageUtils;
 import gui.TileManager;
-
 import java.awt.Color;
 import java.awt.Image;
 import java.util.Vector;
-
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.tile.Tile;
@@ -32,14 +30,12 @@ public class SemiMirror extends DoubleMirror {
 		super(pos, orientation);
 		color = new Color(0, 0, 0);
 	}
-	
 
 	public void eraseLasers() {
 		super.eraseLasers();
-		color = new Color(0,0,0);
+		color = new Color(0, 0, 0);
 	}
 
-	
 	@Override
 	public GameMessage addLaser(Laser laser) {
 		// Si el laser que recibe es igual al ultimo que recibio, no lo agrega y
@@ -49,6 +45,49 @@ public class SemiMirror extends DoubleMirror {
 		return super.addLaser(laser);
 	}
 
+	/**
+	 * Ademas de agregar un laser en la celda recibida, mezcla los colores de
+	 * los lasers que tiene en los casos que corresponda.
+	 * 
+	 * @param t
+	 *            Celda destino.
+	 */
+	@Override
+	public GameMessage action(Tile t) {
+		color = mixLasersColors();
+		GameMessage status = t.addLaser(new Laser(newLaserDir, color));
+		return status;
+	}
+
+	public Color mixLasersColors() {
+		if (countLasers() > 1) {
+			Laser l1 = getFirstLaser();
+			Laser l2 = getLastLaser();
+			/*
+			 * Si la diferencia en sus angulos es de 90 grados y estan en lados
+			 * opuestos del semi-espejo, mezcla sus colores.
+			 */
+			if ((Math.abs(l1.getAngle() - l2.getAngle()) == 90 || l1.getAngle() == 0 && l2.getAngle() == 270)
+				&& (reflects(l1) && !reflects(l2) || (!reflects(l1) && reflects(l2))))
+				return ImageUtils.mix(l1.getColor(), l2.getColor());
+		}
+		return getLastLaser().getColor();
+	}
+
+	/**
+	 * Indica si un laser rebota en el semi-espejo.
+	 */
+	public boolean reflects(Laser laser) {
+		int angle = laser.getAngle();
+		return angle <= degree && angle >= degree - 180
+				|| (angle == 270 && degree == 45);
+	}
+	
+	public String toString() {
+		String pos = getPos().getX() + "," + getPos().getY();
+		return pos + ",5," + orientation + ",0,0,0";
+	}
+	
 	public void drawTile(TileManager tm, BoardPanel bp) {
 
 		int times = 0;
@@ -99,23 +138,4 @@ public class SemiMirror extends DoubleMirror {
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
 	}
-
-	/**
-	 * Ademas de agregar un laser en la celda recibida, mezcla los colores de
-	 * los lasers que tiene.
-	 * 
-	 * @param t
-	 *            Celda destino.
-	 */
-	@Override
-	public GameMessage action(Tile t) {
-		color = ImageUtils.mix(color, getLastLaser().getColor());
-		GameMessage status = t.addLaser(new Laser(newLaserDir, color));
-		return status;	}
-
-	public String toString() {
-		String pos = getPos().getX() + "," + getPos().getY();
-		return pos + ",5," + orientation + ",0,0,0";
-	}
-
 }
