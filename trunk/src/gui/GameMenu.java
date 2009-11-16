@@ -3,20 +3,16 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import logic.Level;
 
-public class GameMenu extends JFrame {
+public class GameMenu extends JFrame implements LevelStarter {
 
 	private static final long serialVersionUID = 1L;
 
 	private ImagePanel background;
-	private JFileChooser openDialog;
-	private JButton loadButton;
-	private String filename;
 
 	public GameMenu() {
 		super("Menu Principal");
@@ -26,34 +22,13 @@ public class GameMenu extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JButton start = new JButton("Start game");
+		LoadButton start = new LoadButton(this, "levelTest.txt", "Comenzar juego");
 		start.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 50, 200, 50);
 
-		start.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				startLevel();
-			}
-		});
-
-		// Default lvl
-		filename = "levelTest.txt";
-
-		JButton loadButton = new JButton("Load");
+		LoadButton loadButton = new LoadButton(this);
 		loadButton.setBounds(getWidth() / 2 - 100, getHeight() / 2, 200, 50);
 
-		openDialog = new JFileChooser();
-
-		loadButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int returnValue = showOpenDialog();
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					filename = openDialog.getSelectedFile().getPath();
-					startLevel();
-				}
-			}
-		});
-
-		JButton exit = new JButton("Exit");
+		JButton exit = new JButton("Finalizar");
 		exit.setBounds(getWidth() / 2 - 100,
 				getHeight() - 50 - getHeight() / 3, 200, 50);
 		exit.addActionListener(new ActionListener() {
@@ -77,7 +52,7 @@ public class GameMenu extends JFrame {
 
 	}
 
-	private void startLevel() {
+	public void startLevel(String filename) {
 		try {
 			System.out.println(filename);
 			Level level = new Level(filename);
@@ -87,9 +62,5 @@ public class GameMenu extends JFrame {
 			JOptionPane.showMessageDialog(null,
 					"Archivo incorrecto o corrupto.");
 		}
-	}
-
-	private int showOpenDialog() {
-		return openDialog.showOpenDialog(loadButton);
 	}
 }
