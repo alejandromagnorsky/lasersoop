@@ -26,7 +26,7 @@ public class PlayerPanel extends JPanel{
 	
 	private JLabel getScoreLabel(){
 		JLabel label = new JLabel("Puntaje: " + String.valueOf(player.getScore()));
-		label.setBounds(5, 150, 100, 30);
+		label.setBounds(5, 40, 100, 30);
 		return label;
 	}
 	

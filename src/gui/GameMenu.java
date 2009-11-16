@@ -8,19 +8,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import logic.Level;
-
 public class GameMenu extends JFrame implements LevelStarter {
 
 	private static final long serialVersionUID = 1L;
 
 	private ImagePanel background;
+	GameFrame game;
 
 	public GameMenu() {
 		super("Menu Principal");
 
 		setLayout(null);
 		setBounds(100, 100, 900, 725);
+
 		Toolkit toolkit = getToolkit();
 		Dimension size = toolkit.getScreenSize();
 		setLocation(size.width / 2 - getWidth() / 2, size.height / 2
@@ -29,7 +29,8 @@ public class GameMenu extends JFrame implements LevelStarter {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		LoadButton start = new LoadButton(this, "levelTest.txt", "Comenzar juego");
+		LoadButton start = new LoadButton(this, "levelTest1.txt",
+				"Comenzar juego");
 		start.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 50, 200, 50);
 
 		LoadButton loadButton = new LoadButton(this);
@@ -60,14 +61,8 @@ public class GameMenu extends JFrame implements LevelStarter {
 	}
 
 	public void startLevel(String filename) {
-		try {
-			System.out.println(filename);
-			Level level = new Level(filename);
-			setVisible(false);
-		} catch (Exception exc) {
-			System.out.println(exc);
-			JOptionPane.showMessageDialog(null,
-					"Archivo incorrecto o corrupto.");
-		}
+		setVisible(false);
+		game = new GameFrame(this, filename);
+		game.setVisible(true);
 	}
 }

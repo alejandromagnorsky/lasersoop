@@ -7,11 +7,9 @@ import logic.tile.Tile;
 public class GameListener implements BoardPanelListener {
 
 	private GameFrame gm;
-	private BoardPanel bp;
 
-	public GameListener(GameFrame gm, BoardPanel bp) {
+	public GameListener(GameFrame gm) {
 		this.gm = gm;
-		this.bp = bp;
 	}
 
 	public void cellClicked(int row, int column) {
@@ -23,7 +21,7 @@ public class GameListener implements BoardPanelListener {
 				gm.getCurrentLevel().update();
 
 			gm.updateScreen();
-			bp.repaint();
+			gm.repaint();
 		}
 	}
 
@@ -38,7 +36,7 @@ public class GameListener implements BoardPanelListener {
 			gm.getCurrentLevel().update();
 
 			gm.updateScreen();
-			bp.repaint();
+			gm.repaint();
 
 			System.out.println("Celda arrastrada desde " + sourceRow + ", "
 					+ sourceColumn + " hasta " + targetRow + ", "
