@@ -34,11 +34,11 @@ public class Level {
 		setName(filename);
 		
 		player = new Player("Hola");
-		
-		GameFrame game = new GameFrame(tileSet, this);
-		game.setVisible(true);
-		
-		
+			
+	}
+	
+	public TileSet getTileset(){
+		return tileSet;
 	}
 	
 	// HAY QUE USAR ESTE CONSTRUCTOR PORQUE EL OTRO LLAMA A GAMEFRAME ANTES DE CARGAR AL PLAYER
