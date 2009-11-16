@@ -88,8 +88,6 @@ public class Level {
 			next = new Wall(nextPos);
 		else
 			next = tileSet.at(nextPos);
-		System.out.println("Lasers: "+t.getLasers());
-		System.out.println(status);
 		status = t.action(next);
 		t = next;
 		walk(t, status);
