@@ -6,7 +6,6 @@ import logic.Vector2D;
 import logic.laser.Laser;
 import logic.laser.LaserController;
 import messages.GameMessage;
-import messages.NullMessage;
 
 /**
  * Representa una celda en el tablero.
@@ -35,15 +34,12 @@ public abstract class Tile extends LaserController {
 	
 	@Override
 	public GameMessage addLaser(Laser laser) {
-		
 		if( !hasLasers() )
 			return super.addLaser(laser);
 		// Si el laser que recibe es igual en direccion a alguno que ya tiene, no lo agrega.
-		else if (countLasers() >= 2 || laser.getDir().equals(getLastLaser().getDir())){
-			eraseLasers();
-			System.out.println("Superposicion: " + laser);
-			super.addLaser(laser);
-			return new NullMessage();
+		else if (laser.getDir().equals(getLastLaser().getDir())){
+			eraseLastLaser();
+			return super.addLaser(laser);
 		}
 		return super.addLaser(laser);
 	}
