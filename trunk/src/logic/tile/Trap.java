@@ -8,6 +8,7 @@ import gui.TileManager;
 import java.awt.Image;
 import java.util.Vector;
 
+import logic.Player;
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
@@ -56,6 +57,15 @@ public class Trap extends StaticTile {
 	@Override
 	public Vector2D nextPosition() {
 		return this.getPos();
+	}
+	
+	/**
+	 * Las trampas setean al puntaje en 0.
+	 */
+	@Override
+	public void changeScore(Player player){
+		if ( hasLasers() )
+			player.setScore(-1);
 	}
 	
 	public String toString(){
