@@ -54,9 +54,18 @@ public class GameFrame extends JFrame implements LevelStarter {
 	}
 
 	public void updateScreen() {
+
 		clearScreen();
 		for (Tile itr : tileset)
 			itr.drawTile(tileManager, bp);
+
+		if (currentLevel.hasWon())
+			nextLevel();
+		if (currentLevel.hasLost()) {
+			setEnabled(false);
+			JOptionPane.showMessageDialog(null, "¡Has perdido!");
+			openMenu();
+		}
 	}
 
 	public void clearScreen() {
@@ -119,6 +128,10 @@ public class GameFrame extends JFrame implements LevelStarter {
 			JOptionPane.showMessageDialog(null,
 					"Archivo incorrecto o corrupto.");
 		}
+	}
+
+	public void nextLevel() {
+		JOptionPane.showMessageDialog(null, "¡Has ganado!");
 	}
 
 }

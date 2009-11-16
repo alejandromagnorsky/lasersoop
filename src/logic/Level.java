@@ -13,12 +13,12 @@ import messages.GameMessage;
 import messages.NullMessage;
 
 public class Level {
-	
+
 	private TileSet tileSet;
 	private String name;
 	private int goalsReached;
 	private Player player;
-	
+
 	/**
 	 * Crea un nuevo nivel con un determinado nombre.
 	 * 
@@ -32,12 +32,13 @@ public class Level {
 		tileSet = load.loader();
 		setName(filename);
 	}
-	
-	public TileSet getTileset(){
+
+	public TileSet getTileset() {
 		return tileSet;
 	}
-	
-	// HAY QUE USAR ESTE CONSTRUCTOR PORQUE EL OTRO LLAMA A GAMEFRAME ANTES DE CARGAR AL PLAYER
+
+	// HAY QUE USAR ESTE CONSTRUCTOR PORQUE EL OTRO LLAMA A GAMEFRAME ANTES DE
+	// CARGAR AL PLAYER
 	public Level(String filename, Player player) throws IOException {
 		this(filename);
 		this.player = player;
@@ -59,29 +60,27 @@ public class Level {
 		cleanLevel();
 		goalsReached = 0;
 		player.setScore(0);
-		for (Tile itr : tileSet){
+		for (Tile itr : tileSet) {
 			if (itr.shootLaser())
 				walk(itr, status);
-			if(itr.laserHasReached())
+			if (itr.laserHasReached())
 				goalsReached++;
 		}
-		
+
 		// Si el puntaje es -1, es porque hay un laser en una trampa.
-		for( Tile itr: tileSet )
-			if( player.getScore() == -1 ){
+		for (Tile itr : tileSet)
+			if (player.getScore() == -1) {
 				System.out.println("Ha perdido");
 				break;
-			}
-			else
+			} else
 				itr.changeScore(player);
-		
-		//PONERLO EN LA PARTE GRAFICA
-		System.out.println("SCORE: "+ player.getScore());
-		
-		
-		if(hasWon())
+
+		// PONERLO EN LA PARTE GRAFICA
+		System.out.println("SCORE: " + player.getScore());
+
+		if (hasWon())
 			System.out.println("Ha ganado el juego");
-				
+
 	}
 
 	/**
@@ -111,7 +110,7 @@ public class Level {
 				walk(tileSet.at(nextPos), status);
 			}
 		}
-	
+
 		nextPos = t.nextPosition();
 		// Los bordes son paredes
 		if (!tileSet.contains(nextPos))
@@ -134,15 +133,19 @@ public class Level {
 		int index = name.lastIndexOf(".");
 		this.name = name.substring(0, index);
 	}
-	
-	public boolean hasWon(){
+
+	public boolean hasWon() {
 		return goalsReached == Goal.countGoals();
+	}
+	
+	public boolean hasLost(){
+		return player.getScore() == -1;
 	}
 
 	public String getName() {
 		return name;
 	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}
