@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Dimension;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import java.io.IOException;
 import javax.swing.JFrame;
@@ -15,14 +16,16 @@ public class GameFrame extends JFrame implements LevelStarter {
 
 	private static final long serialVersionUID = 1L;
 	private static final int CELL_SIZE = 50;
-	
+
 	private BoardPanel bp;
 	private SidebarPanel pp;
-	
+
 	private TileSet tileset;
 	private Level currentLevel;
 	private TileManager tileManager;
-	
+
+	private Player player;
+
 	private GameMenu gameMenu;
 
 	public GameFrame(GameMenu gameMenu, String filename) {
@@ -34,7 +37,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 		setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		
+
 		startLevel(filename);
 	}
 
@@ -85,21 +88,32 @@ public class GameFrame extends JFrame implements LevelStarter {
 
 		bp.setListener(new GameListener(this));
 
-		Player player = new Player("Mariano");
 		pp = new SidebarPanel(this, player);
 
 		add(pp);
 		add(bp);
 
 		paintAll(getGraphics());
-		
+
+	}
+
+	public void getPlayer() {
+		if (player == null) {
+			String playerName = JOptionPane.showInputDialog(null,
+					"Ingrese el nombre del jugador", "", 1);
+			player = new Player(playerName);
+		}
 	}
 
 	public void startLevel(String filename) {
 		try {
-			currentLevel = new Level(filename);
+			getPlayer();
+			currentLevel = new Level(filename, player);
 			tileset = currentLevel.getTileset();
+
+			setTitle(currentLevel.getName());
 			initFrame();
+
 		} catch (IOException exc) {
 			System.out.println(exc);
 			JOptionPane.showMessageDialog(null,
