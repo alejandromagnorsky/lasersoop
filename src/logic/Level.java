@@ -1,6 +1,5 @@
 package logic;
 
-import gui.GameFrame;
 import java.awt.Color;
 import java.io.IOException;
 import logic.io.LevelLoader;
@@ -32,9 +31,6 @@ public class Level {
 		LevelLoader load = new LevelLoader(filename);
 		tileSet = load.loader();
 		setName(filename);
-		
-		player = new Player("Hola");
-			
 	}
 	
 	public TileSet getTileset(){
