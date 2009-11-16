@@ -67,7 +67,9 @@ public class SemiMirror extends DoubleMirror {
 			 * Si la diferencia en sus angulos es de 90 grados y estan en lados
 			 * opuestos del semi-espejo, mezcla sus colores.
 			 */
-			if ((Math.abs(l1.getAngle() - l2.getAngle()) == 90 || l1.getAngle() == 0 && l2.getAngle() == 270)
+			if ((Math.abs(l1.getAngle() - l2.getAngle()) == 90 
+					|| (l1.getAngle() == 0 && l2.getAngle() == 270) 
+					|| (l2.getAngle() == 0 && l1.getAngle() == 270) )
 				&& (reflects(l1) && !reflects(l2) || (!reflects(l1) && reflects(l2))))
 				return ImageUtils.mix(l1.getColor(), l2.getColor());
 		}
