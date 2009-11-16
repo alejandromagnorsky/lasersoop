@@ -2,6 +2,7 @@ package logic.tile;
 
 import gui.BoardPanel;
 import gui.TileManager;
+import logic.Player;
 import logic.Vector2D;
 import logic.laser.Laser;
 import logic.laser.LaserController;
@@ -50,6 +51,14 @@ public abstract class Tile extends LaserController {
 			return super.addLaser(laser);
 		}
 		return super.addLaser(laser);
+	}
+	
+	/**
+	 * Si contiene por lo menos un laser, suma un punto al puntaje del jugador.
+	 */
+	public void changeScore(Player player){
+		if( hasLasers() )
+			player.incrementScore(1);
 	}
 	
 	public abstract boolean canSwap();

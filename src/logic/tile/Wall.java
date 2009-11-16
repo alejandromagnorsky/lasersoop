@@ -6,7 +6,7 @@ import gui.ImageUtils;
 import gui.TileManager;
 import java.awt.Image;
 import java.util.Vector;
-
+import logic.Player;
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
@@ -59,7 +59,14 @@ public class Wall extends StaticTile {
 	public Vector2D nextPosition() {
 		return this.getPos();
 	}
-
+	
+	/**
+	 * Las paredes no suman puntos
+	 */
+	@Override
+	public void changeScore(Player player){
+	}
+	
 	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
 		return pos + ",6,0,0,0,0";

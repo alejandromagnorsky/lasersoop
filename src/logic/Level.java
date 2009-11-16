@@ -1,10 +1,8 @@
 package logic;
 
 import gui.GameFrame;
-
 import java.awt.Color;
 import java.io.IOException;
-
 import logic.io.LevelLoader;
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
@@ -16,9 +14,12 @@ import messages.GameMessage;
 import messages.NullMessage;
 
 public class Level {
+	
 	private TileSet tileSet;
 	private String name;
 	private int goalsReached;
+	private Player player;
+	
 	/**
 	 * Crea un nuevo nivel con un determinado nombre.
 	 * 
@@ -28,13 +29,22 @@ public class Level {
 	 *             Si no se pudo cargar el nivel correctamente.
 	 */
 	public Level(String filename) throws IOException {
-
 		LevelLoader load = new LevelLoader(filename);
 		tileSet = load.loader();
 		setName(filename);
-
+		
+		player = new Player("Hola");
+		
 		GameFrame game = new GameFrame(tileSet, this);
 		game.setVisible(true);
+		
+		
+	}
+	
+	// HAY QUE USAR ESTE CONSTRUCTOR PORQUE EL OTRO LLAMA A GAMEFRAME ANTES DE CARGAR AL PLAYER
+	public Level(String filename, Player player) throws IOException {
+		this(filename);
+		this.player = player;
 	}
 
 	/**
@@ -52,14 +62,28 @@ public class Level {
 		GameMessage status = new NullMessage();
 		cleanLevel();
 		goalsReached = 0;
+		player.setScore(0);
 		for (Tile itr : tileSet){
 			if (itr.shootLaser())
 				walk(itr, status);
 			if(itr.laserHasReached())
 				goalsReached++;
 		}
+		
+		// Si el puntaje es -1, es porque hay un laser en una trampa.
+		for( Tile itr: tileSet )
+			if( player.getScore() == -1 ){
+				System.out.println("Ha perdido");
+				break;
+			}
+			else
+				itr.changeScore(player);
+		
 		//PONERLO EN LA PARTE GRAFICA
-		if(isOver())
+		System.out.println("SCORE: "+ player.getScore());
+		
+		
+		if(hasWon())
 			System.out.println("Ha ganado el juego");
 				
 	}
@@ -91,9 +115,9 @@ public class Level {
 				walk(tileSet.at(nextPos), status);
 			}
 		}
-
+	
 		nextPos = t.nextPosition();
-		// Borders are walls
+		// Los bordes son paredes
 		if (!tileSet.contains(nextPos))
 			next = new Wall(nextPos);
 		else
@@ -115,11 +139,15 @@ public class Level {
 		this.name = name.substring(0, index);
 	}
 	
-	public boolean isOver(){
+	public boolean hasWon(){
 		return goalsReached == Goal.countGoals();
 	}
 
 	public String getName() {
 		return name;
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 }
