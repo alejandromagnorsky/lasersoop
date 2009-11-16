@@ -6,7 +6,7 @@ package logic;
  */
 public class Player implements Comparable<Player>{
 	private String name;
-	private int score; //DEBERIA SER UN ARRAY PUES TIENE UN PUNTAJE POR CADA NIVEL 
+	private int score;
 	
 	public Player(String name){
 		this.name = name;
@@ -40,6 +40,10 @@ public class Player implements Comparable<Player>{
 
 	@Override
 	public int compareTo(Player p) {
-		return this.score - p.score;
+		int delta = p.getScore() - this.score;
+		if (delta == 0){
+			return p.getName().compareTo(this.name);			
+		}
+		return p.getScore() - this.score;
 	}
 }
