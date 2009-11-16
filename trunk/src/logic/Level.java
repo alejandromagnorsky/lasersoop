@@ -28,6 +28,7 @@ public class Level {
 	 *             Si no se pudo cargar el nivel correctamente.
 	 */
 	public Level(String filename) throws IOException {
+		Goal.initGoals();
 		LevelLoader load = new LevelLoader(filename);
 		tileSet = load.loader();
 		setName(filename);
@@ -37,8 +38,6 @@ public class Level {
 		return tileSet;
 	}
 
-	// HAY QUE USAR ESTE CONSTRUCTOR PORQUE EL OTRO LLAMA A GAMEFRAME ANTES DE
-	// CARGAR AL PLAYER
 	public Level(String filename, Player player) throws IOException {
 		this(filename);
 		this.player = player;
@@ -69,17 +68,8 @@ public class Level {
 
 		// Si el puntaje es -1, es porque hay un laser en una trampa.
 		for (Tile itr : tileSet)
-			if (player.getScore() == -1) {
-				System.out.println("Ha perdido");
-				break;
-			} else
+			if (player.getScore() != -1) 
 				itr.changeScore(player);
-
-		// PONERLO EN LA PARTE GRAFICA
-		System.out.println("SCORE: " + player.getScore());
-
-		if (hasWon())
-			System.out.println("Ha ganado el juego");
 
 	}
 

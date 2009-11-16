@@ -70,11 +70,17 @@ public class Goal extends StaticTile {
 				return true;
 		return false;
 	}
-	
-	public static int countGoals(){
+
+	public static int countGoals() {
 		return countGoals;
 	}
 	
+
+	public static void initGoals() {
+		countGoals = 0;
+	}
+
+
 	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
 		String color = getColor().getRed() + "," + getColor().getGreen() + ","

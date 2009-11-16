@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import logic.Level;
 import logic.Player;
+import logic.tile.Goal;
 import logic.tile.SimpleTile;
 import logic.tile.Tile;
 import logic.tileset.TileSet;
@@ -80,6 +81,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 
 	public void initFrame() {
 
+		this.removeAll();
 		this.frameInit();
 
 		setSize(tileset.getCols() * CELL_SIZE + 150, tileset.getRows()
@@ -117,9 +119,11 @@ public class GameFrame extends JFrame implements LevelStarter {
 	public void startLevel(String filename) {
 		try {
 			getPlayer();
+			
 			currentLevel = new Level(filename, player);
 			tileset = currentLevel.getTileset();
 
+			System.out.println(Goal.countGoals());
 			setTitle(currentLevel.getName());
 			initFrame();
 
