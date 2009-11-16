@@ -4,11 +4,14 @@ import gui.BoardPanel;
 import gui.HueController;
 import gui.ImageUtils;
 import gui.TileManager;
+
 import java.awt.Color;
 import java.awt.Image;
+
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
+import messages.NullMessage;
 
 public class Origin extends StaticTile {
 
@@ -26,6 +29,21 @@ public class Origin extends StaticTile {
 		addLaser(l);
 	}
 
+	/**
+	 * Para evitar que se pise el laser del emisor, se pueden agregar
+	 * solamente laseres que no tenga el mismo sentido que el que dispara. 
+	 */
+	@Override
+	public GameMessage addLaser(Laser laser) {
+		if( !hasLasers() )
+			return super.addLaser(laser);
+		if (laser.getDir().equals(getLastLaser().getDir())){
+			return new NullMessage();
+		}
+		return super.addLaser(laser);
+	}
+	
+	
 	public int getOrientation() {
 		return this.orientation;
 	}
