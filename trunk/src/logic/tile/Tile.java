@@ -32,6 +32,14 @@ public abstract class Tile extends LaserController {
 		return false;
 	}
 	
+	
+	/**
+	 * Indica si un laser con el color correspondiente llego a un destino.
+	 */
+	public boolean laserHasReached() {
+		return false;
+	}
+	
 	@Override
 	public GameMessage addLaser(Laser laser) {
 		if( !hasLasers() )

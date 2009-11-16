@@ -25,7 +25,7 @@ public class GameFrame extends JFrame {
 
 		setLayout(null);
 		setSize(tileset.getCols() * CELL_SIZE + 150, tileset.getRows()
-				* CELL_SIZE + 30);
+				* CELL_SIZE + 44);
 		Toolkit toolkit = getToolkit();
 		Dimension size = toolkit.getScreenSize();
 		setLocation(size.width / 2 - getWidth() / 2, size.height / 2
