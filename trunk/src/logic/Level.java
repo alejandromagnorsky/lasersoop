@@ -44,7 +44,7 @@ public class Level {
 	}
 
 	/**
-	 * Borra los lasers del tablero
+	 * Borra los lasers del tablero.
 	 */
 	public void cleanLevel() {
 		for (Tile itr : tileSet)
@@ -52,7 +52,7 @@ public class Level {
 	}
 
 	/**
-	 * "Dispara" los lasers desde los origines.
+	 * "Dispara" los lasers desde los origines y suma el puntaje que corresponda.
 	 */
 	public void update() {
 		GameMessage status = new NullMessage();
@@ -92,7 +92,7 @@ public class Level {
 		if (t instanceof SemiMirror) {
 			nextPos = t.getPos().add(t.getLastLaser().getDir());
 			if (tileSet.contains(nextPos)) {
-				// Si son mas de dos lasers, mezcla sus colores
+				// Si son dos lasers, mezcla sus colores
 				Color color = ((SemiMirror) t).mixLasersColors();
 				Laser l = new Laser(t.getLastLaser().getDir(), color);
 
@@ -102,7 +102,7 @@ public class Level {
 		}
 
 		nextPos = t.nextPosition();
-		// Los bordes son paredes
+		// Los bordes son paredes.
 		if (!tileSet.contains(nextPos))
 			next = new Wall(nextPos);
 		else
@@ -112,6 +112,15 @@ public class Level {
 		walk(t, status);
 	}
 
+	
+	public boolean hasWon() {
+		return goalsReached == Goal.countGoals();
+	}
+	
+	public boolean hasLost(){
+		return player.getScore() == -1;
+	}
+	
 	/**
 	 * Setea el nombre del nivel tomando la parte sin extension del String
 	 * recibido.
@@ -124,13 +133,6 @@ public class Level {
 		this.name = name.substring(0, index);
 	}
 
-	public boolean hasWon() {
-		return goalsReached == Goal.countGoals();
-	}
-	
-	public boolean hasLost(){
-		return player.getScore() == -1;
-	}
 
 	public String getName() {
 		return name;
