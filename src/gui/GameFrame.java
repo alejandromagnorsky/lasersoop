@@ -69,7 +69,8 @@ public class GameFrame extends JFrame implements LevelStarter {
 		}
 	}
 
-	public void clearScreen() {
+	public void clearScreen() 
+	{
 		for (Tile itr : tileset)
 			new SimpleTile(itr.getPos()).drawTile(tileManager, bp);
 	}
