@@ -8,11 +8,11 @@ import java.awt.Image;
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
-import messages.GoalAchievedMessage;
 
 public class Goal extends StaticTile {
 
 	private Color color;
+	private static int countGoals = 0;
 
 	/**
 	 * Crea un nuevo destino con un determinado color en la posicion recibida.
@@ -20,6 +20,7 @@ public class Goal extends StaticTile {
 	public Goal(Vector2D pos, Color color) {
 		super(pos);
 		this.color = color;
+		countGoals++;
 	}
 
 	public Color getColor() {
@@ -39,19 +40,14 @@ public class Goal extends StaticTile {
 	}
 
 	/**
-	 * Agrega un laser en la celda que recibe. Si el laser que posee tiene el
-	 * mismo color que si mismo, devuelve un mensaje que avisa que se alcanzo un
-	 * destino.
+	 * Agrega un laser en la celda que recibe.
 	 * 
 	 * @param t
 	 *            Celda destino.
 	 */
 	@Override
 	public GameMessage action(Tile t) {
-		GameMessage status = t.addLaser(new Laser(getLastLaser()));
-		if (color.equals(getLastLaser()))
-			return new GoalAchievedMessage();
-		return status;
+		return t.addLaser(new Laser(getLastLaser()));
 	}
 
 	/**
@@ -63,6 +59,22 @@ public class Goal extends StaticTile {
 		return this.getPos().add(this.getLastLaser().getDir());
 	}
 
+	/**
+	 * Si algun laser que posee tiene el mismo color que si mismo, devuelve
+	 * verdadero. En caso contrario, devuelve falso.
+	 * 
+	 */
+	public boolean laserHasReached() {
+		for (Laser l : getLasers())
+			if (color.equals(l.getColor()))
+				return true;
+		return false;
+	}
+	
+	public static int countGoals(){
+		return countGoals;
+	}
+	
 	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
 		String color = getColor().getRed() + "," + getColor().getGreen() + ","

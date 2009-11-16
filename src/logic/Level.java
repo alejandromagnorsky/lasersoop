@@ -1,12 +1,14 @@
 package logic;
 
 import gui.GameFrame;
+
 import java.awt.Color;
 import java.io.IOException;
 
 import logic.io.LevelLoader;
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
+import logic.tile.Goal;
 import logic.tile.Tile;
 import logic.tile.Wall;
 import logic.tileset.TileSet;
@@ -16,7 +18,7 @@ import messages.NullMessage;
 public class Level {
 	private TileSet tileSet;
 	private String name;
-
+	private int goalsReached;
 	/**
 	 * Crea un nuevo nivel con un determinado nombre.
 	 * 
@@ -49,9 +51,17 @@ public class Level {
 	public void update() {
 		GameMessage status = new NullMessage();
 		cleanLevel();
-		for (Tile itr : tileSet)
+		goalsReached = 0;
+		for (Tile itr : tileSet){
 			if (itr.shootLaser())
 				walk(itr, status);
+			if(itr.laserHasReached())
+				goalsReached++;
+		}
+		//PONERLO EN LA PARTE GRAFICA
+		if(isOver())
+			System.out.println("Ha ganado el juego");
+				
 	}
 
 	/**
@@ -103,6 +113,10 @@ public class Level {
 	public void setName(String name) {
 		int index = name.lastIndexOf(".");
 		this.name = name.substring(0, index);
+	}
+	
+	public boolean isOver(){
+		return goalsReached == Goal.countGoals();
 	}
 
 	public String getName() {

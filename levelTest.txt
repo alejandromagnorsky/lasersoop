@@ -3,9 +3,9 @@ Nivel de ejemplo
 8,      8
 0,0,1,0,0,0,250     # origen de laser azul
 1,4,1,1,250,0,0     # origen de laser rojo
-6,0,2,0,240,0,0     # destino del laser rojo
-4,7,2,0,0,0,240     # destino del laser azul
-2,0,2,0,240,0,240   # destino laser violeta
+6,0,2,0,250,0,0     # destino del laser rojo
+4,7,2,0,0,0,250     # destino del laser azul
+2,0,2,0,250,0,250   # destino laser violeta
 # paredes
 5,0,6,0,0,0,0
 5,1,6,0,0,0,0

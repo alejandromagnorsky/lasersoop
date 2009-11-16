@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -19,6 +21,11 @@ public class GameMenu extends JFrame implements LevelStarter {
 
 		setLayout(null);
 		setBounds(100, 100, 900, 725);
+		Toolkit toolkit = getToolkit();
+		Dimension size = toolkit.getScreenSize();
+		setLocation(size.width / 2 - getWidth() / 2, size.height / 2
+				- getHeight() / 2);
+
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
