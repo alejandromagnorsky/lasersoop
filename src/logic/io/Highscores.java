@@ -8,19 +8,26 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import logic.Player;
 
 public class Highscores {
 	private String levelName;
-	private Player[] scores;
+	private TreeSet<Player> scores;
 	
 	public Highscores(String levelName){
 		this.levelName = levelName;
-		this.scores = new Player[10];
+		this.scores = new TreeSet<Player>();
 	}
 	
 	public String getLevelName(){
 		return levelName;
+	}
+	
+	public TreeSet<Player> getScores(){
+		return scores;
 	}
 	
 	public void setLevelName(String levelName){
@@ -55,8 +62,7 @@ public class Highscores {
 						auxScore += auxChar;
 					}
 				}
-				scores[i] = new Player(auxName, new Integer(auxScore));
-				Arrays.sort(scores);
+				scores.add(new Player(auxName, new Integer(auxScore)));				
 			}
 			return true;
 			
@@ -81,16 +87,17 @@ public class Highscores {
 				output.write(player.getName() + "," + player.getScore());
 				return true;
 			} else {
-				if (scores[0] == null){
+				if (scores.isEmpty()){
 					this.loader();
 				}
-				if (player.getScore() < scores[0].getScore()){
+				if (player.getScore() < scores.first().getScore()){
 					return false;
 				}
-				scores[0].setScore(player.getScore());
-				output.write(scores[0].getName() + "," + scores[0].getScore());
-				for (int i=0; i< 10 && scores[i] != null; i++){
-					output.write("\n" + scores[i].getName() + "," + scores[i].getScore());
+				for(Player p: scores){
+					output.write(p.getName() + "," + p.getScore());
+					if (p != scores.last()){
+						output.write("\n");
+					}
 				}
 				return true;
 			}

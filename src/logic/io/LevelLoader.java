@@ -16,12 +16,22 @@ import logic.tile.Trap;
 import logic.tile.Wall;
 import logic.tileset.TileSet;
 
+/**
+ * Clase responsable de crear un tablero a partir de un archivo de nivel.
+ *
+ */
 public class LevelLoader {
 	private String filename;
 	
 	private static final int DIMLINE = 2;
 	private static final int TILELINE = 7;
 	
+	/**
+	 * Crea una nueva instancia de LevelLoader con el nombre de un archivo de nivel asociado.
+	 * 
+	 * @param filename
+	 * 					Path relativo del archivo respecto de la carpeta 'levels'.
+	 */
 	public LevelLoader(String filename){
 		this.filename = filename;
 	}
@@ -30,13 +40,23 @@ public class LevelLoader {
 		return filename;
 	}
 	
+	/**
+	 * Levanta toda la información necesaria del archivo de nivel que almacena.
+	 * 
+	 * @return
+	 * 		Devuelve una instancia de TileSet con los datos levantados cargados.
+	 * 		'null' si hubo algún error.
+	 * 
+	 * @throws IOException
+	 */
 	public TileSet loader() throws IOException{
 		BufferedReader input = null;
 		try {
-			File file = new File(filename);
+			File file = new File(filename + ".txt");
 			input = new BufferedReader(new FileReader(file));
 			TileSet tileSet;
 			String line, levelName;
+			
 			if ((line = input.readLine()) == null) return null;
 			while(line.equals("") || line.charAt(0) == '#'){
 				line = input.readLine();
@@ -47,35 +67,17 @@ public class LevelLoader {
 			while(line.equals("") || line.charAt(0) == '#'){
 				line = input.readLine();
 			}
-			Integer[] dim = this.loadDimensions(line);
-			
-			if (dim[0] < 5 || dim[1] < 5 || dim[1] > 20 || dim[0] > 20) {
-				System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5");
+			Integer[] dim;
+			if ( (dim = this.loadDimensions(line)) == null ){
 				return null;
-			}
+			}			
 			tileSet = new TileSet(dim[0], dim[1]);
 			tileSet.setLevelName(levelName);
 			
+			Integer[] tile;
 			while ( (line = input.readLine()) != null ) {
 				if (!line.equals("") && line.charAt(0) != '#') {
-					Integer[] tile = this.loadTile(line);
-					if (tile[0] > tileSet.getRows() || tile[1] > tileSet.getCols()
-							|| tile[2] > 7|| tile[2] < 1) {
-						/* Valido los parámetros en general */
-						System.out.println(line + "\n" + "TEMP|-----| incorrectos 1");
-						return null;
-					} else if (((tile[2] == 1 || tile[2] == 3) && (tile[3] < 0 || tile[3] > 3))
-							|| ((tile[2] == 4 || tile[2] == 5) && tile[3] != 0 && tile[3] != 1)
-							|| ( (tile[2] == 6 || tile[2] == 7) && tile[3] != 0)) {
-						/* Valido los parámetros de la rotación */
-						System.out.println(line + "\n" + "TEMP|-----| incorrectos 2");
-						return null;
-					} else if (((tile[2] == 1 || tile[2] == 2) && (tile[4] < 0
-							|| tile[4] > 255 || tile[5] < 0 || tile[5] > 255
-							|| tile[6] < 0 || tile[6] > 255))
-							|| (tile[2] != 1 && tile[2] != 2 && tile[4] != 0)) {
-						/* Valido los parámetros del color */
-						System.out.println(line + "\n" + "TEMP|-----| incorrectos 3");
+					if ((tile = this.loadTile(line, tileSet)) == null){
 						return null;
 					}
 					Vector2D pos = new Vector2D(tile[0], tile[1]);
@@ -118,12 +120,24 @@ public class LevelLoader {
 		}
 	}
 	
+	
+	/**
+	 * Parser que recorre una dada línea buscando una cantidad dada de enteros, de acuerdo
+	 * con el formato prefijado para los archivos de nivel.
+	 * 
+	 * @param line
+	 * 			String del cual el parser extraerá los datos.
+	 * @param lineType
+	 * 			Cantidad de enteros a levantar.
+	 * 				- Para una línea con información acerca de la dimensión del tablero,
+	 * 				lineType es igual a 2, ya que son 2 los enteros que tiene que levantar
+	 * 				(un para la cantidad de filas y otro para la de columnas).
+	 * 				- Para una línea con información acerca de una celda, lineType es igual a 7.
+	 * @return
+	 * 			Devuelve un arreglo con los enteros extraidos, en orden de aparición.
+	 * 			'null' si la línea no cumple con el formato prefijado para los archivos de nivel.
+	 */
 	public Integer[] parser(String line, int lineType){
-		/* El parámetro lineType hace referencia a la cantidad de valores que el parser
-		 * tiene que levantar por línea. Si la línea tiene información acerca de:
-		 * 		- la dimensión del tablero: lineType = 2.
-		 * 		- una celda: lineType = 7.
-		 */
 		String[] strData = new String[lineType];
 		char auxChar;
 		int quantComas = 0;
@@ -147,7 +161,7 @@ public class LevelLoader {
 					 * si y sólo si la cantidad de comas que se levantaron es la correcta
 					 * y que el último número levantado no sea vacío.
 					 * O sea, evita líneas como estas:
-					 * 		- "0,0,0,0# blaba"
+					 * 		- "0,0,0,0" teniendo que levantar más de 4 enteros.
 					 * 		- "0,0,0,0,0,#"
 					 */
 					flagComment = true;
@@ -165,7 +179,13 @@ public class LevelLoader {
 		}
 		return data;
 	}
-
+	
+	/**
+	 * Dada una línea, devuelve todo lo que esté antes de '#' en caso de haberlo.
+	 * 
+	 * @param line
+	 * 			Línea a leer.
+	 */
 	public String loadName(String line) {
 		String s = "";
 		for (int i = 0; i < line.length() && line.charAt(i) != '#'; i++) {
@@ -174,12 +194,68 @@ public class LevelLoader {
 		return s;
 	}
 
+	/**
+	 * Levanta las dimensiones del tablero. Valida que estén en el rango de valores aceptados.
+	 * 
+	 * @param line
+	 * 			Línea a leer. Se espera que dicha linea sea tal que contenga información
+	 * 			sobre las dimensiones. Sino se considera inválida.
+	 * @return
+	 * 			Arreglo de 2 enteros, una para la cantidad de filas y otra para la de columnas.
+	 * 			'null' sino levanta o no valida.
+	 */
 	public Integer[] loadDimensions(String line) {
-		return parser(line, DIMLINE);
-		
+		Integer[] dim = parser(line, DIMLINE);
+		if (dim == null || dim[0] < 5 || dim[1] < 5 || dim[1] > 20 || dim[0] > 20) {
+			System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5 o coso null");
+			return null;
+		}
+		return dim;
 	}
 
-	public Integer[] loadTile(String line) {
-		return parser(line, TILELINE);
+	/**
+	 * Levanta la información acerca de una celda. Valida que los valores sean coherentes
+	 * entre si y con el tablero de juego.
+	 * 
+	 * @param line
+	 * 			Línea a leer. Se espera que dicha linea sea tal que contenga información sobre
+	 * 			una celda. Sino se considera inválida.
+	 * @param tileSet
+	 * 			Tablero al cual pertence dicha celda.
+	 * @return
+	 * 			Arreglo de 7 enteros. 'null' si no levanta o no valida.
+	 */
+	public Integer[] loadTile(String line, TileSet tileSet) {
+		Integer[] tile = parser(line, TILELINE);
+		
+		if (tile == null){
+			System.out.println(line + "\n" + "TEMP|-----| tile null");
+			return null;
+			
+		/* Valido los parámetros en general */
+		} else if (tile[0] >= tileSet.getRows() || tile[1] >= tileSet.getCols()
+				|| tile[2] > 7|| tile[2] < 1) {
+			
+			System.out.println(line + "\n" + "TEMP|-----| incorrectos 1");
+			return null;
+		
+		/* Valido los parámetros de la rotación */
+		} else if (((tile[2] == 1 || tile[2] == 3) && (tile[3] < 0 || tile[3] > 3))
+				|| ((tile[2] == 4 || tile[2] == 5) && tile[3] != 0 && tile[3] != 1)
+				|| ( (tile[2] == 6 || tile[2] == 7) && tile[3] != 0)) {
+			
+			System.out.println(line + "\n" + "TEMP|-----| incorrectos 2");
+			return null;
+			
+		/* Valido los parámetros del color */
+		} else if (((tile[2] == 1 || tile[2] == 2) && (tile[4] < 0
+				|| tile[4] > 255 || tile[5] < 0 || tile[5] > 255
+				|| tile[6] < 0 || tile[6] > 255))
+				|| (tile[2] != 1 && tile[2] != 2 && tile[4] != 0)) {
+			
+			System.out.println(line + "\n" + "TEMP|-----| incorrectos 3");
+			return null;
+		}
+		return tile;
 	}
 }
