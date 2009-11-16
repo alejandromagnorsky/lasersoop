@@ -129,8 +129,7 @@ public class Level {
 	 *            Nombre de archivo con extension .txt.
 	 */
 	public void setName(String name) {
-		int index = name.lastIndexOf(".");
-		this.name = name.substring(0, index);
+		this.name = name;
 	}
 
 
