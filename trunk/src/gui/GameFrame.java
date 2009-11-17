@@ -108,7 +108,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 
 	public void getPlayer() {
 		if (player == null) {
-			String playerName = JOptionPane.showInputDialog(null,
+		String playerName = JOptionPane.showInputDialog(null,
 					"Ingrese el nombre del jugador", "", 1);
 			player = new Player(playerName);
 		}
