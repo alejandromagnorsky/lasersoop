@@ -156,8 +156,12 @@ public class GameFrame extends JFrame implements LevelStarter {
 			if (LevelLoader.isInLevels(new File(filename))) {
 				getPlayer();
 				currentLevel = new Level(filename, player);
-			} else
+			} else{
+				System.out.println("holaaaaa");
 				currentLevel = new Level(filename);
+				player = currentLevel.getPlayer();
+				System.out.println(player == null);
+			}
 
 			tileset = currentLevel.getTileset();
 			if (tileset == null) {
