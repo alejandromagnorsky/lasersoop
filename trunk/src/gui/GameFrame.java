@@ -73,6 +73,8 @@ public class GameFrame extends JFrame implements LevelStarter {
 		for (Tile itr : tileset)
 			itr.drawTile(tileManager, bp);
 
+		repaint();
+		
 		if (currentLevel.hasLost()) {
 			setEnabled(false);
 			JOptionPane.showMessageDialog(null, "¡Has perdido!");
@@ -179,4 +181,3 @@ public class GameFrame extends JFrame implements LevelStarter {
 	}
 
 }
-
