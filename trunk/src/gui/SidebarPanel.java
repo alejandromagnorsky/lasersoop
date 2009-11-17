@@ -46,7 +46,7 @@ public class SidebarPanel extends JPanel {
 		highscoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					HighScoresWindow hsw = new HighScoresWindow(player, gameFrame.getCurrentLevel().getName());
+					HighScoresWindow hsw = new HighScoresWindow(gameFrame.getCurrentLevel());
 					hsw.setVisible(true);
 				} catch (IOException exc) {
 					System.out.println(exc);
