@@ -4,9 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import logic.Level;
 import logic.tile.SimpleTile;
 import logic.tile.Tile;
-import logic.tileset.TileSet;
 
 public class LevelSaver {
 	private String filename;

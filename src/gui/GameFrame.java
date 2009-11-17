@@ -2,11 +2,13 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import logic.Level;
 import logic.Player;
+import logic.io.LevelLoader;
 import logic.tile.SimpleTile;
 import logic.tile.Tile;
 import logic.tileset.TileSet;
@@ -74,7 +76,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 			itr.drawTile(tileManager, bp);
 
 		repaint();
-		
+
 		if (currentLevel.hasLost()) {
 			setEnabled(false);
 			JOptionPane.showMessageDialog(null, "¡Has perdido!");
@@ -150,11 +152,14 @@ public class GameFrame extends JFrame implements LevelStarter {
 	 */
 	public void startLevel(String filename) {
 		try {
-			getPlayer();
 
-			currentLevel = new Level(filename, player);
+			if (LevelLoader.isInLevels(new File(filename))) {
+				getPlayer();
+				currentLevel = new Level(filename, player);
+			} else
+				currentLevel = new Level(filename);
+
 			tileset = currentLevel.getTileset();
-
 			if (tileset == null) {
 				JOptionPane.showMessageDialog(null,
 						"Archivo incorrecto o corrupto.");
@@ -177,6 +182,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 	public void nextLevel() {
 		JOptionPane.showMessageDialog(null, "¡Has ganado!");
 		JOptionPane.showMessageDialog(null, "¡Has pasado al próximo nivel!");
+		// fijarse si es el ultimo nivel
 		startLevel(currentLevel.getNextLevelPath());
 	}
 
