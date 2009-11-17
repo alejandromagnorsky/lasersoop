@@ -85,6 +85,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 		this.removeAll();
 		this.frameInit();
 
+		System.out.println(tileset == null);
 		setSize(tileset.getCols() * CELL_SIZE + 150, tileset.getRows()
 				* CELL_SIZE + 28);
 
@@ -123,8 +124,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 			
 			currentLevel = new Level(filename, player);
 			tileset = currentLevel.getTileset();
-
-			System.out.println(Goal.countGoals());
+			
 			setTitle(currentLevel.getName());
 			initFrame();
 
