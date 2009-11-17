@@ -23,23 +23,17 @@ public class SemiMirror extends DoubleMirror {
 	 * @param pos
 	 *            Indica la posicion en el tablero.
 	 * @param orientation
-	 *            Contiene la orientacion del espejo representada por un numero
-	 *            entre 0 y 3.
+	 *            Contiene la orientacion del espejo representada por un 0 o un 1.
 	 */
 	public SemiMirror(Vector2D pos, int orientation) {
 		super(pos, orientation);
 		color = new Color(0, 0, 0);
 	}
 
-	public void eraseLasers() {
-		super.eraseLasers();
-		color = new Color(0, 0, 0);
-	}
-
 	@Override
 	public GameMessage addLaser(Laser laser) {
-		// Si el laser que recibe es igual al ultimo que recibio, o tiene dos lasers, no lo agrega y
-		// devuelve que el laser se detuvo.
+		// Si el laser que recibe es igual al ultimo que recibio, o tiene dos lasers,
+		// no lo agrega y devuelve que el laser se detuvo.
 		if ((countLasers() > 1 && laser.getDir().equals(getLastLaser().getDir()))
 				|| countLasers() >= 2)
 			return new LaserStopMessage();
@@ -60,6 +54,10 @@ public class SemiMirror extends DoubleMirror {
 		return status;
 	}
 
+	/**
+	 * Mezcla los colores de los lasers que tiene si corresponde.
+	 * @return
+	 */
 	public Color mixLasersColors() {
 		if (countLasers() > 1) {
 			Laser l1 = getFirstLaser();
@@ -69,44 +67,25 @@ public class SemiMirror extends DoubleMirror {
 			 * opuestos del semi-espejo, mezcla sus colores.
 			 */
 			if ((Math.abs(l1.getAngle() - l2.getAngle()) == 90
-					|| (l1.getAngle() == 0 && l2.getAngle() == 270) || (l2
-					.getAngle() == 0 && l1.getAngle() == 270))
-					&& (reflects(l1) && !reflects(l2) || (!reflects(l1) && reflects(l2))))
+				|| (l1.getAngle() == 0 && l2.getAngle() == 270) 
+				|| (l2.getAngle() == 0 && l1.getAngle() == 270))
+				&& (reflects(l1) && !reflects(l2) || (!reflects(l1) && reflects(l2))))
 				return ImageUtils.mix(l1.getColor(), l2.getColor());
 		}
 		return getLastLaser().getColor();
 	}
 
-	public String toString() {
-		String pos = getPos().getX() + "," + getPos().getY();
-		return pos + ",5," + orientation + ",0,0,0";
+	public void eraseLasers() {
+		super.eraseLasers();
+		color = new Color(0, 0, 0);
 	}
-
+	
 	public void drawTile(TileManager tm, BoardPanel bp) {
-
-		int times = 0;
-
-		// Just for easy understanding
-		switch (getDegree()) {
-		case 135:
-			times = 0;
-			break;
-		case 45:
-			times = 1;
-			break;
-		case 315:
-			times = 2;
-			break;
-		case 225:
-			times = 3;
-			break;
-		}
-
-		// Draw lasers first
+		// Primero dibuja los lasers.
 		drawLasers(tm, bp);
 
-		// Draw image
-		Image image = ImageUtils.rotateImage(tm.getSemiMirror(), times);
+		// Dibuja la imagen.
+		Image image = ImageUtils.rotateImage(tm.getSemiMirror(), orientation);
 
 		if (hasLasers())
 			image = HueController.changeHue(image, color);
@@ -131,5 +110,10 @@ public class SemiMirror extends DoubleMirror {
 			tmpLaser = HueController.changeHue(tmpLaser, color);
 			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
 		}
+	}
+	
+	public String toString() {
+		String pos = getPos().getX() + "," + getPos().getY();
+		return pos + ",5," + orientation + ",0,0,0";
 	}
 }

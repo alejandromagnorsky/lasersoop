@@ -27,6 +27,13 @@ public abstract class Mirror extends MovableTile {
 
 	/**
 	 * Cambia el angulo de orientacion.
+	 * El criterio es:
+	 * \. : 135.
+	 * ./ : 45.
+	 * .\ : 315.
+	 * /. : 225.
+	 * Donde el punto representa la pared del espejo simple.
+	 * Para los dobles y semis se utilizan solo los dos primeros angulos.
 	 * 
 	 * @param orientation
 	 *            Contiene la orientacion del espejo representada por un numero
@@ -58,14 +65,6 @@ public abstract class Mirror extends MovableTile {
 	}
 
 	/**
-	 * Indica si el laser recibido es o no reflejado por el espejo.
-	 * 
-	 * @param laser
-	 *            Laser "dentro" del espejo.
-	 * @return True, si lo refleja. False, en caso contrario.
-	 */
-
-	/**
 	 * Indica si un laser rebota en el espejo.
 	 *
 	 * @param laser
@@ -77,4 +76,5 @@ public abstract class Mirror extends MovableTile {
 		return angle <= degree && angle >= degree - 180
 					|| (angle == 270 && degree == 45);
 	}
+
 }
