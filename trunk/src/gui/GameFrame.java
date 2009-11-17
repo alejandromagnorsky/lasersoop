@@ -100,6 +100,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 	 */
 	public void openMenu() {
 		setVisible(false);
+		this.
 		gameMenu.setVisible(true);
 	}
 
@@ -142,8 +143,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 		if (player == null) {
 			String playerName = JOptionPane.showInputDialog(null,
 					"Ingrese el nombre del jugador", "", 1);
-
-			if (playerName.equals("") || playerName == null)
+			if (playerName == null || playerName.equals(""))
 				playerName = "Jugador 1";
 
 			player = new Player(playerName);
@@ -163,7 +163,6 @@ public class GameFrame extends JFrame implements LevelStarter {
 				getPlayer();
 				currentLevel = new Level(filename, player);
 			} else {
-				System.out.println("holaaaaa");
 				currentLevel = new Level(filename);
 				player = currentLevel.getPlayer();
 			}
@@ -197,13 +196,8 @@ public class GameFrame extends JFrame implements LevelStarter {
 		try {
 			hs.saver(player);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		System.out.println(currentLevel.getPath());
-		
-		System.out.println(hs.getLevelName());
 		// fijarse si es el ultimo nivel
 		System.out.println(currentLevel.getNextLevelPath());
 		startLevel(currentLevel.getNextLevelPath());
