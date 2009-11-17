@@ -61,8 +61,8 @@ public class LevelLoader {
 			String line, levelName;
 			
 			System.out.println(file.getParent());
-			System.out.println(levelsDir.getAbsolutePath());
-			if ( file.getParent()== null || !file.getParent().equals(levelsDir.getAbsolutePath())){
+			System.out.println(levelsDir.getPath());
+			if ( file.getParent()== null || !file.getParent().equals(levelsDir.getPath())){
 				if ((line = input.readLine()) == null) return null;
 				while(line.equals("") || line.charAt(0) == '#'){
 					line = input.readLine();
