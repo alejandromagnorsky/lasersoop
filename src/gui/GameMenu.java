@@ -35,13 +35,13 @@ public class GameMenu extends JFrame implements LevelStarter {
 
 		LoadButton start = new LoadButton(this, Level.getFirstLevel(),
 				"Comenzar juego");
-		start.setBounds(getWidth() / 2 - 100, getHeight() / 3, 200, 50);
+		start.setBounds(getWidth() / 2 + 75, getHeight() / 3, 200, 50);
 
 		LoadButton loadButton = new LoadButton(this);
-		loadButton.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 75, 200, 50);
+		loadButton.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 75, 200, 50);
 
 		JButton hs = new JButton("Ver mejores puntajes");
-		hs.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 150, 200, 50);
+		hs.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 150, 200, 50);
 		hs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			try{
@@ -55,7 +55,7 @@ public class GameMenu extends JFrame implements LevelStarter {
 		});
 		
 		JButton exit = new JButton("Finalizar");
-		exit.setBounds(getWidth() / 2 - 100,
+		exit.setBounds(getWidth() / 2 + 75,
 				getHeight() / 3 + 225, 200, 50);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
