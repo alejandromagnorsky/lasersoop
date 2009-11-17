@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import logic.Level;
+
 public class GameMenu extends JFrame implements LevelStarter {
 
 	private static final long serialVersionUID = 1L;
@@ -29,7 +31,7 @@ public class GameMenu extends JFrame implements LevelStarter {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		LoadButton start = new LoadButton(this, "levels/levelD.txt",
+		LoadButton start = new LoadButton(this, Level.getFirstLevel(),
 				"Comenzar juego");
 		start.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 50, 200, 50);
 
