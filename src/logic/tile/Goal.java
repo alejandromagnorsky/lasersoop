@@ -65,9 +65,11 @@ public class Goal extends StaticTile {
 	 * 
 	 */
 	public boolean laserHasReached() {
-		for (Laser l : getLasers())
+		for (Laser l : getLasers()){
 			if (color.equals(l.getColor()))
 				return true;
+		}
+			
 		return false;
 	}
 
