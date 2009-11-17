@@ -59,7 +59,7 @@ public class LevelLoader {
 			Level level = new Level();
 			String line, levelName;
 			
-			if ( this.isInLevels(file) ){
+			if ( LevelLoader.isInLevels(file) ){
 				if ((line = input.readLine()) == null) return null;
 				while(line.equals("") || line.charAt(0) == '#'){
 					line = input.readLine();
