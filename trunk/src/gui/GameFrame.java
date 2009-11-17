@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import logic.Level;
 import logic.Player;
+import logic.io.Highscores;
 import logic.io.LevelLoader;
 import logic.tile.SimpleTile;
 import logic.tile.Tile;
@@ -142,10 +143,11 @@ public class GameFrame extends JFrame implements LevelStarter {
 			String playerName = JOptionPane.showInputDialog(null,
 					"Ingrese el nombre del jugador", "", 1);
 
-			if (playerName.equals(""))
+			if (playerName.equals("") || playerName == null)
 				playerName = "Jugador 1";
 
 			player = new Player(playerName);
+			
 		}
 	}
 
@@ -164,7 +166,6 @@ public class GameFrame extends JFrame implements LevelStarter {
 				System.out.println("holaaaaa");
 				currentLevel = new Level(filename);
 				player = currentLevel.getPlayer();
-				System.out.println(player == null);
 			}
 
 			tileset = currentLevel.getTileset();
@@ -190,7 +191,21 @@ public class GameFrame extends JFrame implements LevelStarter {
 	public void nextLevel() {
 		JOptionPane.showMessageDialog(null, "¡Has ganado!");
 		JOptionPane.showMessageDialog(null, "¡Has pasado al próximo nivel!");
+		
+		Highscores hs = new Highscores(currentLevel.getPath());
+		
+		try {
+			hs.saver(player);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(currentLevel.getPath());
+		
+		System.out.println(hs.getLevelName());
 		// fijarse si es el ultimo nivel
+		System.out.println(currentLevel.getNextLevelPath());
 		startLevel(currentLevel.getNextLevelPath());
 	}
 
