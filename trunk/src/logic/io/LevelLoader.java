@@ -61,8 +61,11 @@ public class LevelLoader {
 			String line, levelName;
 			
 			System.out.println(file.getParent());
-			System.out.println(levelsDir.getPath());
-			if ( file.getParent()== null || !file.getParent().equals(levelsDir.getPath())){
+			System.out.println(levelsDir.getAbsolutePath());
+			
+			if ( (!file.isAbsolute() && (file.getParent()== null || !file.getParent().equals(levelsDir.getPath())))
+					|| (file.isAbsolute() && ( file.getParent()== null || !file.getParent().equals(levelsDir.getAbsolutePath()))) ){
+				
 				if ((line = input.readLine()) == null) return null;
 				while(line.equals("") || line.charAt(0) == '#'){
 					line = input.readLine();
@@ -70,6 +73,8 @@ public class LevelLoader {
 				System.out.println(line);
 				level.getPlayer().setName(line);
 			}
+			
+			
 					
 			if ((line = input.readLine()) == null) return null;
 			while(line.equals("") || line.charAt(0) == '#'){
