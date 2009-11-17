@@ -38,9 +38,10 @@ public class SemiMirror extends DoubleMirror {
 
 	@Override
 	public GameMessage addLaser(Laser laser) {
-		// Si el laser que recibe es igual al ultimo que recibio, no lo agrega y
+		// Si el laser que recibe es igual al ultimo que recibio, o tiene dos lasers, no lo agrega y
 		// devuelve que el laser se detuvo.
-		if (countLasers() > 1 && laser.getDir().equals(getLastLaser().getDir()))
+		if ((countLasers() > 1 && laser.getDir().equals(getLastLaser().getDir()))
+				|| countLasers() >= 2)
 			return new LaserStopMessage();
 		return super.addLaser(laser);
 	}
@@ -67,20 +68,20 @@ public class SemiMirror extends DoubleMirror {
 			 * Si la diferencia en sus angulos es de 90 grados y estan en lados
 			 * opuestos del semi-espejo, mezcla sus colores.
 			 */
-			if ((Math.abs(l1.getAngle() - l2.getAngle()) == 90 
-					|| (l1.getAngle() == 0 && l2.getAngle() == 270) 
-					|| (l2.getAngle() == 0 && l1.getAngle() == 270) )
-				&& (reflects(l1) && !reflects(l2) || (!reflects(l1) && reflects(l2))))
+			if ((Math.abs(l1.getAngle() - l2.getAngle()) == 90
+					|| (l1.getAngle() == 0 && l2.getAngle() == 270) || (l2
+					.getAngle() == 0 && l1.getAngle() == 270))
+					&& (reflects(l1) && !reflects(l2) || (!reflects(l1) && reflects(l2))))
 				return ImageUtils.mix(l1.getColor(), l2.getColor());
 		}
 		return getLastLaser().getColor();
 	}
-	
+
 	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
 		return pos + ",5," + orientation + ",0,0,0";
 	}
-	
+
 	public void drawTile(TileManager tm, BoardPanel bp) {
 
 		int times = 0;
