@@ -36,7 +36,7 @@ public class SidebarPanel extends JPanel {
 
 		playerPanel.setBounds(0, 0, getWidth(), 100);
 
-		SaveButton saveButton = new SaveButton(gameFrame.getTileSet());
+		SaveButton saveButton = new SaveButton(gameFrame.getCurrentLevel());
 		saveButton.setBounds(5, 80, getWidth() - 30, 20);
 
 		LoadButton loadButton = new LoadButton(gameFrame);

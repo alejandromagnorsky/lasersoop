@@ -7,8 +7,8 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
+import logic.Level;
 import logic.io.LevelSaver;
-import logic.tileset.TileSet;
 
 /**
  * Boton que permite al usuario seleccionar un archivo para guardar un nivel.
@@ -23,7 +23,7 @@ public class SaveButton extends JButton {
 	 * 
 	 * @param tileset
 	 */
-	public SaveButton(final TileSet tileset) {
+	public SaveButton(final Level level) {
 		super("Guardar");
 		saveDialog = new JFileChooser();
 
@@ -34,7 +34,7 @@ public class SaveButton extends JButton {
 					String filename = saveDialog.getSelectedFile().getPath();
 					LevelSaver save = new LevelSaver(filename);
 					try {
-						save.saver(tileset);
+						save.saver(level);
 					} catch (IOException e1) {
 						System.out.println(e1);
 					}

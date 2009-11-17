@@ -25,10 +25,6 @@ public class Level {
 
 	public String getNextLevelPath() {
 
-		System.out.println(LevelLoader.isInLevels(new File(path)));
-
-		System.out.println(path);
-
 		return getMinimumFile((new File(path)).getName());
 	}
 
