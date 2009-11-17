@@ -17,7 +17,7 @@ public class Level {
 	private TileSet tileSet;
 	private String name;
 	private int goalsReached;
-	private Player player;
+	private Player player = new Player("");
 
 	/**
 	 * Crea un nuevo nivel con un determinado nombre.
@@ -29,14 +29,16 @@ public class Level {
 	 */
 	public Level(String filename) throws IOException {
 		Goal.initGoals();
-		setName(filename);
+		this.name = filename;
 		LevelLoader load = new LevelLoader(name);
-		tileSet = load.loader();
-
+		tileSet = load.loader().getTileset();
 	}
-
-	public TileSet getTileset() {
-		return tileSet;
+	
+	/**
+	 * Constructor default
+	 */
+	public Level(){
+		
 	}
 
 	public Level(String filename, Player player) throws IOException {
@@ -128,10 +130,6 @@ public class Level {
 	 * @param name
 	 *            Nombre de archivo con extension .txt.
 	 */
-	public void setName(String name) {
-		int index = name.lastIndexOf(".");
-		this.name = name.substring(0, index);
-	}
 
 	public String getName() {
 		return name;
@@ -139,5 +137,14 @@ public class Level {
 
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public TileSet getTileset() {
+		return tileSet;
+	}
+	
+	
+	public void setTileSet(TileSet ts){
+		tileSet = ts;
 	}
 }
