@@ -37,7 +37,8 @@ public class Highscores {
 	public boolean loader() throws IOException{
 		BufferedReader input = null;
 		try {
-			File file = new File(levelName + ".scores");
+			/* remueve la extensión .txt para ponerle .scores. */
+			File file = new File(levelName.substring(0, levelName.lastIndexOf(".")) + ".scores");
 			input = new BufferedReader(new FileReader(file));
 			String line;
 			/*
