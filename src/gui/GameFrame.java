@@ -174,7 +174,9 @@ public class GameFrame extends JFrame implements LevelStarter {
 	 */
 	public void nextLevel() {
 		JOptionPane.showMessageDialog(null, "¡Has ganado!");
+		JOptionPane.showMessageDialog(null, "¡Has pasado al próximo nivel!");
 		startLevel(currentLevel.getNextLevelPath());
 	}
 
 }
+
