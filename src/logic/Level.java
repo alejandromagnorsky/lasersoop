@@ -15,6 +15,7 @@ import messages.NullMessage;
 public class Level {
 
 	private TileSet tileSet;
+	private String path;
 	private String name;
 	private int goalsReached;
 	private Player player = new Player("");
@@ -29,9 +30,10 @@ public class Level {
 	 */
 	public Level(String filename) throws IOException {
 		Goal.initGoals();
-		this.name = filename;
-		LevelLoader load = new LevelLoader(name);
+		path = filename;
+		LevelLoader load = new LevelLoader(path);
 		tileSet = load.loader().getTileset();
+		name = tileSet.getLevelName();
 	}
 	
 	/**
@@ -131,8 +133,8 @@ public class Level {
 	 *            Nombre de archivo con extension .txt.
 	 */
 
-	public String getName() {
-		return name;
+	public String getPath() {
+		return path;
 	}
 
 	public Player getPlayer() {
@@ -141,6 +143,10 @@ public class Level {
 	
 	public TileSet getTileset() {
 		return tileSet;
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 	
