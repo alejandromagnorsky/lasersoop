@@ -1,19 +1,15 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.TreeSet;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import logic.Player;
 import logic.io.Highscores;
 
 public class HighScoresPanel extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
 	private String levelName;
 	
 	public HighScoresPanel(String levelName) throws IOException{
