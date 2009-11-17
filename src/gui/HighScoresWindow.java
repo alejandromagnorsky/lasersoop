@@ -11,14 +11,14 @@ public class HighScoresWindow extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	public HighScoresWindow(Level level) throws IOException{
-		super("Highscores: " + level.getName());
+		super("Highscores: " + level.getPath());
 		
 		Toolkit toolkit = getToolkit();
 		Dimension size = toolkit.getScreenSize();
 		
 		setBounds(size.width / 2 - getWidth() / 2 + 280, size.height / 2 - getHeight() / 2 - 213, 250, 325);
 		
-		setContentPane(new HighScoresPanel(level.getName()));
+		setContentPane(new HighScoresPanel(level.getPath()));
 	}
 		
 }
