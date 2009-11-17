@@ -1,7 +1,6 @@
 package logic.laser;
 
 import java.awt.Color;
-
 import logic.Vector2D;
 
 public class Laser {
@@ -20,9 +19,9 @@ public class Laser {
 	/**
 	 * Crea un nuevo laser con direccion, color y angulo.
 	 * Para el angulo el criterio es:
-	 * -> : 0 .
-	 * <- : 180 .
-	 * Hacia arriba: 90 .
+	 * Hacia la derecha : 0.
+	 * Hacia la izquierda : 180.
+	 * Hacia arriba: 90.
 	 * Hacia abajo: 270.
 	 */
 	public Laser(Vector2D dir, Color color) {

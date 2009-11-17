@@ -27,69 +27,6 @@ public class SimpleMirror extends Mirror {
 		super(pos, orientation);
 	}
 
-	public void drawTile(TileManager tm, BoardPanel bp) {
-
-		int times = 0;
-
-		// Just for easy understanding
-		switch (getDegree()) {
-		case 135:
-			times = 0;
-			break;
-		case 45:
-			times = 1;
-			break;
-		case 315:
-			times = 2;
-			break;
-		case 225:
-			times = 3;
-			break;
-		}
-
-		// Draw lasers first
-		drawLasers(tm, bp);
-
-		// Draw image
-		Image image = ImageUtils.rotateImage(tm.getSimpleMirror(), times);
-
-		if (hasLasers())
-			image = HueController.changeHue(image, getFirstLaser().getColor());
-		bp.appendImage(getPos().getX(), getPos().getY(), image);
-
-	}
-
-	public void drawLasers(TileManager tm, BoardPanel bp) {
-		Vector<Laser> lasers = getLasers();
-
-		for (Laser l : lasers) {
-
-			// Nº of rotations to the left.
-			int angle = l.getAngle() / 90;
-
-			int direction = 0;
-
-			Image tmpLaser;
-
-			if (reflects(l)) {
-
-				if (angle % 2 == 1)
-					direction = angle + (getOrientation()%2) * 3 - 1;
-				else
-					direction = angle + getOrientation()%2;
-
-				tmpLaser = tm.getCornerLaser();
-			} else {
-				direction = -angle;
-				tmpLaser = tm.getHalfLaser();
-			}
-
-			tmpLaser = ImageUtils.rotateImage(tmpLaser, direction);
-			tmpLaser = HueController.changeHue(tmpLaser, l.getColor());
-			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
-		}
-	}
-
 	@Override
 	public void rotate() {
 		orientation = (orientation + 1) % 4;
@@ -138,6 +75,50 @@ public class SimpleMirror extends Mirror {
 			next = this.getPos();
 		}
 		return next;
+	}
+	
+	public void drawTile(TileManager tm, BoardPanel bp) {
+		// Primero dibuja los lasers.
+		drawLasers(tm, bp);
+
+		// Dibuja las imagenes.
+		Image image = ImageUtils.rotateImage(tm.getSimpleMirror(), orientation);
+
+		if (hasLasers())
+			image = HueController.changeHue(image, getFirstLaser().getColor());
+		bp.appendImage(getPos().getX(), getPos().getY(), image);
+
+	}
+
+	public void drawLasers(TileManager tm, BoardPanel bp) {
+		Vector<Laser> lasers = getLasers();
+
+		for (Laser l : lasers) {
+
+			// Nº of rotations to the left.
+			int angle = l.getAngle() / 90;
+
+			int direction = 0;
+
+			Image tmpLaser;
+
+			if (reflects(l)) {
+
+				if (angle % 2 == 1)
+					direction = angle + (getOrientation()%2) * 3 - 1;
+				else
+					direction = angle + getOrientation()%2;
+
+				tmpLaser = tm.getCornerLaser();
+			} else {
+				direction = -angle;
+				tmpLaser = tm.getHalfLaser();
+			}
+
+			tmpLaser = ImageUtils.rotateImage(tmpLaser, direction);
+			tmpLaser = HueController.changeHue(tmpLaser, l.getColor());
+			bp.appendImage(getPos().getX(), getPos().getY(), tmpLaser);
+		}
 	}
 
 	public String toString(){
