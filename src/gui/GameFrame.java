@@ -198,8 +198,13 @@ public class GameFrame extends JFrame implements LevelStarter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// fijarse si es el ultimo nivel
-		System.out.println(currentLevel.getNextLevelPath());
+		
+		if( currentLevel.getNextLevelPath().equals(Level.getLastLevelPath())){
+			JOptionPane.showMessageDialog(null, "¡Has ganado el juego!");
+			openMenu();
+		}
+			
+		
 		startLevel(currentLevel.getNextLevelPath());
 	}
 
