@@ -28,6 +28,20 @@ public class Level {
 		return getMinimumFile((new File(path)).getName());
 	}
 
+	public static String getLastLevelPath() {
+		String filename = null;
+
+		File levelDir = new File("levels");
+
+		for (String str : levelDir.list())
+			if (!(new File(str)).isDirectory() && str.contains(".txt"))
+				if (filename == null || str.compareTo(filename) > 0)
+					filename = str;
+
+		return "levels/" + filename;
+
+	}
+
 	private static String getMinimumFile(String start) {
 		String filename = null;
 
