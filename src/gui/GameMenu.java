@@ -29,7 +29,7 @@ public class GameMenu extends JFrame implements LevelStarter {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		LoadButton start = new LoadButton(this, "levelTest.txt",
+		LoadButton start = new LoadButton(this, "./levels/levelB.txt",
 				"Comenzar juego");
 		start.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 50, 200, 50);
 

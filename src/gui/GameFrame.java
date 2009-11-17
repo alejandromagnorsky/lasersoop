@@ -1,14 +1,12 @@
 package gui;
 
 import java.awt.Dimension;
-import java.awt.TextField;
 import java.awt.Toolkit;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import logic.Level;
 import logic.Player;
-import logic.tile.Goal;
 import logic.tile.SimpleTile;
 import logic.tile.Tile;
 import logic.tileset.TileSet;
@@ -60,17 +58,16 @@ public class GameFrame extends JFrame implements LevelStarter {
 		for (Tile itr : tileset)
 			itr.drawTile(tileManager, bp);
 
-		if (currentLevel.hasWon())
-			nextLevel();
 		if (currentLevel.hasLost()) {
 			setEnabled(false);
 			JOptionPane.showMessageDialog(null, "¡Has perdido!");
 			openMenu();
 		}
+		if (currentLevel.hasWon())
+			nextLevel();
 	}
 
-	public void clearScreen() 
-	{
+	public void clearScreen() {
 		for (Tile itr : tileset)
 			new SimpleTile(itr.getPos()).drawTile(tileManager, bp);
 	}
@@ -120,10 +117,10 @@ public class GameFrame extends JFrame implements LevelStarter {
 	public void startLevel(String filename) {
 		try {
 			getPlayer();
-			
+
 			currentLevel = new Level(filename, player);
 			tileset = currentLevel.getTileset();
-			
+
 			setTitle(currentLevel.getName());
 			initFrame();
 
