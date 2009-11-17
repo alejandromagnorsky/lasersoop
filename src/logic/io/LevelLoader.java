@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
+import logic.Level;
 import logic.Vector2D;
 import logic.mirror.DoubleMirror;
 import logic.mirror.SemiMirror;
@@ -49,14 +51,26 @@ public class LevelLoader {
 	 * 
 	 * @throws IOException
 	 */
-	public TileSet loader() throws IOException{
+	public Level loader() throws IOException{
 		BufferedReader input = null;
 		try {
-			File file = new File(filename + ".txt");
+			File file = new File(filename);
+			File levelsDir = new File("levels");
 			input = new BufferedReader(new FileReader(file));
-			TileSet tileSet;
+			Level level = new Level();
 			String line, levelName;
 			
+			System.out.println(file.getParent());
+			System.out.println(levelsDir.getAbsolutePath());
+			if ( file.getParent()== null || !file.getParent().equals(levelsDir.getAbsolutePath())){
+				if ((line = input.readLine()) == null) return null;
+				while(line.equals("") || line.charAt(0) == '#'){
+					line = input.readLine();
+				}
+				System.out.println(line);
+				level.getPlayer().setName(line);
+			}
+					
 			if ((line = input.readLine()) == null) return null;
 			while(line.equals("") || line.charAt(0) == '#'){
 				line = input.readLine();
@@ -71,44 +85,45 @@ public class LevelLoader {
 			if ( (dim = this.loadDimensions(line)) == null ){
 				return null;
 			}			
-			tileSet = new TileSet(dim[0], dim[1]);
-			tileSet.setLevelName(levelName);
+			level.setTileSet(new TileSet(dim[0], dim[1]));
+			level.getTileset().setLevelName(levelName);
 			
 			Integer[] tile;
 			while ( (line = input.readLine()) != null ) {
 				if (!line.equals("") && line.charAt(0) != '#') {
-					if ((tile = this.loadTile(line, tileSet)) == null){
+					if ((tile = this.loadTile(line, level.getTileset())) == null){
 						return null;
 					}
 					Vector2D pos = new Vector2D(tile[0], tile[1]);
 					switch (tile[2]) {
 					case 1:
 						Color lc1 = new Color(tile[4], tile[5], tile[6]);
-						tileSet.add(new Origin(pos, tile[3], lc1));
+						level.getTileset().add(new Origin(pos, tile[3], lc1));
 						break;
 					case 2:
 						Color lc2 = new Color(tile[4], tile[5], tile[6]);
-						tileSet.add(new Goal(pos, lc2));
+						level.getTileset().add(new Goal(pos, lc2));
 						break;
 					case 3:
-						tileSet.add(new SimpleMirror(pos, tile[3]));
+						level.getTileset().add(new SimpleMirror(pos, tile[3]));
 						break;
 					case 4:
-						tileSet.add(new DoubleMirror(pos, tile[3]));
+						level.getTileset().add(new DoubleMirror(pos, tile[3]));
 						break;
 					case 5:
-						tileSet.add(new SemiMirror(pos, tile[3]));
+						level.getTileset().add(new SemiMirror(pos, tile[3]));
 						break;
 					case 6:
-						tileSet.add(new Wall(pos));
+						level.getTileset().add(new Wall(pos));
 						break;
 					case 7:
-						tileSet.add(new Trap(pos));
+						level.getTileset().add(new Trap(pos));
 						break;
 					}
 				}
 			}
-			return tileSet;
+			return level;
+			
 		} catch (FileNotFoundException exc) {
 			/* VER BIEN QUE ONDA ESTO */
 			System.out.println("TEMP|-----|HUBO UNA EXCEPCIÓN");
