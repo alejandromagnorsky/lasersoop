@@ -192,7 +192,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 			JOptionPane.showMessageDialog(null, "¡Has ganado el juego!");
 			openMenu();
 		}
-
+		
 		JOptionPane.showMessageDialog(null, "¡Has ganado!");
 		JOptionPane.showMessageDialog(null, "¡Has pasado al próximo nivel!");
 
@@ -205,6 +205,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 		}
 
 		startLevel(currentLevel.getNextLevelPath());
+		return;
 	}
 
 }
