@@ -100,8 +100,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 	 */
 	public void openMenu() {
 		setVisible(false);
-		this.
-		gameMenu.setVisible(true);
+		this.gameMenu.setVisible(true);
 	}
 
 	/**
@@ -147,7 +146,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 				playerName = "Jugador 1";
 
 			player = new Player(playerName);
-			
+
 		}
 	}
 
@@ -188,28 +187,23 @@ public class GameFrame extends JFrame implements LevelStarter {
 	 * Metodo que selecciona el proximo nivel luego de ganar el actual.
 	 */
 	public void nextLevel() {
+		
+		if (currentLevel.getPath().equals(Level.getLastLevelPath())) {
+			JOptionPane.showMessageDialog(null, "¡Has ganado el juego!");
+			openMenu();
+		}
+
 		JOptionPane.showMessageDialog(null, "¡Has ganado!");
 		JOptionPane.showMessageDialog(null, "¡Has pasado al próximo nivel!");
-		
+
 		Highscores hs = new Highscores(currentLevel.getPath());
-		
+
 		try {
 			hs.saver(player);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		String path = (new File(currentLevel.getPath())).getAbsolutePath();
-		
-		
-		if( path.equals(Level.getLastLevelPath())){
-			JOptionPane.showMessageDialog(null, "¡Has ganado el juego!");
-			openMenu();
-		}
-		
-		System.out.println(path);
-			
-		
+
 		startLevel(currentLevel.getNextLevelPath());
 	}
 
