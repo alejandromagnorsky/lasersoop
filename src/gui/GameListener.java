@@ -35,7 +35,8 @@ public class GameListener implements BoardPanelListener {
 	}
 
 	/**
-	 *	Permite al usuario arrastrar tiles de un punto A a un punto B en la pantalla.
+	 * Permite al usuario arrastrar tiles de un punto A a un punto B en la
+	 * pantalla.
 	 */
 	public void cellDragged(int sourceRow, int sourceColumn, int targetRow,
 			int targetColumn) {
@@ -48,12 +49,6 @@ public class GameListener implements BoardPanelListener {
 			gm.getCurrentLevel().update();
 
 			gm.updateScreen();
-
-			System.out.println("Celda arrastrada desde " + sourceRow + ", "
-					+ sourceColumn + " hasta " + targetRow + ", "
-					+ targetColumn);
-		} else {
-			System.out.println("Accion incorrecta: imposible mover la celda.");
 
 		}
 

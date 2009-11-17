@@ -69,7 +69,6 @@ public class Level {
 	public Level(String filename) throws IOException {
 		Goal.initGoals();
 		path = filename;
-		System.out.println(LevelLoader.isInLevels(new File(path)));
 		LevelLoader load = new LevelLoader(path);
 		tileSet = load.loader().getTileset();
 		name = tileSet.getLevelName();
