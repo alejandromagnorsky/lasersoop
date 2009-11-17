@@ -1,7 +1,10 @@
 package logic;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
+
 import logic.io.LevelLoader;
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
@@ -20,6 +23,45 @@ public class Level {
 	private int goalsReached;
 	private Player player = new Player("");
 
+	public String getNextLevelPath() {
+
+		System.out.println(LevelLoader.isInLevels(new File(path)));
+		
+		System.out.println(path);
+		
+		return getMinimumFile((new File(path)).getName());
+	}
+
+	private static String getMinimumFile(String start) {
+		String filename = null;
+
+		File levelsDir = new File("levels");
+
+		Vector<String> strings = new Vector<String>();
+
+		// Armar un vector con todos los strings mayores
+		for (File file : levelsDir.listFiles())
+			if (!file.isDirectory())
+				if (start == null || file.getName().compareTo(start) > 0)
+					strings.add(file.getName());
+
+		// Seleccionar el menor
+		for (String str : strings)
+			if (filename == null || str.compareTo(filename) < 0)
+				filename = str;
+
+		return "levels/" + filename;
+	}
+
+	/**
+	 * Metodo de clase que devuelve siempre el primer nivel.
+	 */
+	public static String getFirstLevel() {
+
+		
+		return getMinimumFile(null);
+	}
+
 	/**
 	 * Crea un nuevo nivel con un determinado nombre.
 	 * 
@@ -31,21 +73,23 @@ public class Level {
 	public Level(String filename) throws IOException {
 		Goal.initGoals();
 		path = filename;
+		System.out.println(LevelLoader.isInLevels(new File(path)));
 		LevelLoader load = new LevelLoader(path);
 		tileSet = load.loader().getTileset();
 		name = tileSet.getLevelName();
 	}
-	
+
 	/**
 	 * Constructor default
 	 */
-	public Level(){
-		
+	public Level() {
+
 	}
 
 	public Level(String filename, Player player) throws IOException {
 		this(filename);
 		this.player = player;
+
 	}
 
 	/**
@@ -57,7 +101,8 @@ public class Level {
 	}
 
 	/**
-	 * "Dispara" los lasers desde los origines y suma el puntaje que corresponda.
+	 * "Dispara" los lasers desde los origines y suma el puntaje que
+	 * corresponda.
 	 */
 	public void update() {
 		GameMessage status = new NullMessage();
@@ -67,10 +112,10 @@ public class Level {
 		for (Tile itr : tileSet)
 			if (itr.shootLaser())
 				walk(itr, status);
-		
+
 		// Si el puntaje es -1, es porque hay un laser en una trampa.
 		for (Tile itr : tileSet)
-			if (player.getScore() != -1){
+			if (player.getScore() != -1) {
 				itr.changeScore(player);
 				if (itr.laserHasReached())
 					goalsReached++;
@@ -104,7 +149,7 @@ public class Level {
 				walk(tileSet.at(nextPos), status);
 			}
 		}
-		
+
 		nextPos = t.nextPosition();
 		// Los bordes son paredes.
 		if (!tileSet.contains(nextPos))
@@ -116,15 +161,14 @@ public class Level {
 		walk(t, status);
 	}
 
-	
 	public boolean hasWon() {
 		return goalsReached == Goal.countGoals();
 	}
-	
-	public boolean hasLost(){
+
+	public boolean hasLost() {
 		return player.getScore() == -1;
 	}
-	
+
 	/**
 	 * Setea el nombre del nivel tomando la parte sin extension del String
 	 * recibido.
@@ -140,17 +184,16 @@ public class Level {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public TileSet getTileset() {
 		return tileSet;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
-	
-	public void setTileSet(TileSet ts){
+
+	public void setTileSet(TileSet ts) {
 		tileSet = ts;
 	}
 }

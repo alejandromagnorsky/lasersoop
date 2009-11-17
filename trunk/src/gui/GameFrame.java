@@ -11,6 +11,11 @@ import logic.tile.SimpleTile;
 import logic.tile.Tile;
 import logic.tileset.TileSet;
 
+/**
+ * Frame principal del juego. Contiene el panel de juego y el panel lateral con
+ * opciones.
+ * 
+ */
 public class GameFrame extends JFrame implements LevelStarter {
 
 	private static final long serialVersionUID = 1L;
@@ -27,6 +32,12 @@ public class GameFrame extends JFrame implements LevelStarter {
 
 	private GameMenu gameMenu;
 
+	/**
+	 * Para construir requiere un menu y la direccion de un nivel para comenzar
+	 * 
+	 * @param gameMenu
+	 * @param filename
+	 */
 	public GameFrame(GameMenu gameMenu, String filename) {
 		this.gameMenu = gameMenu;
 
@@ -52,6 +63,10 @@ public class GameFrame extends JFrame implements LevelStarter {
 		return gameMenu;
 	}
 
+	/**
+	 * Metodo que actualiza la pantalla. Limpia la pantalla y se fija si el
+	 * usuario gana o pierde
+	 */
 	public void updateScreen() {
 
 		clearScreen();
@@ -67,16 +82,25 @@ public class GameFrame extends JFrame implements LevelStarter {
 			nextLevel();
 	}
 
+	/**
+	 * Metodo que limpia la pantalla.
+	 */
 	public void clearScreen() {
 		for (Tile itr : tileset)
 			new SimpleTile(itr.getPos()).drawTile(tileManager, bp);
 	}
 
+	/**
+	 * Metodo para volver al menu principal
+	 */
 	public void openMenu() {
 		setVisible(false);
 		gameMenu.setVisible(true);
 	}
 
+	/**
+	 * Metodo que inicializa el panel de juego.
+	 */
 	public void initFrame() {
 
 		this.removeAll();
@@ -106,6 +130,9 @@ public class GameFrame extends JFrame implements LevelStarter {
 
 	}
 
+	/**
+	 * Metodo que pide al usuario el nombre del jugador
+	 */
 	public void getPlayer() {
 		if (player == null) {
 			String playerName = JOptionPane.showInputDialog(null,
@@ -114,12 +141,23 @@ public class GameFrame extends JFrame implements LevelStarter {
 		}
 	}
 
+	/**
+	 * Metodo necesario para poder comenzar nuevos niveles. Hace llamadas a
+	 * getPlayer e initFrame. En caso de excepcion, avisa al usuario que hubo un
+	 * error.
+	 */
 	public void startLevel(String filename) {
 		try {
 			getPlayer();
 
 			currentLevel = new Level(filename, player);
 			tileset = currentLevel.getTileset();
+
+			if (tileset == null) {
+				JOptionPane.showMessageDialog(null,
+						"Archivo incorrecto o corrupto.");
+				openMenu();
+			}
 
 			setTitle(currentLevel.getName());
 			initFrame();
@@ -131,8 +169,12 @@ public class GameFrame extends JFrame implements LevelStarter {
 		}
 	}
 
+	/**
+	 * Metodo que selecciona el proximo nivel luego de ganar el actual.
+	 */
 	public void nextLevel() {
 		JOptionPane.showMessageDialog(null, "¡Has ganado!");
+		startLevel(currentLevel.getNextLevelPath());
 	}
 
 }

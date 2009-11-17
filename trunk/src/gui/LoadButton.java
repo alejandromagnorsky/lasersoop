@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -44,7 +46,7 @@ public class LoadButton extends JButton {
 
 	public LoadButton(final LevelStarter ls) {
 		super("Cargar");
-		saveDialog = new JFileChooser();
+		saveDialog = new JFileChooser(new File("levels"));
 
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
