@@ -31,7 +31,6 @@ public class GameListener implements BoardPanelListener {
 				gm.getCurrentLevel().update();
 
 			gm.updateScreen();
-			gm.repaint();
 		}
 	}
 
@@ -49,7 +48,6 @@ public class GameListener implements BoardPanelListener {
 			gm.getCurrentLevel().update();
 
 			gm.updateScreen();
-			gm.repaint();
 
 			System.out.println("Celda arrastrada desde " + sourceRow + ", "
 					+ sourceColumn + " hasta " + targetRow + ", "
