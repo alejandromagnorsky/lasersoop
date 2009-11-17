@@ -6,6 +6,20 @@
 		<javac srcdir="src" destdir="bin" classpath="lib/junit-4.7.jar" />
 	</target>
 
+	<!-- Crea la documentacion en formato Javadoc, en el directorio doc.-->
+	<target name="doc" depends="compile">
+		<javadoc sourcepath="src" destdir="doc" classpath="lib/junit-4.7.jar"/>
+	</target>
+	
+	<!-- Ejecuta los tests. -->
+	<target name="tests" depends="compile">
+		<junit>
+			<formatter type="brief" usefile="false"/>
+			<classpath path="lib/junit-4.7.jar;bin" />
+			<test name="tests.TestMirrors" />
+		</junit>
+	</target>
+	
 	<!-- Crea el jar ejecutable con todo el proyecto compilado. -->
 	<target name="dist" depends="compile">
 		<jar destfile="lasers.jar" basedir="bin">
