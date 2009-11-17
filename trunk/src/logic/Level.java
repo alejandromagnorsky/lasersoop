@@ -60,18 +60,17 @@ public class Level {
 		cleanLevel();
 		goalsReached = 0;
 		player.setScore(0);
-		for (Tile itr : tileSet) {
+		for (Tile itr : tileSet)
 			if (itr.shootLaser())
 				walk(itr, status);
-			if (itr.laserHasReached())
-				goalsReached++;
-		}
-
+		
 		// Si el puntaje es -1, es porque hay un laser en una trampa.
 		for (Tile itr : tileSet)
-			if (player.getScore() != -1) 
+			if (player.getScore() != -1){
 				itr.changeScore(player);
-
+				if (itr.laserHasReached())
+					goalsReached++;
+			}
 	}
 
 	/**
@@ -101,7 +100,7 @@ public class Level {
 				walk(tileSet.at(nextPos), status);
 			}
 		}
-
+		
 		nextPos = t.nextPosition();
 		// Los bordes son paredes.
 		if (!tileSet.contains(nextPos))
@@ -133,7 +132,6 @@ public class Level {
 		int index = name.lastIndexOf(".");
 		this.name = name.substring(0, index);
 	}
-
 
 	public String getName() {
 		return name;
