@@ -5,34 +5,60 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import logic.Player;
 
-public class PlayerPanel extends JPanel{
-	
+/**
+ * Panel que contiene y muestra los datos (nombre y puntaje) de un jugador.
+ */
+
+public class PlayerPanel extends JPanel {
+
 	private Player player;
 	private JLabel scoreLabel;
-	
-	public PlayerPanel(Player player){
+
+	/**
+	 * Constructor. Requiere un jugador para inicializarse.
+	 * 
+	 * @param player
+	 */
+	public PlayerPanel(Player player) {
 		this.player = player;
 		setLayout(null);
 		setOpaque(false);
 		add(getNameLabel());
 		add(scoreLabel = getScoreLabel());
 	}
-	
-	private JLabel getNameLabel(){
+
+	/**
+	 * Metodo auxiliar para mostrar el nombre del jugador.
+	 * 
+	 * @return
+	 */
+
+	private JLabel getNameLabel() {
 		JLabel label = new JLabel(player.getName());
 		label.setBounds(5, 20, 100, 30);
 		return label;
 	}
-	
-	private JLabel getScoreLabel(){
-		JLabel label = new JLabel("Puntaje: " + String.valueOf(player.getScore()));
+
+	/**
+	 * Metodo auxiliar para mostrar el puntaje del jugador.
+	 * 
+	 * @return
+	 */
+
+	private JLabel getScoreLabel() {
+		JLabel label = new JLabel("Puntaje: "
+				+ String.valueOf(player.getScore()));
 		label.setBounds(5, 40, 100, 30);
 		return label;
 	}
-	
+
+	/**
+	 * Metodo que imprime el panel en la pantalla.
+	 */
 	public void paint(Graphics g) {
 		super.paint(g);
-		this.scoreLabel.setText("Puntaje: "+ String.valueOf(player.getScore()));
-	}	
-		
+		this.scoreLabel
+				.setText("Puntaje: " + String.valueOf(player.getScore()));
+	}
+
 }
