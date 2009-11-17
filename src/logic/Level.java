@@ -29,9 +29,10 @@ public class Level {
 	 */
 	public Level(String filename) throws IOException {
 		Goal.initGoals();
-		LevelLoader load = new LevelLoader(filename);
-		tileSet = load.loader();
 		setName(filename);
+		LevelLoader load = new LevelLoader(name);
+		tileSet = load.loader();
+
 	}
 
 	public TileSet getTileset() {
