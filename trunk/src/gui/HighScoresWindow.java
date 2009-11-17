@@ -15,7 +15,8 @@ public class HighScoresWindow extends JFrame{
 		
 		Toolkit toolkit = getToolkit();
 		Dimension size = toolkit.getScreenSize();
-		setBounds(- getWidth()/2 , - getHeight()/2, 250, 500);
+		
+		setBounds(size.width / 2 - getWidth() / 2 + 280, size.height / 2 - getHeight() / 2 - 213, 250, 325);
 		
 		setContentPane(new HighScoresPanel(level.getName()));
 	}
