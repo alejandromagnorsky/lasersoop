@@ -26,9 +26,9 @@ public class Level {
 	public String getNextLevelPath() {
 
 		System.out.println(LevelLoader.isInLevels(new File(path)));
-		
+
 		System.out.println(path);
-		
+
 		return getMinimumFile((new File(path)).getName());
 	}
 
@@ -47,8 +47,9 @@ public class Level {
 
 		// Seleccionar el menor
 		for (String str : strings)
-			if (filename == null || str.compareTo(filename) < 0)
-				filename = str;
+			if (str.contains(".txt"))
+				if (filename == null || str.compareTo(filename) < 0)
+					filename = str;
 
 		return "levels/" + filename;
 	}
@@ -58,7 +59,6 @@ public class Level {
 	 */
 	public static String getFirstLevel() {
 
-		
 		return getMinimumFile(null);
 	}
 
