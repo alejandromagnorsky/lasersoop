@@ -199,7 +199,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 			e.printStackTrace();
 		}
 		
-		if( currentLevel.getNextLevelPath().equals(Level.getLastLevelPath())){
+		if( currentLevel.getPath().equals(Level.getLastLevelPath())){
 			JOptionPane.showMessageDialog(null, "¡Has ganado el juego!");
 			openMenu();
 		}
