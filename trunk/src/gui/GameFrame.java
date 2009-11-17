@@ -141,6 +141,10 @@ public class GameFrame extends JFrame implements LevelStarter {
 		if (player == null) {
 			String playerName = JOptionPane.showInputDialog(null,
 					"Ingrese el nombre del jugador", "", 1);
+
+			if (playerName.equals(""))
+				playerName = "Jugador 1";
+
 			player = new Player(playerName);
 		}
 	}
@@ -156,7 +160,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 			if (LevelLoader.isInLevels(new File(filename))) {
 				getPlayer();
 				currentLevel = new Level(filename, player);
-			} else{
+			} else {
 				System.out.println("holaaaaa");
 				currentLevel = new Level(filename);
 				player = currentLevel.getPlayer();
