@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -27,20 +28,29 @@ public class GameMenu extends JFrame implements LevelStarter {
 		Dimension size = toolkit.getScreenSize();
 		setLocation(size.width / 2 - getWidth() / 2, size.height / 2
 				- getHeight() / 2);
-
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		LoadButton start = new LoadButton(this, Level.getFirstLevel(),
 				"Comenzar juego");
-		start.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 50, 200, 50);
+		start.setBounds(getWidth() / 2 - 100, getHeight() / 3, 200, 50);
 
 		LoadButton loadButton = new LoadButton(this);
-		loadButton.setBounds(getWidth() / 2 - 100, getHeight() / 2, 200, 50);
+		loadButton.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 75, 200, 50);
 
+		JButton hs = new JButton("Ver mejores puntajes");
+		hs.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 150, 200, 50);
+		hs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HighScoresWindow hsw = new HighScoresWindow(Level.getFirstLevel());
+				hsw.setVisible(true);
+			}
+		});
+		
 		JButton exit = new JButton("Finalizar");
 		exit.setBounds(getWidth() / 2 - 100,
-				getHeight() - 50 - getHeight() / 3, 200, 50);
+				getHeight() / 3 + 225, 200, 50);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -56,8 +66,10 @@ public class GameMenu extends JFrame implements LevelStarter {
 		}
 
 		add(start);
-		add(exit);
 		add(loadButton);
+		add(hs);
+		add(exit);
+		
 		add(background);
 
 	}
