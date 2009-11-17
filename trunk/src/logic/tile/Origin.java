@@ -12,7 +12,7 @@ import java.util.Vector;
 import logic.Vector2D;
 import logic.laser.Laser;
 import messages.GameMessage;
-import messages.NullMessage;
+import messages.LaserStopMessage;
 
 public class Origin extends StaticTile {
 
@@ -38,8 +38,8 @@ public class Origin extends StaticTile {
 	public GameMessage addLaser(Laser laser) {
 		if (!hasLasers())
 			return super.addLaser(laser);
-		if (laser.getDir().equals(getLastLaser().getDir())) {
-			return new NullMessage();
+		if (laser.getDir().equals(getFirstLaser().getDir())) {
+			return new LaserStopMessage();
 		}
 		return super.addLaser(laser);
 	}
