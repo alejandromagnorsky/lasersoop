@@ -11,6 +11,12 @@ import logic.tileset.TileSet;
 public class LevelSaver {
 	private String filename;
 	
+	/**
+	 * Crea una nueva instancia de LevelSaver, a partir de una ruta de archivo.
+	 * 
+	 * @param filename
+	 * 			Ruta de archivo.
+	 */
 	public LevelSaver(String filename){
 		this.filename = filename;
 	}
@@ -19,24 +25,29 @@ public class LevelSaver {
 		return filename;
 	}
 	
-	public void saver(TileSet tileSet) throws IOException {
+	/**
+	 * Almacena un nivel en la ruta que contienes su variable de instancia.
+	 * 
+	 * @param level
+	 * 			Nivel a almacenar
+	 * @throws IOException
+	 */
+	public void saver(Level level) throws IOException {
 		BufferedWriter output = null;
 		try {
 			File file = new File(filename);
-			if (file.exists()) {
-				if (!file.isFile()) {
-					System.out
-							.println("TEMP |----| NO INGRESASTE UN ARCHIVO COMO PARAMETRO");
-					return;
-				}
+			if (file.exists() && !file.isFile()) {
+				System.out.println("TEMP |----| NO INGRESASTE UN ARCHIVO COMO PARAMETRO");
+				return;
 			} else {
 				file.createNewFile();
 			}
 			output = new BufferedWriter(new FileWriter(file));
-			output.write(tileSet.getLevelName() + "\n");
-			output.write(tileSet.getRows() + "," + tileSet.getCols() + "\n");
+			output.write(level.getPlayer().getName() + "\n");
+			output.write(level.getName() + "\n");
+			output.write(level.getTileset().getRows() + "," + level.getTileset().getCols() + "\n");
 
-			for (Tile t : tileSet) {
+			for (Tile t : level.getTileset()) {
 				if (!(t instanceof SimpleTile)) {
 					output.write(t.toString() + "\n");
 				}
