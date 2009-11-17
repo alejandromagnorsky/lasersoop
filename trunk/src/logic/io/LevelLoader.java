@@ -55,17 +55,11 @@ public class LevelLoader {
 		BufferedReader input = null;
 		try {
 			File file = new File(filename);
-			File levelsDir = new File("levels");
 			input = new BufferedReader(new FileReader(file));
 			Level level = new Level();
 			String line, levelName;
 			
-			System.out.println(file.getParent());
-			System.out.println(levelsDir.getAbsolutePath());
-			
-			if ( (!file.isAbsolute() && (file.getParent()== null || !file.getParent().equals(levelsDir.getPath())))
-					|| (file.isAbsolute() && ( file.getParent()== null || !file.getParent().equals(levelsDir.getAbsolutePath()))) ){
-				
+			if ( this.isInLevels(file) ){
 				if ((line = input.readLine()) == null) return null;
 				while(line.equals("") || line.charAt(0) == '#'){
 					line = input.readLine();
@@ -73,9 +67,7 @@ public class LevelLoader {
 				System.out.println(line);
 				level.getPlayer().setName(line);
 			}
-			
-			
-					
+				
 			if ((line = input.readLine()) == null) return null;
 			while(line.equals("") || line.charAt(0) == '#'){
 				line = input.readLine();
@@ -277,5 +269,13 @@ public class LevelLoader {
 			return null;
 		}
 		return tile;
+	}
+	
+	public static boolean isInLevels(File file){
+		File levelsDir = new File("levels");
+		return ( (!file.isAbsolute() &&
+				( file.getParent()== null || !file.getParent().equals(levelsDir.getPath()) ))
+				|| (file.isAbsolute() &&
+				( file.getParent()== null || !file.getParent().equals(levelsDir.getAbsolutePath()))));
 	}
 }
