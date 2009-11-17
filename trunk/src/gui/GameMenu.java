@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -43,8 +44,13 @@ public class GameMenu extends JFrame implements LevelStarter {
 		hs.setBounds(getWidth() / 2 - 100, getHeight() / 3 + 150, 200, 50);
 		hs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			try{
 				HighScoresWindow hsw = new HighScoresWindow(Level.getFirstLevel());
 				hsw.setVisible(true);
+			}catch( IOException exc ){
+				JOptionPane.showMessageDialog(null,
+				"Archivo incorrecto o corrupto.");
+			}
 			}
 		});
 		
