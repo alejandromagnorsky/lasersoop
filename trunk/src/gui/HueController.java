@@ -3,10 +3,17 @@ package gui;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
 
+/**
+ * Utilidad que permite cambiar la tonalidad de una imagen.
+ *
+ */
 public class HueController {
 
+	/**
+	 * Metodo que recibe una imagen y un color, y devuelve una copia de la imagen
+	 * con la tonalidad de la imagen adaptada al color recibido. 
+	 */
 	public static Image changeHue(Image image, Color target) {
 
 		// Create image with same size

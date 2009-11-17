@@ -10,10 +10,23 @@ import javax.swing.JPanel;
 
 import logic.Player;
 
+/**
+ * Panel lateral que contiene los datos del jugador y varios botones para
+ * guardar, cargar, ver puntajes, volver al menu y salir del juego.
+ * 
+ */
 public class SidebarPanel extends JPanel {
 
 	private PlayerPanel playerPanel;
 
+	/**
+	 * Constructor de SidebarPanel. Recibe un GameFrame y un Player para poder
+	 * mostrar la informacion y poder ejecutar ciertas acciones (como cargar,
+	 * guardar o volver al menu principal).
+	 * 
+	 * @param gameFrame
+	 * @param player
+	 */
 	public SidebarPanel(final GameFrame gameFrame, final Player player) {
 		this.playerPanel = new PlayerPanel(player);
 
@@ -28,8 +41,7 @@ public class SidebarPanel extends JPanel {
 
 		LoadButton loadButton = new LoadButton(gameFrame);
 		loadButton.setBounds(5, 110, getWidth() - 30, 20);
-		
-		
+
 		JButton menuButton = new JButton("Menu");
 		menuButton.setBounds(5, 140, getWidth() - 30, 20);
 
@@ -38,15 +50,15 @@ public class SidebarPanel extends JPanel {
 				gameFrame.openMenu();
 			}
 		});
-		
-		
+
 		JButton highscoreButton = new JButton("Puntajes");
 		highscoreButton.setBounds(5, 170, getWidth() - 30, 20);
-		
+
 		highscoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try{
-					HighScoresWindow hsw = new HighScoresWindow(gameFrame.getCurrentLevel());
+				try {
+					HighScoresWindow hsw = new HighScoresWindow(gameFrame
+							.getCurrentLevel());
 					hsw.setVisible(true);
 				} catch (IOException exc) {
 					System.out.println(exc);
@@ -55,17 +67,16 @@ public class SidebarPanel extends JPanel {
 				}
 			}
 		});
-		
+
 		JButton exitButton = new JButton("Salir");
 		exitButton.setBounds(5, 200, getWidth() - 30, 20);
-		
+
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		
-		
+
 		add(playerPanel);
 		add(highscoreButton);
 		add(exitButton);

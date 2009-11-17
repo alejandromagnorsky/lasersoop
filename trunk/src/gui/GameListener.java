@@ -4,6 +4,11 @@ import logic.Vector2D;
 import logic.mirror.Mirror;
 import logic.tile.Tile;
 
+/**
+ * Listener para el juego. Controla los dos eventos que pueden haber en el
+ * juego.
+ * 
+ */
 public class GameListener implements BoardPanelListener {
 
 	private GameFrame gm;
@@ -12,6 +17,11 @@ public class GameListener implements BoardPanelListener {
 		this.gm = gm;
 	}
 
+	/**
+	 * Cada vez que el usuario clickea un tile, si es un espejo, rota. Este
+	 * método está optimizado para no actualizar a menos que haya algun cambio
+	 * de direccion de laser.
+	 */
 	public void cellClicked(int row, int column) {
 
 		Tile t = gm.getTileSet().at(new Vector2D(row, column));
@@ -25,6 +35,9 @@ public class GameListener implements BoardPanelListener {
 		}
 	}
 
+	/**
+	 *	Permite al usuario arrastrar tiles de un punto A a un punto B en la pantalla.
+	 */
 	public void cellDragged(int sourceRow, int sourceColumn, int targetRow,
 			int targetColumn) {
 		Tile t = gm.getTileSet().at(new Vector2D(sourceRow, sourceColumn));
