@@ -41,8 +41,10 @@ public class Highscores {
 			File file = new File(levelName.substring(0, levelName
 					.lastIndexOf("."))
 					+ ".scores");
+			
 			input = new BufferedReader(new FileReader(file));
 			String line;
+			
 			/*
 			 * Si alguien le pone más de 10 highscores externamente al archivo,
 			 * toma al archivo como inválido.
@@ -100,8 +102,10 @@ public class Highscores {
 
 				System.out.println(scores);
 
-				if (scores.isEmpty())
+				if (scores.isEmpty()) {
+					output.write(player.getName() + "," + player.getScore());
 					return true;
+				}
 
 				if (player.getScore() < scores.first().getScore()) {
 					return false;
