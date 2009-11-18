@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import logic.Level;
+import logic.Player;
 import logic.Vector2D;
 import logic.mirror.DoubleMirror;
 import logic.mirror.SemiMirror;
@@ -64,7 +65,7 @@ public class LevelLoader {
 				while(line.equals("") || line.charAt(0) == '#'){
 					line = input.readLine();
 				}
-				level.getPlayer().setName(line);
+				level.setPlayer(new Player(line));
 			}
 				
 			if ((line = input.readLine()) == null) return null;
