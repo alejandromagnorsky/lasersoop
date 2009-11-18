@@ -27,18 +27,6 @@ public class Goal extends StaticTile {
 		return color;
 	}
 
-	public void drawTile(TileManager tm, BoardPanel bp) {
-
-		// Draw lasers first
-		drawLasers(tm, bp);
-
-		// Draw image
-		Image image = tm.getGoal();
-		image = HueController.changeHue(image, color);
-		bp.appendImage(getPos().getX(), getPos().getY(), image);
-
-	}
-
 	/**
 	 * Agrega un laser en la celda que recibe.
 	 * 
@@ -68,8 +56,7 @@ public class Goal extends StaticTile {
 		for (Laser l : getLasers()){
 			if (color.equals(l.getColor()))
 				return true;
-		}
-			
+		}			
 		return false;
 	}
 
@@ -82,7 +69,18 @@ public class Goal extends StaticTile {
 		countGoals = 0;
 	}
 
+	public void drawTile(TileManager tm, BoardPanel bp) {
 
+		// Draw lasers first
+		drawLasers(tm, bp);
+
+		// Draw image
+		Image image = tm.getGoal();
+		image = HueController.changeHue(image, color);
+		bp.appendImage(getPos().getX(), getPos().getY(), image);
+
+	}
+	
 	public String toString() {
 		String pos = getPos().getX() + "," + getPos().getY();
 		String color = getColor().getRed() + "," + getColor().getGreen() + ","
