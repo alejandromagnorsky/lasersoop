@@ -64,7 +64,7 @@ public class GameMenu extends JFrame implements LevelStarter {
 		});
 
 		try {
-			background = new ImagePanel("bg.jpg");
+			background = new ImagePanel("src/resources/bg.jpg");
 			background.setBounds(0, 0, 900, 725);
 
 		} catch (Exception e) {
