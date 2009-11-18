@@ -12,6 +12,11 @@ import javax.swing.JOptionPane;
 
 import logic.Level;
 
+/**
+ * Menu principal del jeugo. Contiene botones para comenzar un juego, cargar una
+ * partida, ver los puntajes maximos o salir.
+ * 
+ */
 public class GameMenu extends JFrame implements LevelStarter {
 
 	private static final long serialVersionUID = 1L;
@@ -29,7 +34,7 @@ public class GameMenu extends JFrame implements LevelStarter {
 		Dimension size = toolkit.getScreenSize();
 		setLocation(size.width / 2 - getWidth() / 2, size.height / 2
 				- getHeight() / 2);
-		
+
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -38,25 +43,26 @@ public class GameMenu extends JFrame implements LevelStarter {
 		start.setBounds(getWidth() / 2 + 75, getHeight() / 3, 200, 50);
 
 		LoadButton loadButton = new LoadButton(this);
-		loadButton.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 75, 200, 50);
+		loadButton
+				.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 75, 200, 50);
 
 		JButton hs = new JButton("Ver mejores puntajes");
 		hs.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 150, 200, 50);
 		hs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			try{
-				HighScoresWindow hsw = new HighScoresWindow(Level.getFirstLevel());
-				hsw.setVisible(true);
-			}catch( IOException exc ){
-				JOptionPane.showMessageDialog(null,
-				"Archivo incorrecto o corrupto.");
-			}
+				try {
+					HighScoresWindow hsw = new HighScoresWindow(Level
+							.getFirstLevel());
+					hsw.setVisible(true);
+				} catch (IOException exc) {
+					JOptionPane.showMessageDialog(null,
+							"Archivo incorrecto o corrupto.");
+				}
 			}
 		});
-		
+
 		JButton exit = new JButton("Finalizar");
-		exit.setBounds(getWidth() / 2 + 75,
-				getHeight() / 3 + 225, 200, 50);
+		exit.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 225, 200, 50);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -75,7 +81,7 @@ public class GameMenu extends JFrame implements LevelStarter {
 		add(loadButton);
 		add(hs);
 		add(exit);
-		
+
 		add(background);
 
 	}
