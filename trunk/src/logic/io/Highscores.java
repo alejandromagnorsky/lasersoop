@@ -38,16 +38,10 @@ public class Highscores {
 		BufferedReader input = null;
 		try {
 			/* remueve la extensión .txt para ponerle .scores. */
-			File file = new File(levelName.substring(0, levelName
-					.lastIndexOf("."))
-					+ ".scores");
+			File file = new File(levelName.substring(0, levelName.lastIndexOf(".")) + ".scores");
 			input = new BufferedReader(new FileReader(file));
 			String line;
 			
-			/*
-			 * Si alguien le pone más de 10 highscores externamente al archivo,
-			 * toma al archivo como inválido.
-			 */
 			for (int i = 0; (line = input.readLine()) != null; i++) {
 				
 				if (i >= 10 || line.equals("") || line.charAt(0) == ',') {
@@ -72,8 +66,6 @@ public class Highscores {
 			return true;
 
 		} catch (FileNotFoundException exc) {
-			/* VER BIEN QUE ONDA ESTO */
-			System.out.println("NO SE ENCONTRO EL ARCHIVO, RETORNO FALSE");
 			return false;
 		} finally {
 			if (input != null) {
@@ -109,7 +101,6 @@ public class Highscores {
 				}
 			}
 		} catch(IOException exc){
-			System.out.println("ALGUN ERROR LEVANTANDO O GUARDANDO");
 		}finally {
 			if (output != null) {
 				output.close();
