@@ -40,14 +40,14 @@ public class GameMenu extends JFrame implements LevelStarter {
 
 		LoadButton start = new LoadButton(this, Level.getFirstLevel(),
 				"Comenzar juego");
-		start.setBounds(getWidth() / 2 + 75, getHeight() / 3, 200, 50);
+		start.setBounds(getWidth() / 2 + 125, getHeight() / 4, 200, 50);
 
 		LoadButton loadButton = new LoadButton(this);
 		loadButton
-				.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 75, 200, 50);
+				.setBounds(getWidth() / 2 + 125, getHeight() / 4 + 75, 200, 50);
 
 		JButton hs = new JButton("Ver mejores puntajes");
-		hs.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 150, 200, 50);
+		hs.setBounds(getWidth() / 2 + 125, getHeight() / 4 + 150, 200, 50);
 		hs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -60,9 +60,20 @@ public class GameMenu extends JFrame implements LevelStarter {
 				}
 			}
 		});
+		
+		final InstructionsFrame instructions = new InstructionsFrame();
+		
+
+		JButton showInstructions = new JButton("Ver instrucciones");
+		showInstructions.setBounds(getWidth() / 2 + 125, getHeight() / 4 + 225, 200, 50);
+		showInstructions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				instructions.setVisible(true);
+			}
+		});
 
 		JButton exit = new JButton("Finalizar");
-		exit.setBounds(getWidth() / 2 + 75, getHeight() / 3 + 225, 200, 50);
+		exit.setBounds(getWidth() / 2 + 125, getHeight() / 4 + 300, 200, 50);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -77,6 +88,7 @@ public class GameMenu extends JFrame implements LevelStarter {
 			JOptionPane.showMessageDialog(null, "Error cargando recursos.");
 		}
 
+		add(showInstructions);
 		add(start);
 		add(loadButton);
 		add(hs);
