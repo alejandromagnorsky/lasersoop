@@ -15,7 +15,7 @@ public class HighScoresPanel extends JPanel{
 	public HighScoresPanel(String levelName) throws IOException{
 		this.levelName = levelName;
 		Highscores hs = new Highscores(levelName);
-		
+		hs.loader();
 		setLayout(null);
 		JLabel label = new JLabel("TOP10 Players");
 		label.setBounds(30, 30, 100, 30);
