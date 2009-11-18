@@ -34,7 +34,6 @@ public class PlayerPanel extends JPanel {
 	 */
 
 	private JLabel getNameLabel() {
-		System.out.println(player == null);
 		JLabel label = new JLabel(player.getName());
 		label.setBounds(5, 20, 100, 30);
 		return label;
