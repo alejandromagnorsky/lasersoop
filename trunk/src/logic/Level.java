@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
-
 import logic.io.LevelLoader;
 import logic.laser.Laser;
 import logic.mirror.SemiMirror;
@@ -23,55 +22,6 @@ public class Level {
 	private int goalsReached;
 	private Player player = new Player("");
 
-	public String getNextLevelPath() {
-
-		return getMinimumFile((new File(path)).getName());
-	}
-
-	public static String getLastLevelPath() {
-		String filename = null;
-
-		File levelDir = new File("levels");
-
-		for (String str : levelDir.list())
-			if (!(new File(str)).isDirectory() && str.contains(".txt"))
-				if (filename == null || str.compareTo(filename) > 0)
-					filename = str;
-
-		return "levels/" + filename;
-
-	}
-
-	private static String getMinimumFile(String start) {
-		String filename = null;
-
-		File levelsDir = new File("levels");
-
-		Vector<String> strings = new Vector<String>();
-
-		// Armar un vector con todos los strings mayores
-		for (File file : levelsDir.listFiles())
-			if (!file.isDirectory())
-				if (start == null || file.getName().compareTo(start) > 0)
-					strings.add(file.getName());
-
-		// Seleccionar el menor
-		for (String str : strings)
-			if (str.contains(".txt"))
-				if (filename == null || str.compareTo(filename) < 0)
-					filename = str;
-
-		return "levels/" + filename;
-	}
-
-	/**
-	 * Metodo de clase que devuelve siempre el primer nivel.
-	 */
-	public static String getFirstLevel() {
-
-		return getMinimumFile(null);
-	}
-
 	/**
 	 * Crea un nuevo nivel con un determinado nombre.
 	 * 
@@ -80,15 +30,12 @@ public class Level {
 	 * @throws IOException
 	 *             Si no se pudo cargar el nivel correctamente.
 	 */
-	public Level(String filename) {
+	public Level(String filename) throws Exception {
 		Goal.initGoals();
 		path = filename;
 		LevelLoader load = new LevelLoader(path);
-		try {
-			tileSet = load.loader().getTileset();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		tileSet = load.loader().getTileset();
+
 		name = tileSet.getLevelName();
 	}
 
@@ -99,7 +46,7 @@ public class Level {
 
 	}
 
-	public Level(String filename, Player player) throws IOException {
+	public Level(String filename, Player player) throws Exception {
 		this(filename);
 		this.player = player;
 
@@ -189,6 +136,54 @@ public class Level {
 	 *            Nombre de archivo con extension .txt.
 	 */
 
+	public String getNextLevelPath() {
+		return getMinimumFile((new File(path)).getName());
+	}
+
+	public static String getLastLevelPath() {
+		String filename = null;
+
+		File levelDir = new File("levels");
+
+		for (String str : levelDir.list())
+			if (!(new File(str)).isDirectory() && str.contains(".txt"))
+				if (filename == null || str.compareTo(filename) > 0)
+					filename = str;
+
+		return "levels/" + filename;
+
+	}
+
+	private static String getMinimumFile(String start) {
+		String filename = null;
+
+		File levelsDir = new File("levels");
+
+		Vector<String> strings = new Vector<String>();
+
+		// Armar un vector con todos los strings mayores
+		for (File file : levelsDir.listFiles())
+			if (!file.isDirectory())
+				if (start == null || file.getName().compareTo(start) > 0)
+					strings.add(file.getName());
+
+		// Seleccionar el menor
+		for (String str : strings)
+			if (str.contains(".txt"))
+				if (filename == null || str.compareTo(filename) < 0)
+					filename = str;
+
+		return "levels/" + filename;
+	}
+
+	/**
+	 * Metodo de clase que devuelve siempre el primer nivel.
+	 */
+	public static String getFirstLevel() {
+
+		return getMinimumFile(null);
+	}
+	
 	public String getPath() {
 		return path;
 	}

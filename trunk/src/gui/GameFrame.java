@@ -158,12 +158,18 @@ public class GameFrame extends JFrame implements LevelStarter {
 	public void startLevel(String filename) {
 		try {
 
-			if (LevelLoader.isInLevels(new File(filename))) {
-				getPlayer();
-				currentLevel = new Level(filename, player);
-			} else {
-				currentLevel = new Level(filename);
-				player = currentLevel.getPlayer();
+			try {
+				if (LevelLoader.isInLevels(new File(filename))) {
+					getPlayer();
+					currentLevel = new Level(filename, player);
+				} else {
+					currentLevel = new Level(filename);
+					player = currentLevel.getPlayer();
+				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null,
+				"Archivo incorrecto o corrupto.");
+				System.exit(0);
 			}
 
 			tileset = currentLevel.getTileset();
@@ -176,8 +182,7 @@ public class GameFrame extends JFrame implements LevelStarter {
 			setTitle(currentLevel.getName());
 			initFrame();
 
-		} catch (IOException exc) {
-			System.out.println(exc);
+		} catch (Exception exc) {
 			JOptionPane.showMessageDialog(null,
 					"Archivo incorrecto o corrupto.");
 		}
