@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 import javax.swing.JFrame;
-import logic.Level;
-
 public class HighScoresWindow extends JFrame{
 	
 	private static final long serialVersionUID = 1L;

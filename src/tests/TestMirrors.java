@@ -8,7 +8,6 @@ import logic.laser.Laser;
 import logic.mirror.DoubleMirror;
 import logic.mirror.SemiMirror;
 import logic.mirror.SimpleMirror;
-
 import org.junit.Before;
 import org.junit.Test;
 

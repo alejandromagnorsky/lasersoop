@@ -64,7 +64,6 @@ public class LevelLoader {
 				while(line.equals("") || line.charAt(0) == '#'){
 					line = input.readLine();
 				}
-				System.out.println(line);
 				level.getPlayer().setName(line);
 			}
 				

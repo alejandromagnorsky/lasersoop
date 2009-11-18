@@ -15,10 +15,6 @@ public class HighScoresPanel extends JPanel{
 	public HighScoresPanel(String levelName) throws IOException{
 		this.levelName = levelName;
 		Highscores hs = new Highscores(levelName);
-		/* VER BIEN ESTE TEMA DE QUE DEVUELVE EN CASO DE FALSE */
-		if ( !hs.loader() ){
-			System.out.println("TEMP----- tira una excepcion onda archivo de scorsinvalido");
-		}
 		
 		setLayout(null);
 		JLabel label = new JLabel("TOP10 Players");
