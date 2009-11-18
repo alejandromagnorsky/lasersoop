@@ -122,8 +122,6 @@ public class LevelLoader {
 			return level;
 			
 		} catch (FileNotFoundException exc) {
-			/* VER BIEN QUE ONDA ESTO */
-			System.out.println("TEMP|-----|HUBO UNA EXCEPCIÓN");
 			return null;
 		} finally {
 			if (input != null) {
@@ -178,7 +176,6 @@ public class LevelLoader {
 					 */
 					flagComment = true;
 				} else if (!Character.isDigit(auxChar)) {
-						System.out.println(line + "TEMP|-----| INVALIDO 1");
 						return null;
 				} else {
 					strData[quantComas] += auxChar;
@@ -219,7 +216,6 @@ public class LevelLoader {
 	public Integer[] loadDimensions(String line) {
 		Integer[] dim = parser(line, DIMLINE);
 		if (dim == null || dim[0] < 5 || dim[1] < 5 || dim[1] > 20 || dim[0] > 20) {
-			System.out.println("TEMP|-----| fil o cols mayores a 20 o menores a 5 o coso null");
 			return null;
 		}
 		return dim;
@@ -241,22 +237,17 @@ public class LevelLoader {
 		Integer[] tile = parser(line, TILELINE);
 		
 		if (tile == null){
-			System.out.println(line + "\n" + "TEMP|-----| tile null");
 			return null;
 			
 		/* Valido los parámetros en general */
 		} else if (tile[0] >= tileSet.getRows() || tile[1] >= tileSet.getCols()
 				|| tile[2] > 7|| tile[2] < 1) {
-			
-			System.out.println(line + "\n" + "TEMP|-----| incorrectos 1");
 			return null;
 		
 		/* Valido los parámetros de la rotación */
 		} else if (((tile[2] == 1 || tile[2] == 3) && (tile[3] < 0 || tile[3] > 3))
 				|| ((tile[2] == 4 || tile[2] == 5) && tile[3] != 0 && tile[3] != 1)
 				|| ( (tile[2] == 6 || tile[2] == 7) && tile[3] != 0)) {
-			
-			System.out.println(line + "\n" + "TEMP|-----| incorrectos 2");
 			return null;
 			
 		/* Valido los parámetros del color */
@@ -264,8 +255,6 @@ public class LevelLoader {
 				|| tile[4] > 255 || tile[5] < 0 || tile[5] > 255
 				|| tile[6] < 0 || tile[6] > 255))
 				|| (tile[2] != 1 && tile[2] != 2 && tile[4] != 0)) {
-			
-			System.out.println(line + "\n" + "TEMP|-----| incorrectos 3");
 			return null;
 		}
 		return tile;

@@ -37,7 +37,6 @@ public class LevelSaver {
 		try {
 			File file = new File(filename);
 			if (file.exists() && !file.isFile()) {
-				System.out.println("TEMP |----| NO INGRESASTE UN ARCHIVO COMO PARAMETRO");
 				return;
 			} else {
 				file.createNewFile();
