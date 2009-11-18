@@ -187,25 +187,26 @@ public class GameFrame extends JFrame implements LevelStarter {
 	 * Metodo que selecciona el proximo nivel luego de ganar el actual.
 	 */
 	public void nextLevel() {
-		
+
 		if (currentLevel.getPath().equals(Level.getLastLevelPath())) {
 			JOptionPane.showMessageDialog(null, "¡Has ganado el juego!");
 			openMenu();
+		} else {
+
+			JOptionPane.showMessageDialog(null, "¡Has ganado!");
+			JOptionPane
+					.showMessageDialog(null, "¡Has pasado al próximo nivel!");
+
+			Highscores hs = new Highscores(currentLevel.getPath());
+
+			try {
+				hs.saver(player);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			startLevel(currentLevel.getNextLevelPath());
 		}
-		
-		JOptionPane.showMessageDialog(null, "¡Has ganado!");
-		JOptionPane.showMessageDialog(null, "¡Has pasado al próximo nivel!");
-
-		Highscores hs = new Highscores(currentLevel.getPath());
-
-		try {
-			hs.saver(player);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		startLevel(currentLevel.getNextLevelPath());
-		return;
 	}
 
 }
