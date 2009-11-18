@@ -35,7 +35,7 @@ public class HighScoresPanel extends JPanel{
 	
 	public JLabel getLevelLabel(){
 		JLabel l = new JLabel(levelName.toUpperCase());
-		l.setBounds(10, 10, 100, 30);
+		l.setBounds(10, 10, 200, 30);
 		return l;
 	}		
 }
