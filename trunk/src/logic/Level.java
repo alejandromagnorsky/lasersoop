@@ -80,11 +80,15 @@ public class Level {
 	 * @throws IOException
 	 *             Si no se pudo cargar el nivel correctamente.
 	 */
-	public Level(String filename) throws IOException {
+	public Level(String filename) {
 		Goal.initGoals();
 		path = filename;
 		LevelLoader load = new LevelLoader(path);
-		tileSet = load.loader().getTileset();
+		try {
+			tileSet = load.loader().getTileset();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		name = tileSet.getLevelName();
 	}
 
@@ -146,7 +150,6 @@ public class Level {
 
 		Vector2D nextPos;
 		Tile next;
-		/* MEJORAR ESTO */
 		if (t instanceof SemiMirror) {
 			nextPos = t.getPos().add(t.getLastLaser().getDir());
 			if (tileSet.contains(nextPos)) {
