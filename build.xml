@@ -8,23 +8,24 @@
 
 	<!-- Crea la documentacion en formato Javadoc, en el directorio doc.-->
 	<target name="doc" depends="compile">
-		<javadoc sourcepath="src" destdir="doc" classpath="lib/junit-4.7.jar"/>
+		<javadoc sourcepath="src" destdir="doc"/>
 	</target>
 	
 	<!-- Ejecuta los tests. -->
 	<target name="tests" depends="compile">
 		<junit>
 			<formatter type="brief" usefile="false"/>
-			<classpath path="lib/junit-4.7.jar;bin" />
+			<classpath path="lib/junit-4.7.jar" />
 			<test name="tests.TestMirrors" />
+			<test name="tests.TestTiles" />
 		</junit>
 	</target>
 	
 	<!-- Crea el jar ejecutable con todo el proyecto compilado. -->
-	<target name="dist" depends="compile">
+	<target name="dist" depends="compile, doc">
 		<jar destfile="lasers.jar" basedir="bin">
 			<manifest>
-				<attribute name="Main-Class" value="logic.Game" />
+				<attribute name="Game" value="logic.Game" />
 			</manifest>
 		</jar>
 	</target>
