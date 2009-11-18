@@ -111,14 +111,14 @@ public class GameFrame extends JFrame implements LevelStarter {
 		this.removeAll();
 		this.frameInit();
 
-		setSize(tileset.getCols() * CELL_SIZE + 150, tileset.getRows()
-				* CELL_SIZE + 28);
-
+		
 		Toolkit toolkit = getToolkit();
 		Dimension size = toolkit.getScreenSize();
-		setLocation(size.width / 2 - getWidth() / 2, size.height / 2
-				- getHeight() / 2);
-
+		
+		setBounds(size.width / 2 - getWidth() / 2,size.height / 2
+				- getHeight() / 2,tileset.getCols() * CELL_SIZE + 150, tileset.getRows()
+				* CELL_SIZE + 30);
+		
 		bp = new BoardPanel(tileset.getRows(), tileset.getCols(), CELL_SIZE);
 
 		currentLevel.update();
