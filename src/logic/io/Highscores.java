@@ -41,8 +41,6 @@ public class Highscores {
 			File file = new File(levelName.substring(0, levelName
 					.lastIndexOf("."))
 					+ ".scores");
-	//		System.out.println(file.getPath());
-	//		System.out.println(file.exists());
 			input = new BufferedReader(new FileReader(file));
 			String line;
 			
@@ -50,8 +48,7 @@ public class Highscores {
 			 * Si alguien le pone más de 10 highscores externamente al archivo,
 			 * toma al archivo como inválido.
 			 */
-			System.out.println(line = input.readLine());
-			for (int i = 0; (line /*= input.readLine()*/) != null; i++) {
+			for (int i = 0; (line = input.readLine()) != null; i++) {
 				
 				if (i >= 10 || line.equals("") || line.charAt(0) == ',') {
 					return false;
@@ -70,9 +67,7 @@ public class Highscores {
 						auxScore += auxChar;
 					}
 				}
-				System.out.println("PLAYER: " + auxName + "PUNTOS: " + auxScore);
 				scores.add(new Player(auxName, new Integer(auxScore)));
-				line = input.readLine();
 			}
 			return true;
 
@@ -87,39 +82,35 @@ public class Highscores {
 		}
 	}
 
-	public boolean saver(Player player) throws IOException {
+	public void saver(Player player) throws IOException {
 		BufferedWriter output = null;
-		loader();
+	
 		try {
-			File file = new File(levelName.substring(0, levelName.length() - 4)
-					+ ".scores");
+			loader();
+			File file = new File(levelName.substring(0, levelName.length() - 4) + ".scores");
 
 			boolean exists = file.exists();
-
 			output = new BufferedWriter(new FileWriter(file));
 
 			if (!exists) {
 				file.createNewFile();
 				output.write(player.getName() + "," + player.getScore());
-				return true;
 			} else {
 				if (scores.isEmpty()) {
 					output.write(player.getName() + "," + player.getScore());
-					return true;
+				} else if (scores.size() != 10 || player.getScore() >= scores.first().getScore()){
+					scores.add(player);
 				}
-				if (scores.size() == 10 && player.getScore() < scores.first().getScore()) {
-					return false;
-				}
-				scores.add(player);
 				for (Player p : scores) {
 					output.write(p.getName() + "," + p.getScore());
 					if (p != scores.last()) {
 						output.write("\n");
 					}
 				}
-				return true;
 			}
-		} finally {
+		} catch(IOException exc){
+			System.out.println("ALGUN ERROR LEVANTANDO O GUARDANDO");
+		}finally {
 			if (output != null) {
 				output.close();
 			}
