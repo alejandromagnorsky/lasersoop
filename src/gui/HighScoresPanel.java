@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.TreeSet;
 import javax.swing.JLabel;
@@ -34,7 +35,8 @@ public class HighScoresPanel extends JPanel{
 	}
 	
 	public JLabel getLevelLabel(){
-		JLabel l = new JLabel(levelName.toUpperCase());
+		File f = new File(levelName);
+		JLabel l = new JLabel(f.getName().toUpperCase());
 		l.setBounds(10, 10, 200, 30);
 		return l;
 	}		
