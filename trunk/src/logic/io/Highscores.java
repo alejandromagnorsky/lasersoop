@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import logic.Player;
