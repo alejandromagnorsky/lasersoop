@@ -34,8 +34,9 @@ public class Level {
 		Goal.initGoals();
 		path = filename;
 		LevelLoader load = new LevelLoader(path);
-		tileSet = load.loader().getTileset();
-
+		Level l = load.loader();
+		tileSet = l.getTileset();
+		player = l.getPlayer();
 		name = tileSet.getLevelName();
 	}
 
@@ -202,5 +203,9 @@ public class Level {
 
 	public void setTileSet(TileSet ts) {
 		tileSet = ts;
+	}
+	
+	public void setPlayer(Player p){
+		player = p;
 	}
 }
